@@ -1,7 +1,24 @@
 # assume we look for miniums
 
-def get_function():
-    pass
+from enum import Enum
+
+class OptimizerType(Enum):
+    BISECTION = 0,
+    GOLDEN_DIVISION = 1
+
+class UnaryFunction:
+
+    def __init__(self, expression):
+        super().__init__()
+        self.expression = expression
+
+    def evalute(self, x):
+        self.x = x
+        return eval(self.expression)
+
+
+def get_function(expression):
+    return eval(expression)
 
 
 def get_function_range():
