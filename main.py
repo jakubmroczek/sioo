@@ -16,8 +16,10 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
+def get_function():
+    pass
 
-def get_function(expression):
+def get_optimizer(expression):
     return eval(expression)
 
 
@@ -33,7 +35,7 @@ def get_unimodal_range(function, range):
     pass
 
 
-def run_function(function, range):
+def run_function(optimizer, function, range):
     pass
 
 
@@ -42,6 +44,7 @@ def visualize_result(result):
 
 
 if __name__ == '__main__':
+    optimizer = get_optimizer()
     function = get_function()
     range = get_function_range()
 
@@ -49,6 +52,5 @@ if __name__ == '__main__':
     if not is_function_unimodal_in_range(function, range):
         range = get_unimodal_range(function, range)
 
-
-    result =  run_function(function, range)
+    result =  run_function(optimizer, function, range)
     visualize_result(result)
