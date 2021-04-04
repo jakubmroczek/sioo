@@ -9,7 +9,6 @@ class OptimizerType(Enum):
     GOLDEN_DIVISION = 1
 
 class UnaryFunction:
-
     def __init__(self, expression):
         super().__init__()
         self.expression = expression
@@ -31,7 +30,6 @@ class GoldenDivisionOptimizer(object):
 
 
 class Range:
-
     def __init__(self, low, high):
         super().__init__()
         self.low = low
@@ -46,15 +44,20 @@ def get_optimizer(optimzierType):
 
 
 def is_function_unimodal_in_range(function, range):
-    pass
+    return True
 
 
 def get_unimodal_range(function, range):
     pass
 
 
-def optimize(optimizer, function, range):
-    pass
+def optimize(optimizer, function, range, stopCondition):
+    result = range.low
+
+    if stopCondition():
+        return result
+    else:
+        result, range = optimizer.step(function, range)
 
 
 def visualize_result(result):
@@ -76,7 +79,6 @@ if __name__ == '__main__':
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
     range = arguments.range
-
 
     if not is_function_unimodal_in_range(function, range):
         range = get_unimodal_range(function, range)
