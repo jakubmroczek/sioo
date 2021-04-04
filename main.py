@@ -54,11 +54,13 @@ def get_unimodal_range(function, range):
 def optimize(optimizer, function, range, stopCondition):
     result = range.low
 
-    if stopCondition():
-        return result
-    else:
-        result, range = optimizer.step(function, range)
+    epoch = 0
 
+    while not stopCondition(epoch, result):
+        result, range = optimizer.step(function, range)
+        epoch = epoch + 1
+
+    return result
 
 def visualize_result(result):
     pass
