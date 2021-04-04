@@ -3,10 +3,11 @@
 # assume we look for miniums
 
 from enum import Enum
+import math
 
 class OptimizerType(Enum):
     BISECTION = 0,
-    GOLDEN_DIVISION = 1
+    GOLDEN_SECTION_SEARCH = 1
 
 class UnaryFunction:
     def __init__(self, expression):
@@ -21,7 +22,7 @@ def get_function(expression):
     return UnaryFunction(expression)
 
 
-class BisectionOptimzer(object):
+class BisectionOptimizer(object):
 
 
     def optimize(self, function, functionRange, stopCondition, epochs):
@@ -59,10 +60,29 @@ class BisectionOptimzer(object):
 
 
 
-class GoldenDivisionOptimizer(object):
+class GoldenSectionSearchOptimizer(object):
 
-    def optimize(self):
-        pass
+    def optimize(self, function, functionRange, stopCondition, epochs):
+        a, b  = functionRange.low, functionRange.high
+        tol = 1e-5
+
+        # Old code belowe
+        gr = (math.sqrt(5) + 1) / 2
+
+        c = b - (b - a) / gr
+        d = a + (b - a) / gr
+        while abs(b - a) > tol:
+            if function.evalute(c) < function.evalute(d):
+                b = d
+            else:
+                a = c
+
+            # We recompute both c and d here to avoid loss of precision which may lead to incorrect results or infinite loop
+            c = b - (b - a) / gr
+            d = a + (b - a) / gr
+
+        return (b + a) / 2
+
 
 
 class FunctionRange:
@@ -74,9 +94,9 @@ class FunctionRange:
 
 def get_optimizer(optimzierType):
     if optimzierType == OptimizerType.BISECTION:
-        return BisectionOptimzer()
+        return BisectionOptimizer()
     else:
-        return GoldenDivisionOptimizer()
+        return GoldenSectionSearchOptimizer()
 
 
 def is_function_unimodal_in_range(function, range):
@@ -95,7 +115,7 @@ class ProgramArguments:
 
     def __init__(self):
         super().__init__()
-        self.optimizerType = OptimizerType.BISECTION
+        self.optimizerType = OptimizerType.GOLDEN_SECTION_SEARCH
         self.expression = 'x ** 2 - 1'
         self.functionRange = FunctionRange(0, 10)
         self.stopCondition = lambda epoch, result :  False
