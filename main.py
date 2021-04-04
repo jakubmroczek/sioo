@@ -16,11 +16,23 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
-def get_function():
+def get_function(expression):
+    return UnaryFunction(expression)
+
+
+class BisectionOptimzer(object):
     pass
 
-def get_optimizer(expression):
-    return eval(expression)
+
+class GoldenDivisionOptimizer(object):
+    pass
+
+
+def get_optimizer(optimzierType):
+    if optimzierType == OptimizerType.BISECTION:
+        return BisectionOptimzer()
+    else:
+        return GoldenDivisionOptimizer()
 
 
 def get_function_range():
@@ -44,6 +56,7 @@ def visualize_result(result):
 
 
 if __name__ == '__main__':
+    # cli arguments layer
     optimizer = get_optimizer()
     function = get_function()
     range = get_function_range()
