@@ -73,6 +73,7 @@ class ProgramArguments:
         self.optimizerType = OptimizerType.BISECTION
         self.expression = 'x ** 2'
         self.range = Range(0, 10)
+        self.stopCondition = lambda epoch, result :  False
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
@@ -81,9 +82,10 @@ if __name__ == '__main__':
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
     range = arguments.range
+    stopCondition = arguments.stopCondition
 
     if not is_function_unimodal_in_range(function, range):
         range = get_unimodal_range(function, range)
 
-    result =  optimize(optimizer, function, range)
+    result =  optimize(optimizer, function, range, stopCondition)
     visualize_result(result)
