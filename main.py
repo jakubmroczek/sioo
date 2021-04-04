@@ -99,9 +99,27 @@ def get_optimizer(optimzierType):
         return GoldenSectionSearchOptimizer()
 
 
-def is_function_unimodal_in_range(function, range):
-    return True
+def is_function_unimodal_in_range(function, range, unimodal_check_n):
+    x1, x2 = range.low, range.high
+    function_x1, function_x2 = function.evalute(x1), function.evalute(x2)
+    step = abs(x2 - x1) / unimodal_check_n
 
+    minimum_found = False
+
+    for i in range(1, unimodal_check_n + 1):
+        x = x1 + step * i
+        function_x = function.evalute(x)
+
+        if not minimum_found:
+            if function_x1 < function_x:
+                minimum_found = True
+        else:
+            if not function_x1 <= function_x:
+                return False
+
+        function_x1 = function_x
+
+    return True
 
 def get_unimodal_range(function, range):
     pass
@@ -120,6 +138,7 @@ class ProgramArguments:
         self.functionRange = FunctionRange(0, 10)
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
+        self.unimodal_check_n= 100
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
@@ -130,8 +149,9 @@ if __name__ == '__main__':
     functionRange = arguments.functionRange
     stopCondition = arguments.stopCondition
     epochs = arguments.epochs
+    unimodal_check_n = arguments.unimodal_check_n
 
-    if not is_function_unimodal_in_range(function, range):
+    if not is_function_unimodal_in_range(function, range, unimodal_check_n):
         range = get_unimodal_range(function, range)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
