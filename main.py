@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # assume we look for miniums
 
 from enum import Enum
