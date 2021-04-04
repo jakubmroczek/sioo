@@ -30,15 +30,19 @@ class GoldenDivisionOptimizer(object):
     pass
 
 
+class Range:
+
+    def __init__(self, low, high):
+        super().__init__()
+        self.low = low
+        self.high = high
+
+
 def get_optimizer(optimzierType):
     if optimzierType == OptimizerType.BISECTION:
         return BisectionOptimzer()
     else:
         return GoldenDivisionOptimizer()
-
-
-def get_function_range():
-    pass
 
 
 def is_function_unimodal_in_range(function, range):
@@ -63,6 +67,7 @@ class ProgramArguments:
         super().__init__()
         self.optimizerType = OptimizerType.BISECTION
         self.expression = 'x ** 2'
+        self.range = Range(0, 10)
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
@@ -70,7 +75,7 @@ if __name__ == '__main__':
     # cli arguments layer
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
-    range = get_function_range()
+    range = arguments.range
 
 
     if not is_function_unimodal_in_range(function, range):
