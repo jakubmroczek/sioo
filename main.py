@@ -47,7 +47,7 @@ def get_unimodal_range(function, range):
     pass
 
 
-def run_function(optimizer, function, range):
+def optimize(optimizer, function, range):
     pass
 
 
@@ -55,15 +55,24 @@ def visualize_result(result):
     pass
 
 
+class ProgramArguments:
+
+    def __init__(self):
+        super().__init__()
+        self.optimizerType = OptimizerType.BISECTION
+        self.expression = 'x ** 2'
+
 if __name__ == '__main__':
+    arguments = ProgramArguments()
+
     # cli arguments layer
-    optimizer = get_optimizer()
-    function = get_function()
+    optimizer = get_optimizer(arguments.optimizerType)
+    function = get_function(arguments.expression)
     range = get_function_range()
 
 
     if not is_function_unimodal_in_range(function, range):
         range = get_unimodal_range(function, range)
 
-    result =  run_function(optimizer, function, range)
+    result =  optimize(optimizer, function, range)
     visualize_result(result)
