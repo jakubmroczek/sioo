@@ -61,7 +61,8 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
 
         function_x1 = function_x
 
-    return True
+    # Function can NOT also be only declaining
+    return minimum_found
 
 def get_unimodal_range(function, range):
     pass
@@ -76,7 +77,7 @@ class ProgramArguments:
     def __init__(self):
         super().__init__()
         self.optimizerType = OptimizerType.GOLDEN_SECTION_SEARCH
-        self.expression = 'x ** 2 - 1'
+        self.expression = '-x- 1'
         self.functionRange = FunctionRange(-0.1, 10)
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
