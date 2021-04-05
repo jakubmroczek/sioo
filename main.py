@@ -32,6 +32,7 @@ class FunctionRange:
         pass
 
     # Call only this method is the ranges intersects
+    # To nie jest taka suma w sensie matemtycznym
     def sum(self, other):
         pass
 
@@ -102,7 +103,13 @@ def bounding_phases_method(function, x, delta):
             return FunctionRange(low, high)
 
 def intersects(range1, range2):
-    pass
+    # Case 1
+    range1.high >= range2.low and range1.high <= range2.high
+
+    range2.low >= range1.low and range2.low <= range1.high and range2.high >= range1.low and range2.high <= range1.high
+
+    # Case 3
+    range2.high >= range1.low and range2.high <= range1.high
 
 def get_unimodal_range(function, functionRange, delta):
     # Szukamy począwszy od a i b (low, high)
