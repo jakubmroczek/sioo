@@ -56,7 +56,7 @@ def main():
 
     if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
         print('Function is NOT unimodal')
-        range = get_unimodal_range(function, functionRange, n)
+        functionRange = get_unimodal_range(function, functionRange, n)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
     visualize_result(result_x)
