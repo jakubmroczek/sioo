@@ -2,7 +2,6 @@ class BisectionOptimizer(object):
     def optimize(self, function, functionRange, stopCondition, epochs):
         a, b = functionRange.low,  functionRange.high
 
-
         if function.evalute(a) * function.evalute(b) >= 0:
             print("Bisection method fails.")
             return None
