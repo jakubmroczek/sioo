@@ -71,6 +71,40 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
 
     return True
 
+def exhaustive_serach_method(function, functionRange, n):
+    # Krok 1
+    x_1 = functionRange.low
+    delta_x = (functionRange.high - functionRange.low) / n
+
+    x_2 = x_1 + delta_x
+    x_3 = x_2 + delta_x
+
+    # Krok 2
+    function_x_1 = function.evalute(x_1)
+    function_x_2 = function.evalute(x_2)
+    function_x_3 = function.evalute(x_3)
+
+    while True:
+        if function_x_1 >= function_x_2 and function_x_2 <= function_x_3:
+            return FunctionRange(x_1, x_3)
+        else:
+            x_1 = x_2
+            x_2 = x_3
+            x_3 = x_2 + delta_x
+
+            # Po co obilczac 2 razy to samo :D
+            function_x_1 = function_x_2
+            function_x_2 = function_x_3
+            function_x_3 = function.evalute(x_3)
+
+        if x_3 > functionRange.high:
+            raise Exception(f'Nie istnieje minimum wprzedziale {functionRange} lub punkt brzegowy {functionRange} jest '
+                            f'punktem '
+                            f'minimalnym')
+
+
+
+
 def bounding_phases_method(function, x, delta):
     x0 = x
     delta = abs(delta)
