@@ -8,6 +8,7 @@ from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import UnaryFunction, FunctionRange
 from unimodality import  is_function_unimodal_in_range, exhaustive_search_method
 from gui import WidgetGallery
+from PyQt5.QtWidgets import QApplication
 
 class OptimizerType(Enum):
     BISECTION = 0,
@@ -58,14 +59,6 @@ def main():
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
     visualize_result(result_x)
-
-from PyQt5.QtCore import QDateTime, Qt, QTimer
-from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
-                             QDial, QDialog, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit,
-                             QProgressBar, QPushButton, QRadioButton, QScrollBar, QSizePolicy,
-                             QSlider, QSpinBox, QStyleFactory, QTableWidget, QTabWidget, QTextEdit,
-                             QVBoxLayout, QWidget)
-
 
 if __name__ == '__main__':
     import sys
