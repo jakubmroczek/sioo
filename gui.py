@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
                              QPushButton)
 
+from program_arguments import ProgramArguments
 
 class GUI(QDialog):
     def __init__(self, parent=None):
@@ -26,5 +27,18 @@ class GUI(QDialog):
 
         self.setLayout(layout)
 
+        # Calculation start callback
+        self.onCalculationStartCallback = None
+
+        # Assigning callbacks on click
+        self.runButton.clicked.connect(self._onCalculationStart)
+
     def setOnCalculationStart(self, callback):
-        self.runButton.clicked.connect(callback)
+        self.onCalculationStartCallback = callback
+
+    def _onCalculationStart(self):
+        programArguments = self._getProgramArguments()
+        self.onCalculationStartCallback(programArguments)
+
+    def _getProgramArguments(self):
+        return ProgramArguments()
