@@ -25,7 +25,7 @@ def get_function(expression):
 class FunctionRange:
     def __init__(self, low, high):
         super().__init__()
-        assert low < high
+        assert low < high, f'{low}, {high}'
         self.low = low
         self.high = high
 
@@ -139,8 +139,8 @@ class ProgramArguments:
     def __init__(self):
         super().__init__()
         self.optimizerType = OptimizerType.GOLDEN_SECTION_SEARCH
-        self.expression = 'x ** 2 - 1'
-        self.functionRange = FunctionRange(1, 10)
+        self.expression = 'x ** 3 - 6 * x** 2 + 4 * x + 12'
+        self.functionRange = FunctionRange(-1, 5)
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
         self.unimodal_check_n= 100
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     delta = arguments.delta
 
     if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
-        print('not unimodal')
+        print('Function is NOT unimodal')
         range = get_unimodal_range(function, functionRange, delta)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
