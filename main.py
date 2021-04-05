@@ -15,8 +15,10 @@ def get_function(expression):
 def get_optimizer(optimzierType):
     if optimzierType == OptimizerType.BISECTION:
         return BisectionOptimizer()
-    else:
+    elif optimzierType == OptimizerType.GOLDEN_SECTION_SEARCH:
         return GoldenSectionSearchOptimizer()
+    else:
+        raise Exception('Unsupported optimzier type')
 
 def get_unimodal_range(function, functionRange, n):
     unimodal_range = exhaustive_search_method(function, functionRange, n)

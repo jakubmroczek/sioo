@@ -4,6 +4,8 @@ from function import FunctionRange
 class OptimizerType(Enum):
     BISECTION = 0,
     GOLDEN_SECTION_SEARCH = 1
+    SCIPY_BISECTION = 2
+    SCIPY_GOLDEN_SECTION_SEARCH = 3
 
 class ProgramArguments:
     def __init__(self):
