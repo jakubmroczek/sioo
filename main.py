@@ -31,6 +31,7 @@ class FunctionRange:
     def intersects(self, other):
         pass
 
+    # Call only this method is the ranges intersects
     def sum(self, other):
         pass
 
@@ -70,8 +71,29 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
     # Function can NOT also be only declaining
     return minimum_found
 
-def bounding_phases_method(function, x):
-    pass
+def bounding_phases_method(function, x, delta):
+
+    case0:
+
+    x0 = x
+    delta = abs(delta)
+    k = 0
+
+    if f(x (0) − |∆|) ≥ f(x (0)) ≥ f(x (0) + |∆|):
+        ∆ > 0
+    if f(x (0) − |∆|) ≤ f(x (0)) ≤ f(x (0) + |∆|):
+        ∆ < 0;
+    else
+        jump case0
+
+    # krok 3
+    x1 = x0 + 2 * k * delta
+    if f(x (k+1)) < f(x (k) ):
+        ustal k = k + 1
+        jump krok3
+
+    else:
+        return (x (k−1), x(k+1))
 
 def intersects(range1, range2):
     pass
