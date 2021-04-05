@@ -159,7 +159,6 @@ def visualize_result(result):
 
 
 class ProgramArguments:
-
     def __init__(self):
         super().__init__()
         self.optimizerType = OptimizerType.GOLDEN_SECTION_SEARCH
@@ -168,7 +167,7 @@ class ProgramArguments:
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
         self.unimodal_check_n= 100
-        self.n = 10000
+        self.n = 100000
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
