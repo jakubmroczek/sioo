@@ -25,6 +25,7 @@ def get_function(expression):
 class FunctionRange:
     def __init__(self, low, high):
         super().__init__()
+        assert low < high
         self.low = low
         self.high = high
 
@@ -36,6 +37,9 @@ class FunctionRange:
     def sum(self, other):
         self.low = min(self.low, other.low)
         self.high = max(self.high, other.high)
+
+    def __str__(self):
+        return f'({self.low}, {self.high})'
 
 
 def get_optimizer(optimzierType):
@@ -125,6 +129,9 @@ def get_unimodal_range(function, functionRange, delta):
     left_range = bounding_phases_method(function, functionRange.low, delta)
     right_range = bounding_phases_method(function, functionRange.high, delta)
 
+    print(left_range, ' ', right_range)
+
+
     if left_range.intersects(right_range):
         return left_range.sum(right_range)
     else:
@@ -159,6 +166,7 @@ if __name__ == '__main__':
     delta = arguments.delta
 
     if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
+        print('not unimodal')
         range = get_unimodal_range(function, functionRange, delta)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
