@@ -62,20 +62,14 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
 
         if not minimum_found:
             if function_x1 < function_x:
-
                 minimum_found = True
-                # Minimum can NOT be in the x1
-                if i == 1:
-                    return False
-
         else:
             if not function_x1 <= function_x:
                 return False
 
         function_x1 = function_x
 
-    # Function can NOT also be only declaining
-    return minimum_found
+    return True
 
 def bounding_phases_method(function, x, delta):
     x0 = x
@@ -85,7 +79,6 @@ def bounding_phases_method(function, x, delta):
     f_x0_minus_delta =  function.evalute(x0 - delta)
     f_x0 = function.evalute(x0)
     f_x0_plus_delta = function.evalute(x0 + delta)
-    #TODO: Oblicz funckje jednokrotnie
 
     if f_x0_minus_delta >= f_x0 and f_x0 >= f_x0_plus_delta:
         delta = -delta
