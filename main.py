@@ -34,7 +34,8 @@ class FunctionRange:
     # Call only this method is the ranges intersects
     # To nie jest taka suma w sensie matemtycznym
     def sum(self, other):
-        pass
+        self.low = min(self.low, other.low)
+        self.high = max(self.high, other.high)
 
 
 def get_optimizer(optimzierType):
@@ -104,12 +105,19 @@ def bounding_phases_method(function, x, delta):
 
 def intersects(range1, range2):
     # Case 1
-    range1.high >= range2.low and range1.high <= range2.high
+    if range1.high >= range2.low and range1.high <= range2.high:
+        return True
 
-    range2.low >= range1.low and range2.low <= range1.high and range2.high >= range1.low and range2.high <= range1.high
+    # Case 2
+    if range2.low >= range1.low and range2.low <= range1.high and range2.high >= range1.low and range2.high <= \
+            range1.high:
+        return True
 
     # Case 3
-    range2.high >= range1.low and range2.high <= range1.high
+    if range2.high >= range1.low and range2.high <= range1.high:
+        return True
+
+    return False
 
 def get_unimodal_range(function, functionRange, delta):
     # Szukamy począwszy od a i b (low, high)
