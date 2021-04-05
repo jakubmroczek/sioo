@@ -72,37 +72,43 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
     return minimum_found
 
 def bounding_phases_method(function, x, delta):
-
-    case0:
-
     x0 = x
     delta = abs(delta)
     k = 0
 
-    if f(x (0) − |∆|) ≥ f(x (0)) ≥ f(x (0) + |∆|):
-        ∆ > 0
-    if f(x (0) − |∆|) ≤ f(x (0)) ≤ f(x (0) + |∆|):
-        ∆ < 0;
-    else
-        jump case0
+    f_x0_minus_delta =  function.evalute(x0 - delta)
+    f_x0 = function.evalute(x0)
+    f_x0_plus_delta = function.evalute(x0 + delta)
+    #TODO: Oblicz funckje jednokrotnie
 
-    # krok 3
-    x1 = x0 + 2 * k * delta
-    if f(x (k+1)) < f(x (k) ):
-        ustal k = k + 1
-        jump krok3
-
+    if f_x0_minus_delta >= f_x0 and f_x0 >= f_x0_plus_delta:
+        delta = -delta
+    if f_x0_minus_delta <= f_x0 and f_x0 <= f_x0_plus_delta:
+        delta = delta
     else:
-        return (x (k−1), x(k+1))
+        # Powinniśmy skoczyc do poczatku funkcji
+        raise Exception('bounding_phase_method should jump to case 1, but it is not implemented')
+
+    # Krok 3
+    while True:
+        x1 = x0 + 2 * k * delta
+        if function.evalute(x1) < function.evalute(x0):
+            k = k + 1
+            x0 = x1
+        else:
+            # Upewnij się, czy to k jest dobre
+            low = x0 - 2 * (k - 1) * delta
+            high = x1
+            return FunctionRange(low, high)
 
 def intersects(range1, range2):
     pass
 
-def get_unimodal_range(function, functionRange):
+def get_unimodal_range(function, functionRange, delta):
     # Szukamy począwszy od a i b (low, high)
     # Jeśli wyliczone przedziały mają cześc wspolna to zwracamy ich sume.
-    left_range = bounding_phases_method(function, functionRange.low)
-    right_range = bounding_phases_method(function, functionRange.high)
+    left_range = bounding_phases_method(function, functionRange.low, delta)
+    right_range = bounding_phases_method(function, functionRange.high, delta)
 
     if left_range.intersects(right_range):
         return left_range.sum(right_range)
@@ -118,11 +124,12 @@ class ProgramArguments:
     def __init__(self):
         super().__init__()
         self.optimizerType = OptimizerType.GOLDEN_SECTION_SEARCH
-        self.expression = '-x- 1'
-        self.functionRange = FunctionRange(-0.1, 10)
+        self.expression = 'x ** 2 - 1'
+        self.functionRange = FunctionRange(1, 10)
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
         self.unimodal_check_n= 100
+        self.delta = 0.01
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
@@ -134,9 +141,10 @@ if __name__ == '__main__':
     stopCondition = arguments.stopCondition
     epochs = arguments.epochs
     unimodal_check_n = arguments.unimodal_check_n
+    delta = arguments.delta
 
     if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
-        range = get_unimodal_range(function, functionRange)
+        range = get_unimodal_range(function, functionRange, delta)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
     visualize_result(result_x)
