@@ -150,19 +150,9 @@ def intersects(range1, range2):
 
     return False
 
-def get_unimodal_range(function, functionRange, delta):
-    # Szukamy począwszy od a i b (low, high)
-    # Jeśli wyliczone przedziały mają cześc wspolna to zwracamy ich sume.
-    left_range = bounding_phases_method(function, functionRange.low, delta)
-    right_range = bounding_phases_method(function, functionRange.high, delta)
-
-    print(left_range, ' ', right_range)
-
-
-    if left_range.intersects(right_range):
-        return left_range.sum(right_range)
-    else:
-        return [left_range, right_range]
+def get_unimodal_range(function, functionRange, n):
+    unimodal_range = exhaustive_serach_method(function, functionRange, n)
+    return unimodal_range
 
 def visualize_result(result):
     print(f'The result is {result}')
@@ -178,7 +168,7 @@ class ProgramArguments:
         self.stopCondition = lambda epoch, result :  False
         self.epochs = 25
         self.unimodal_check_n= 100
-        self.delta = 0.01
+        self.n = 10000
 
 if __name__ == '__main__':
     arguments = ProgramArguments()
@@ -190,11 +180,11 @@ if __name__ == '__main__':
     stopCondition = arguments.stopCondition
     epochs = arguments.epochs
     unimodal_check_n = arguments.unimodal_check_n
-    delta = arguments.delta
+    n = arguments.n
 
     if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
         print('Function is NOT unimodal')
-        range = get_unimodal_range(function, functionRange, delta)
+        range = get_unimodal_range(function, functionRange, n)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
     visualize_result(result_x)
