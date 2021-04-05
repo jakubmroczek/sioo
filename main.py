@@ -7,6 +7,7 @@ from bisection_optimizer import BisectionOptimizer
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import UnaryFunction, FunctionRange
 from unimodality import  is_function_unimodal_in_range, exhaustive_search_method
+from gui import WidgetGallery
 
 class OptimizerType(Enum):
     BISECTION = 0,
@@ -39,7 +40,7 @@ class ProgramArguments:
         self.unimodal_check_n= 100
         self.n = 100000
 
-if __name__ == '__main__':
+def main():
     arguments = ProgramArguments()
 
     # cli arguments layer
@@ -57,3 +58,19 @@ if __name__ == '__main__':
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
     visualize_result(result_x)
+
+from PyQt5.QtCore import QDateTime, Qt, QTimer
+from PyQt5.QtWidgets import (QApplication, QCheckBox, QComboBox, QDateTimeEdit,
+                             QDial, QDialog, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit,
+                             QProgressBar, QPushButton, QRadioButton, QScrollBar, QSizePolicy,
+                             QSlider, QSpinBox, QStyleFactory, QTableWidget, QTabWidget, QTextEdit,
+                             QVBoxLayout, QWidget)
+
+
+if __name__ == '__main__':
+    import sys
+
+    app = QApplication(sys.argv)
+    gallery = WidgetGallery()
+    gallery.show()
+    sys.exit(app.exec_())
