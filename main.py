@@ -28,6 +28,12 @@ class FunctionRange:
         self.low = low
         self.high = high
 
+    def intersects(self, other):
+        pass
+
+    def sum(self, other):
+        pass
+
 
 def get_optimizer(optimzierType):
     if optimzierType == OptimizerType.BISECTION:
@@ -64,9 +70,22 @@ def is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
     # Function can NOT also be only declaining
     return minimum_found
 
-def get_unimodal_range(function, range):
+def bounding_phases_method(function, x):
     pass
 
+def intersects(range1, range2):
+    pass
+
+def get_unimodal_range(function, functionRange):
+    # Szukamy począwszy od a i b (low, high)
+    # Jeśli wyliczone przedziały mają cześc wspolna to zwracamy ich sume.
+    left_range = bounding_phases_method(function, functionRange.low)
+    right_range = bounding_phases_method(function, functionRange.high)
+
+    if left_range.intersects(right_range):
+        return left_range.sum(right_range)
+    else:
+        return [left_range, right_range]
 
 def visualize_result(result):
     print(f'The result is {result}')
