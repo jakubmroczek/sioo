@@ -2,9 +2,9 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLin
                              QPushButton)
 
 
-class WidgetGallery(QDialog):
+class GUI(QDialog):
     def __init__(self, parent=None):
-        super(WidgetGallery, self).__init__(parent)
+        super(GUI, self).__init__(parent)
 
         self.originalPalette = QApplication.palette()
         self.setWindowTitle("SIOO")

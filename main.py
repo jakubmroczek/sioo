@@ -7,8 +7,9 @@ from bisection_optimizer import BisectionOptimizer
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import UnaryFunction, FunctionRange
 from unimodality import  is_function_unimodal_in_range, exhaustive_search_method
-from gui import WidgetGallery
+from gui import GUI
 from PyQt5.QtWidgets import QApplication
+import sys
 
 class OptimizerType(Enum):
     BISECTION = 0,
@@ -61,9 +62,7 @@ def main():
     visualize_result(result_x)
 
 if __name__ == '__main__':
-    import sys
-
     app = QApplication(sys.argv)
-    gallery = WidgetGallery()
-    gallery.show()
+    gui = GUI()
+    gui.show()
     sys.exit(app.exec_())
