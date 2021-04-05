@@ -63,6 +63,9 @@ def main():
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+
+    callback = lambda : print('hell owolrd')
     gui = GUI()
+    gui.setOnCalculationStart(callback)
     gui.show()
     sys.exit(app.exec_())
