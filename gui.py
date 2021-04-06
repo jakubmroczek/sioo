@@ -30,20 +30,35 @@ class GUI(QDialog):
         self.optimizerComboBox.addItems([self.BISECTION, self.GOLDEN_SECTION_SEARCH, self.SCIPY_BISECTION, self.SCIPTY_GOLDEN_SECITION_SEARCH])
         self.runButton = QPushButton('Calculate!')
 
+        # Line edit for iterations and xtol
+        self.maxIterationsEdit = QLineEdit('500')
+        self.xtolEdit = QLineEdit('1e-3')
+
         functionLabel = QLabel('Function:')
         intervalStartLabel = QLabel('Interval start:')
         intervalEndLabel = QLabel('Interval end:')
+        maxIterationsLabel = QLabel('Max iterations:')
+        xtolLabel = QLabel('Xtol:')
 
         layout = QGridLayout()
         layout.addWidget(functionLabel, 0, 0, 1, 1)
         layout.addWidget(self.functionLabel, 0, 1, 1, 1)
+
         layout.addWidget(intervalStartLabel, 1, 0, 1, 1)
         layout.addWidget(self.functionLowPointLabel, 1, 1, 1, 1)
+
         layout.addWidget(intervalEndLabel, 2, 0, 1, 2)
         layout.addWidget(self.functionHighLabel, 2, 1, 1, 1)
-        layout.addWidget(self.optimizerComboBox, 3, 0, 1, 2)
-        layout.addWidget(self.runButton, 4, 0, 1, 2)
-        layout.addWidget(self.graphWidget, 5, 0, 1, 2)
+
+        layout.addWidget(maxIterationsLabel, 3, 0, 1, 1)
+        layout.addWidget(self.maxIterationsEdit, 3, 1, 1, 1)
+
+        layout.addWidget(xtolLabel, 4, 0, 1, 1)
+        layout.addWidget(self.xtolEdit, 4, 1, 1, 1)
+
+        layout.addWidget(self.optimizerComboBox, 5, 0, 1, 2)
+        layout.addWidget(self.runButton, 6, 0, 1, 2)
+        layout.addWidget(self.graphWidget, 7, 0, 1, 2)
 
         layout.setRowStretch(5, 1)
 
