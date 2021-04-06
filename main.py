@@ -26,10 +26,11 @@ def get_unimodal_range(function, functionRange, n):
 
 class CalculationResult:
 
-    def __init__(self, function, interval, minimum_interval, intermediate_intervals):
+    def __init__(self, function, user_interval, unimodal_interval, minimum_interval, intermediate_intervals):
         super().__init__()
         self.function = function
-        self.interval = interval
+        self.user_interval = user_interval
+        self.unimodal_interval = unimodal_interval
         self.minimum_end_interval = FunctionRange(minimum_interval[0], minimum_interval[1])
         self.intermediate_intervals = intermediate_intervals
 
@@ -37,20 +38,21 @@ class CalculationResult:
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
-    functionRange = arguments.functionRange
+    user_function_interval = arguments.functionRange
+    unimodal_interval = user_function_interval
     stopCondition = arguments.stopCondition
     epochs = arguments.epochs
     unimodal_check_n = arguments.unimodal_check_n
     n = arguments.n
 
-    if not is_function_unimodal_in_range(function, functionRange, unimodal_check_n):
+    if not is_function_unimodal_in_range(function, user_function_interval, unimodal_check_n):
         print('Function is NOT unimodal')
-        functionRange = get_unimodal_range(function, functionRange, n)
+        unimodal_interval = get_unimodal_range(function, user_function_interval, n)
 
-    result_x, minimum_end_interval, intermediate_intervals =  optimizer.optimize(function, functionRange,
+    result_x, minimum_end_interval, intermediate_intervals =  optimizer.optimize(function, unimodal_interval,
                                                                                  stopCondition, epochs)
 
-    return CalculationResult(function, functionRange, minimum_end_interval, intermediate_intervals)
+    return CalculationResult(function, user_function_interval, unimodal_interval, minimum_end_interval, intermediate_intervals)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
