@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
                              QPushButton)
-from pyqtgraph import PlotWidget, plot
+import numpy as np
 from PyQt5 import QtCore
 import pyqtgraph as pg
 from program_arguments import ProgramArguments, OptimizerType
@@ -57,13 +57,26 @@ class GUI(QDialog):
         self._plot(result)
 
     def _plot(self, result):
-        hour = [1,2,3,4,5,6,7,8,9,10]
-        temperature = [30,32,34,32,33,31,29,32,35,45]
+        self.graphWidget.clear()
+        self._plot_function(result)
+        self._plot_final_interval(result)
+        self._plot_intermediate_intervals(result)
+
+    def _plot_function(self, result):
+        step = 0.01
+        x = np.arange(result.interval.low, result.interval.high, step)
+        y = [result.function.evalute(x) for x in x]
 
         pen = pg.mkPen(color=(255, 0, 0), width=7, style=QtCore.Qt.DashLine)
 
         # plot data: x, y values
-        self.graphWidget.plot(hour, temperature, pen=pen)
+        self.graphWidget.plot(x, y, pen=pen)
+
+    def _plot_final_interval(self, result):
+        pass
+
+    def _plot_intermediate_intervals(self, result):
+        pass
 
     def _getProgramArguments(self):
         arguments = ProgramArguments()
