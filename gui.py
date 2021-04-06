@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
-                             QPushButton)
+                             QPushButton, QLabel)
 import numpy as np
 from PyQt5 import QtCore
 import pyqtgraph as pg
@@ -23,7 +23,6 @@ class GUI(QDialog):
         self.graphWidget.setBackground('#7C7C7C')
         self.graphWidget.showGrid(x = True, y = True, alpha = 0.8)
 
-        #
         self.functionLabel = QLineEdit('x ** 2 - 2 * x + 10')
         self.functionLowPointLabel = QLineEdit('-5.5')
         self.functionHighLabel = QLineEdit('6.0')
@@ -31,10 +30,17 @@ class GUI(QDialog):
         self.optimizerComboBox.addItems([self.BISECTION, self.GOLDEN_SECTION_SEARCH, self.SCIPY_BISECTION, self.SCIPTY_GOLDEN_SECITION_SEARCH])
         self.runButton = QPushButton('Calculate!')
 
+        functionLabel = QLabel('Function:')
+        intervalStartLabel = QLabel('Interval start:')
+        intervalEndLabel = QLabel('Interval end:')
+
         layout = QGridLayout()
-        layout.addWidget(self.functionLabel, 0, 0, 1, 2)
-        layout.addWidget(self.functionLowPointLabel, 1, 0, 1, 2)
-        layout.addWidget(self.functionHighLabel, 2, 0, 1, 2)
+        layout.addWidget(functionLabel, 0, 0, 1, 1)
+        layout.addWidget(self.functionLabel, 0, 1, 1, 1)
+        layout.addWidget(intervalStartLabel, 1, 0, 1, 1)
+        layout.addWidget(self.functionLowPointLabel, 1, 1, 1, 1)
+        layout.addWidget(intervalEndLabel, 2, 0, 1, 2)
+        layout.addWidget(self.functionHighLabel, 2, 1, 1, 1)
         layout.addWidget(self.optimizerComboBox, 3, 0, 1, 2)
         layout.addWidget(self.runButton, 4, 0, 1, 2)
         layout.addWidget(self.graphWidget, 5, 0, 1, 2)
