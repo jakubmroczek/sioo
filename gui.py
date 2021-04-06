@@ -75,12 +75,23 @@ class GUI(QDialog):
         self.graphWidget.plot(x, y, pen=pen)
 
     def _plot_end_interval(self, result):
-        x = [result.minimum_end_interval.low, result.minimum_end_interval.high]
-        y = [result.function.evalute(x) for x in x]
         pen = pg.mkPen(width=0)
-        self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=30, symbolBrush=('b'))
+
+        # SciPy optimzers do not return the final interval, but only a single point
+        if result.minimum_end_interval != None:
+            x = [result.minimum_end_interval.low, result.minimum_end_interval.high]
+            y = [result.function.evalute(x) for x in x]
+            self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=30, symbolBrush=('b'))
+
+        x = [result.result_x]
+        y = [result.function.evalute(result.result_x)]
+        self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=40, symbolBrush=('b'))
 
     def _plot_intermediate_intervals(self, result):
+        # The SciPy optimizers does not return the intermediate_intervals
+        if result.intermediate_intervals == None:
+            return
+
         x = []
         for interval in result.intermediate_intervals:
             x.append(interval.low)
