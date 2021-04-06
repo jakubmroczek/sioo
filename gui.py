@@ -79,7 +79,10 @@ class GUI(QDialog):
         self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=30, symbolBrush=('b'))
 
     def _plot_intermediate_intervals(self, result):
-        pass
+        x = result.intermediate_intervals
+        y = [result.function.evalute(x) for x in x]
+        pen = pg.mkPen(width=0)
+        self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=15, symbolBrush=('y'))
 
     def _plot_unimodality_interval(self, result):
         pass
