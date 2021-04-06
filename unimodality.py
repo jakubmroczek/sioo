@@ -14,6 +14,9 @@ def is_function_unimodal_in_interval(function, functionInterval, unimodal_check_
         if not minimum_found:
             if function_x1 < function_x:
                 minimum_found = True
+            # Function has to be strictly unimodal, hence it can not be constant on some interval.
+            if function_x1 == function_x:
+                return False
         else:
             if not function_x1 <= function_x:
                 return False
