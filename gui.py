@@ -51,7 +51,15 @@ class GUI(QDialog):
 
     def _onCalculationStart(self):
         programArguments = self._getProgramArguments()
-        self.onCalculationStartCallback(programArguments)
+        result = self.onCalculationStartCallback(programArguments)
+        self._plot(result)
+
+    def _plot(self, result):
+        hour = [1,2,3,4,5,6,7,8,9,10]
+        temperature = [30,32,34,32,33,31,29,32,35,45]
+
+        # plot data: x, y values
+        self.graphWidget.plot(hour, temperature)
 
     def _getProgramArguments(self):
         arguments = ProgramArguments()
