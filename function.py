@@ -19,3 +19,8 @@ class FunctionInterval:
 
     def __str__(self):
         return f'({self.low}, {self.high})'
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+
