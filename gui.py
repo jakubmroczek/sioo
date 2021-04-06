@@ -59,12 +59,13 @@ class GUI(QDialog):
     def _plot(self, result):
         self.graphWidget.clear()
         self._plot_function(result)
+        self._plot_unimodal_interval(result)
         self._plot_intermediate_intervals(result)
         self._plot_end_interval(result)
 
     def _plot_function(self, result):
         step = 0.01
-        x = np.arange(result.interval.low, result.interval.high, step)
+        x = np.arange(result.user_interval.low, result.user_interval.high, step)
         y = [result.function.evalute(x) for x in x]
 
         pen = pg.mkPen(color=(255, 0, 0), width=7, style=QtCore.Qt.DashLine)
@@ -85,10 +86,17 @@ class GUI(QDialog):
             x.append(interval.high)
         y = [result.function.evalute(x) for x in x]
         pen = pg.mkPen(width=0)
-        self.graphWidget.plot(x, y, pen=pen, symbol='x', symbolSize=15, symbolBrush=('y'))
+        self.graphWidget.plot(x, y, pen=pen, symbol='x', symbolSize=15, symbolBrush=('r'))
 
-    def _plot_unimodality_interval(self, result):
-        pass
+    def _plot_unimodal_interval(self, result):
+        step = 0.01
+        x = np.arange(result.unimodal_interval.low, result.unimodal_interval.high, step)
+        y = [result.function.evalute(x) for x in x]
+
+        pen = pg.mkPen(color=(30, 240, 0), width=7, style=QtCore.Qt.DashLine)
+
+        # plot data: x, y values
+        self.graphWidget.plot(x, y, pen=pen)
 
     def _getProgramArguments(self):
         arguments = ProgramArguments()
