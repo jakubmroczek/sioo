@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
                              QPushButton)
 from pyqtgraph import PlotWidget, plot
+from PyQt5 import QtCore
 import pyqtgraph as pg
 from program_arguments import ProgramArguments, OptimizerType
 from function import FunctionRange
@@ -19,6 +20,7 @@ class GUI(QDialog):
 
         # Plot
         self.graphWidget = pg.PlotWidget()
+        self.graphWidget.setBackground('w')
 
         #
         self.functionLabel = QLineEdit('function')
@@ -58,8 +60,10 @@ class GUI(QDialog):
         hour = [1,2,3,4,5,6,7,8,9,10]
         temperature = [30,32,34,32,33,31,29,32,35,45]
 
+        pen = pg.mkPen(color=(255, 0, 0), width=7, style=QtCore.Qt.DashLine)
+
         # plot data: x, y values
-        self.graphWidget.plot(hour, temperature)
+        self.graphWidget.plot(hour, temperature, pen=pen)
 
     def _getProgramArguments(self):
         arguments = ProgramArguments()
