@@ -2,9 +2,9 @@
 
 from bisection_optimizer import BisectionOptimizer
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
-from function import UnaryFunction, FunctionRange
+from function import UnaryFunction, FunctionInterval
 from program_arguments import ProgramArguments, OptimizerType
-from unimodality import  is_function_unimodal_in_range, exhaustive_search_method
+from unimodality import  is_function_unimodal_in_interval, exhaustive_search_method
 from gui import GUI
 from PyQt5.QtWidgets import QApplication
 import sys
@@ -20,8 +20,8 @@ def get_optimizer(optimzierType):
     else:
         raise Exception('Unsupported optimzier type')
 
-def get_unimodal_range(function, functionRange, n):
-    unimodal_range = exhaustive_search_method(function, functionRange, n)
+def get_unimodal_range(function, functionInterval, n):
+    unimodal_range = exhaustive_search_method(function, functionInterval, n)
     return unimodal_range
 
 class CalculationResult:
@@ -31,21 +31,21 @@ class CalculationResult:
         self.function = function
         self.user_interval = user_interval
         self.unimodal_interval = unimodal_interval
-        self.minimum_end_interval = FunctionRange(minimum_interval[0], minimum_interval[1])
+        self.minimum_end_interval = FunctionInterval(minimum_interval[0], minimum_interval[1])
         self.intermediate_intervals = intermediate_intervals
 
 
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
-    user_function_interval = arguments.functionRange
+    user_function_interval = arguments.functionInterval
     unimodal_interval = user_function_interval
     stopCondition = arguments.stopCondition
     epochs = arguments.epochs
     unimodal_check_n = arguments.unimodal_check_n
     n = arguments.n
 
-    if not is_function_unimodal_in_range(function, user_function_interval, unimodal_check_n):
+    if not is_function_unimodal_in_interval(function, user_function_interval, unimodal_check_n):
         print('Function is NOT unimodal')
         unimodal_interval = get_unimodal_range(function, user_function_interval, n)
 

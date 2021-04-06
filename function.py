@@ -10,7 +10,7 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
-class FunctionRange:
+class FunctionInterval:
     def __init__(self, low, high):
         super().__init__()
         assert low < high, f'{low}, {high}'

@@ -4,7 +4,7 @@ import numpy as np
 from PyQt5 import QtCore
 import pyqtgraph as pg
 from program_arguments import ProgramArguments, OptimizerType
-from function import FunctionRange
+from function import FunctionInterval
 
 class GUI(QDialog):
     BISECTION = 'Bisection'
@@ -101,7 +101,7 @@ class GUI(QDialog):
     def _getProgramArguments(self):
         arguments = ProgramArguments()
         arguments.expression = self.functionLabel.text()
-        arguments.functionRange = FunctionRange(float(self.functionLowPointLabel.text()),
+        arguments.functionInterval = FunctionInterval(float(self.functionLowPointLabel.text()),
                                                 float(self.functionHighLabel.text()))
 
         optimzerType = str(self.optimizerComboBox.currentText())
