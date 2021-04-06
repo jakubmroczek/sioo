@@ -1,3 +1,5 @@
+from function import FunctionRange
+
 class BisectionOptimizer(object):
     def optimize(self, function, functionRange, stopCondition, epochs):
         a, b = functionRange.low,  functionRange.high
@@ -8,6 +10,7 @@ class BisectionOptimizer(object):
 
         a_n = a
         b_n = b
+        intermediate_results = [FunctionRange(a_n, b_n)]
 
         for epoch in range(epochs):
             if stopCondition(epoch, a):
@@ -19,9 +22,11 @@ class BisectionOptimizer(object):
             if function.evalute(a_n)*f_m_n < 0:
                 a_n = a_n
                 b_n = m_n
+                intermediate_results.append(FunctionRange(a_n, b_n))
             elif function.evalute(b_n)*f_m_n < 0:
                 a_n = m_n
                 b_n = b_n
+                intermediate_results.append(FunctionRange(a_n, b_n))
             elif f_m_n == 0:
                 print("Found exact solution.")
                 return m_n
@@ -29,4 +34,4 @@ class BisectionOptimizer(object):
                 print("Bisection method fails.")
                 return None
 
-        return (a_n + b_n)/2, (a_n, b_n)
+        return (a_n + b_n)/2, (a_n, b_n), intermediate_results
