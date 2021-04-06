@@ -59,7 +59,7 @@ class GUI(QDialog):
     def _plot(self, result):
         self.graphWidget.clear()
         self._plot_function(result)
-        self._plot_final_interval(result)
+        self._plot_end_interval(result)
         self._plot_intermediate_intervals(result)
 
     def _plot_function(self, result):
@@ -72,10 +72,16 @@ class GUI(QDialog):
         # plot data: x, y values
         self.graphWidget.plot(x, y, pen=pen)
 
-    def _plot_final_interval(self, result):
-        pass
+    def _plot_end_interval(self, result):
+        x = [result.minimum_end_interval.low, result.minimum_end_interval.high]
+        y = [result.function.evalute(x) for x in x]
+        pen = pg.mkPen(width=0)
+        self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=30, symbolBrush=('b'))
 
     def _plot_intermediate_intervals(self, result):
+        pass
+
+    def _plot_unimodality_interval(self, result):
         pass
 
     def _getProgramArguments(self):
