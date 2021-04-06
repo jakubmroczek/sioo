@@ -21,4 +21,4 @@ class GoldenSectionSearchOptimizer(object):
             c = b - (b - a) / gr
             d = a + (b - a) / gr
 
-        return (b + a) / 2
+        return (b + a) / 2, (a, b)

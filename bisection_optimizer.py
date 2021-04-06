@@ -29,4 +29,4 @@ class BisectionOptimizer(object):
                 print("Bisection method fails.")
                 return None
 
-        return (a_n + b_n)/2
+        return (a_n + b_n)/2, (a_n, b_n)

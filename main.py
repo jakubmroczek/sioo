@@ -2,7 +2,7 @@
 
 from bisection_optimizer import BisectionOptimizer
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
-from function import UnaryFunction
+from function import UnaryFunction, FunctionRange
 from program_arguments import ProgramArguments, OptimizerType
 from unimodality import  is_function_unimodal_in_range, exhaustive_search_method
 from gui import GUI
@@ -30,7 +30,7 @@ class CalculationResult:
         super().__init__()
         self.function = function
         self.interval = interval
-        self.minimum_interval = minimum_interval
+        self.minimum_end_interval = FunctionRange(minimum_interval[0], minimum_interval[1])
         self.intermediate_intervals = intermediate_intervals
 
 
@@ -47,9 +47,9 @@ def calculate(arguments: ProgramArguments):
         print('Function is NOT unimodal')
         functionRange = get_unimodal_range(function, functionRange, n)
 
-    result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
+    result_x, minimum_end_interval =  optimizer.optimize(function, functionRange, stopCondition, epochs)
 
-    return CalculationResult(function, functionRange, result_x, [])
+    return CalculationResult(function, functionRange, minimum_end_interval, [])
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
