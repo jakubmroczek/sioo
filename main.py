@@ -72,8 +72,9 @@ def calculate(arguments: ProgramArguments):
     unimodal_interval = user_function_interval
     max_iterations = arguments.max_iterations
     unimodal_check_n = arguments.unimodal_check_n
+    xtol = arguments.xtol
     n = arguments.n
-    stopCondition = make_stop_conditon(max_iterations, arguments.xtol)
+    stopCondition = make_stop_conditon(max_iterations, xtol)
 
     if not is_function_unimodal_in_interval(function, user_function_interval, unimodal_check_n):
         print('Function is NOT unimodal')
@@ -88,7 +89,7 @@ def calculate(arguments: ProgramArguments):
     else:
         # I have not fonud any explicit information in the SciPy documentation that the function interval got to be
         # unimodal
-        result_x = optimizer.optimize(function, user_function_interval)
+        result_x = optimizer.optimize(function, user_function_interval, xtol, max_iterations)
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x, None, None)
 
 

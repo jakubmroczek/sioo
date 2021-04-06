@@ -23,15 +23,15 @@ class GUI(QDialog):
         self.graphWidget.setBackground('#7C7C7C')
         self.graphWidget.showGrid(x = True, y = True, alpha = 0.8)
 
-        self.functionLabel = QLineEdit('x ** 2 - 2 * x + 10')
-        self.functionLowPointLabel = QLineEdit('-5.5')
+        self.functionLabel = QLineEdit('x ** 2 - 2 * x - 10')
+        self.functionLowPointLabel = QLineEdit('-1.0')
         self.functionHighLabel = QLineEdit('6.0')
         self.optimizerComboBox = QComboBox()
         self.optimizerComboBox.addItems([self.BISECTION, self.GOLDEN_SECTION_SEARCH, self.SCIPY_BISECTION, self.SCIPTY_GOLDEN_SECITION_SEARCH])
         self.runButton = QPushButton('Calculate!')
 
         # Line edit for iterations and xtol
-        self.maxIterationsEdit = QLineEdit('500')
+        self.maxIterationsEdit = QLineEdit('5000')
         self.xtolEdit = QLineEdit('1e-5')
 
         functionLabel = QLabel('Function:')
