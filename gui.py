@@ -21,6 +21,7 @@ class GUI(QDialog):
         # Plot
         self.graphWidget = pg.PlotWidget()
         self.graphWidget.setBackground('#7C7C7C')
+        self.graphWidget.showGrid(x = True, y = True, alpha = 0.8)
 
         #
         self.functionLabel = QLineEdit('x ** 2 - 2 * x + 10')
