@@ -47,9 +47,10 @@ def calculate(arguments: ProgramArguments):
         print('Function is NOT unimodal')
         functionRange = get_unimodal_range(function, functionRange, n)
 
-    result_x, minimum_end_interval =  optimizer.optimize(function, functionRange, stopCondition, epochs)
+    result_x, minimum_end_interval, intermediate_intervals =  optimizer.optimize(function, functionRange,
+                                                                                 stopCondition, epochs)
 
-    return CalculationResult(function, functionRange, minimum_end_interval, [])
+    return CalculationResult(function, functionRange, minimum_end_interval, intermediate_intervals)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
