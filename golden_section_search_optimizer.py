@@ -5,7 +5,7 @@ class GoldenSectionSearchOptimizer(object):
 
     def optimize(self, function, functionRange, stopCondition, epochs):
         a, b  = functionRange.low, functionRange.high
-        intermediate_results = [FunctionRange(a, b)]
+        intermediate_intervals = [FunctionRange(a, b)]
         tol = 1e-5
 
         # Old code belowe
@@ -19,10 +19,10 @@ class GoldenSectionSearchOptimizer(object):
             else:
                 a = c
 
-            intermediate_results.append(FunctionRange(a, b))
+            intermediate_intervals.append(FunctionRange(a, b))
 
             # We recompute both c and d here to avoid loss of precision which may lead to incorrect results or infinite loop
             c = b - (b - a) / gr
             d = a + (b - a) / gr
 
-        return (b + a) / 2, (a, b), intermediate_results
+        return (b + a) / 2, (a, b), intermediate_intervals

@@ -59,8 +59,8 @@ class GUI(QDialog):
     def _plot(self, result):
         self.graphWidget.clear()
         self._plot_function(result)
-        self._plot_end_interval(result)
         self._plot_intermediate_intervals(result)
+        self._plot_end_interval(result)
 
     def _plot_function(self, result):
         step = 0.01
@@ -79,10 +79,13 @@ class GUI(QDialog):
         self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=30, symbolBrush=('b'))
 
     def _plot_intermediate_intervals(self, result):
-        x = result.intermediate_intervals
+        x = []
+        for interval in result.intermediate_intervals:
+            x.append(interval.low)
+            x.append(interval.high)
         y = [result.function.evalute(x) for x in x]
         pen = pg.mkPen(width=0)
-        self.graphWidget.plot(x, y, pen=pen, symbol='+', symbolSize=15, symbolBrush=('y'))
+        self.graphWidget.plot(x, y, pen=pen, symbol='x', symbolSize=15, symbolBrush=('y'))
 
     def _plot_unimodality_interval(self, result):
         pass
