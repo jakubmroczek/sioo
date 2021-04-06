@@ -73,12 +73,12 @@ def calculate(arguments: ProgramArguments):
     max_iterations = arguments.max_iterations
     unimodal_check_n = arguments.unimodal_check_n
     xtol = arguments.xtol
-    n = arguments.n
+    exhaustive_serach_n = arguments.exhaustive_serach_n
     stopCondition = make_stop_conditon(max_iterations, xtol)
 
     if not is_function_unimodal_in_interval(function, user_function_interval, unimodal_check_n):
         print('Function is NOT unimodal')
-        unimodal_interval = get_unimodal_range(function, user_function_interval, n)
+        unimodal_interval = get_unimodal_range(function, user_function_interval, exhaustive_serach_n)
 
 
     if not is_scipy_optimzier(arguments.optimizerType):

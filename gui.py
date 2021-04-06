@@ -34,11 +34,16 @@ class GUI(QDialog):
         self.maxIterationsEdit = QLineEdit('5000')
         self.xtolEdit = QLineEdit('1e-5')
 
+        self.unimodalityCheckPointsEdit = QLineEdit('100')
+        self.exhaustiveSerachEdit = QLineEdit('100')
+
         functionLabel = QLabel('Function:')
         intervalStartLabel = QLabel('Interval start:')
         intervalEndLabel = QLabel('Interval end:')
         maxIterationsLabel = QLabel('Max iterations:')
         xtolLabel = QLabel('Xtol:')
+        unimodalityCheckPointsLabel = QLabel('Unimodality-check points number:')
+        exhaustiveSerachPoints = QLabel('Exhaustive search points number:')
 
         layout = QGridLayout()
         layout.addWidget(functionLabel, 0, 0, 1, 1)
@@ -56,9 +61,17 @@ class GUI(QDialog):
         layout.addWidget(xtolLabel, 4, 0, 1, 1)
         layout.addWidget(self.xtolEdit, 4, 1, 1, 1)
 
-        layout.addWidget(self.optimizerComboBox, 5, 0, 1, 2)
-        layout.addWidget(self.runButton, 6, 0, 1, 2)
-        layout.addWidget(self.graphWidget, 7, 0, 1, 2)
+        # Unimodality check
+        layout.addWidget(unimodalityCheckPointsLabel, 5, 0, 1, 1)
+        layout.addWidget(self.unimodalityCheckPointsEdit, 5, 1, 1, 1)
+
+        # Exhaustive search
+        layout.addWidget(exhaustiveSerachPoints, 6, 0, 1, 1)
+        layout.addWidget(self.exhaustiveSerachEdit, 6, 1, 1, 1)
+
+        layout.addWidget(self.optimizerComboBox, 7, 0, 1, 2)
+        layout.addWidget(self.runButton, 8, 0, 1, 2)
+        layout.addWidget(self.graphWidget, 9, 0, 1, 2)
 
         layout.setRowStretch(5, 1)
 
@@ -156,5 +169,11 @@ class GUI(QDialog):
 
         # Xtol
         arguments.xtol = float(self.xtolEdit.text())
+
+        # Unimodality
+        arguments.unimodal_check_n = int(self.unimodalityCheckPointsEdit.text())
+
+        # Search
+        arguments.exhaustive_serach_n = int(self.exhaustiveSerachEdit.text())
 
         return arguments
