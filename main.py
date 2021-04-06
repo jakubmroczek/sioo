@@ -89,7 +89,7 @@ def calculate(arguments: ProgramArguments):
     else:
         # I have not fonud any explicit information in the SciPy documentation that the function interval got to be
         # unimodal
-        result_x = optimizer.optimize(function, user_function_interval, xtol, max_iterations)
+        result_x = optimizer.optimize(function, unimodal_interval, xtol, max_iterations)
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x, None, None)
 
 
