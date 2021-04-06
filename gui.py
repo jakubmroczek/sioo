@@ -32,7 +32,7 @@ class GUI(QDialog):
 
         # Line edit for iterations and xtol
         self.maxIterationsEdit = QLineEdit('500')
-        self.xtolEdit = QLineEdit('1e-3')
+        self.xtolEdit = QLineEdit('1e-5')
 
         functionLabel = QLabel('Function:')
         intervalStartLabel = QLabel('Interval start:')
@@ -147,5 +147,11 @@ class GUI(QDialog):
             arguments.optimizerType = OptimizerType.SCIPY_BISECTION
         else:
             arguments.optimizerType = OptimizerType.SCIPY_GOLDEN_SECTION_SEARCH
+
+        # Max iterations
+        arguments.max_iterations = int(self.maxIterationsEdit.text())
+
+        # Xtol
+        arguments.xtol = float(self.xtolEdit.text())
 
         return arguments
