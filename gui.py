@@ -23,9 +23,9 @@ class GUI(QDialog):
         self.graphWidget.setBackground('#7C7C7C')
 
         #
-        self.functionLabel = QLineEdit('function')
-        self.functionLowPointLabel = QLineEdit('domain start')
-        self.functionHighLabel = QLineEdit('domain end')
+        self.functionLabel = QLineEdit('x ** 2 - 2 * x + 10')
+        self.functionLowPointLabel = QLineEdit('-5.5')
+        self.functionHighLabel = QLineEdit('6.0')
         self.optimizerComboBox = QComboBox()
         self.optimizerComboBox.addItems([self.BISECTION, self.GOLDEN_SECTION_SEARCH, self.SCIPY_BISECTION, self.SCIPTY_GOLDEN_SECITION_SEARCH])
         self.runButton = QPushButton('Calculate!')
