@@ -20,7 +20,7 @@ class GUI(QDialog):
 
         # Plot
         self.graphWidget = pg.PlotWidget()
-        self.graphWidget.setBackground('w')
+        self.graphWidget.setBackground('#7C7C7C')
 
         #
         self.functionLabel = QLineEdit('function')
