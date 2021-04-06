@@ -13,7 +13,7 @@ class BisectionOptimizer(object):
         intermediate_intervals = [FunctionInterval(a_n, b_n)]
 
         for epoch in range(epochs):
-            if stopCondition(epoch, a):
+            if stopCondition(epoch, a_n, b_n):
                 break
 
             m_n = (a_n + b_n)/2

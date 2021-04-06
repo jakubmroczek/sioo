@@ -59,15 +59,21 @@ def log_to_console(obj):
 def is_scipy_optimzier(optimizerType):
     return optimizerType == OptimizerType.SCIPY_BISECTION or optimizerType == OptimizerType.SCIPY_GOLDEN_SECTION_SEARCH
 
+
+def make_stop_conditon(max_iterations, xtol):
+    # >= cause iterations start from 0
+    stop_condition = lambda iteration, a, b : iteration >= max_iterations or abs(b - a) < xtol
+    return stop_condition
+
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
     function = get_function(arguments.expression)
     user_function_interval = arguments.functionInterval
     unimodal_interval = user_function_interval
-    stopCondition = arguments.stopCondition
-    epochs = arguments.epochs
+    max_iterations = arguments.max_iterations
     unimodal_check_n = arguments.unimodal_check_n
     n = arguments.n
+    stopCondition = make_stop_conditon(max_iterations, arguments.xtol)
 
     if not is_function_unimodal_in_interval(function, user_function_interval, unimodal_check_n):
         print('Function is NOT unimodal')
@@ -76,7 +82,7 @@ def calculate(arguments: ProgramArguments):
 
     if not is_scipy_optimzier(arguments.optimizerType):
         result_x, minimum_end_interval, intermediate_intervals =  optimizer.optimize(function, unimodal_interval,
-                                                                                     stopCondition, epochs)
+                                                                                     stopCondition, max_iterations)
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x,
                                               minimum_end_interval, intermediate_intervals)
     else:
