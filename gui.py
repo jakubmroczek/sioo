@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
                              QPushButton)
-
+from pyqtgraph import PlotWidget, plot
+import pyqtgraph as pg
 from program_arguments import ProgramArguments, OptimizerType
 from function import FunctionRange
 
@@ -16,6 +17,10 @@ class GUI(QDialog):
         self.originalPalette = QApplication.palette()
         self.setWindowTitle("SIOO")
 
+        # Plot
+        self.graphWidget = pg.PlotWidget()
+
+        #
         self.functionLabel = QLineEdit('function')
         self.functionLowPointLabel = QLineEdit('domain start')
         self.functionHighLabel = QLineEdit('domain end')
@@ -29,6 +34,7 @@ class GUI(QDialog):
         layout.addWidget(self.functionHighLabel, 2, 0, 1, 2)
         layout.addWidget(self.optimizerComboBox, 3, 0, 1, 2)
         layout.addWidget(self.runButton, 4, 0, 1, 2)
+        layout.addWidget(self.graphWidget, 5, 0, 1, 2)
 
         layout.setRowStretch(5, 1)
 
