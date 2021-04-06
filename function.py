@@ -1,3 +1,6 @@
+# Do not delete this, otherwise the app will not support many standard math function!!
+from math import *
+
 class UnaryFunction:
     def __init__(self, expression):
         super().__init__()

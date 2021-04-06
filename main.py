@@ -24,8 +24,15 @@ def get_unimodal_range(function, functionRange, n):
     unimodal_range = exhaustive_search_method(function, functionRange, n)
     return unimodal_range
 
-def visualize_result(result):
-    print(f'The result is {result}')
+class CalculationResult:
+
+    def __init__(self, function, interval, minimum_interval, intermediate_intervals):
+        super().__init__()
+        self.function = function
+        self.interval = interval
+        self.minimum_interval = minimum_interval
+        self.intermediate_intervals = intermediate_intervals
+
 
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
@@ -41,7 +48,8 @@ def calculate(arguments: ProgramArguments):
         functionRange = get_unimodal_range(function, functionRange, n)
 
     result_x =  optimizer.optimize(function, functionRange, stopCondition, epochs)
-    visualize_result(result_x)
+
+    return CalculationResult(function, functionRange, result_x, [])
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
