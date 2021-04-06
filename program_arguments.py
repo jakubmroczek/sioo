@@ -15,6 +15,6 @@ class ProgramArguments:
         self.functionInterval = FunctionInterval(-1, 5)
         self.epochs = 25
         self.unimodal_check_n= 100
-        self.n = 100000
+        self.n = 100
         self.max_iterations = 500
         self.xtol = 1e-3
