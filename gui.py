@@ -74,6 +74,9 @@ class GUI(QDialog):
         self.onCalculationStartCallback = callback
 
     def _onCalculationStart(self):
+        # Clean the plot
+        self.graphWidget.clear()
+
         programArguments = self._getProgramArguments()
         result = self.onCalculationStartCallback(programArguments)
         self._plot(result)
