@@ -1,10 +1,11 @@
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
-                             QPushButton, QLabel)
+                             QPushButton, QLabel, QMessageBox)
 import numpy as np
 from PyQt5 import QtCore
 import pyqtgraph as pg
 from program_arguments import ProgramArguments, OptimizerType
 from function import FunctionInterval
+import traceback
 
 class GUI(QDialog):
     BISECTION = 'Bisection'
@@ -89,10 +90,19 @@ class GUI(QDialog):
     def _onCalculationStart(self):
         # Clean the plot
         self.graphWidget.clear()
-
         programArguments = self._getProgramArguments()
-        result = self.onCalculationStartCallback(programArguments)
-        self._plot(result)
+
+        try:
+            result = self.onCalculationStartCallback(programArguments)
+            self._plot(result)
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error')
+            text = f'{str(e)}\n Traceback: "{traceback.print_exc()}"'
+            msg.setText(text)
+            msg.exec()
+        except:
+            print(f'Caught unsupported exception!\n Traceback: "{traceback.print_exc()}"')
 
     def _plot(self, result):
         self.graphWidget.clear()

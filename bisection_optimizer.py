@@ -7,8 +7,7 @@ class BisectionOptimizer(object):
         intermediate_intervals = [FunctionInterval(a_n, b_n)]
 
         if function.evalute(a_n) * function.evalute(b_n) >= 0:
-            print("Bisection method fails.")
-            return None
+            raise Exception("Bisection method fails. F(a) and F(b) got to have different signs")
 
         for epoch in range(epochs):
             if stopCondition(epoch, a_n, b_n):
@@ -35,10 +34,9 @@ class BisectionOptimizer(object):
                 b_n = b_n
                 intermediate_intervals.append(FunctionInterval(a_n, b_n))
             elif f_m_n == 0:
-                print("Found exact solution.")
+                print("Found exact solution")
                 return m_n
             else:
-                print("Bisection method fails.")
-                return None
+                raise Exception("Bisection method fails. F(a) and F(b) got to have different signs")
 
         return (a_n + b_n)/2, (a_n, b_n), intermediate_intervals
