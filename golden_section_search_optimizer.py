@@ -11,16 +11,25 @@ class GoldenSectionSearchOptimizer(object):
         x1 = (b - a) * (-golden_ratio) + b
         x2 = (b - a) * golden_ratio + a
 
+        f_x1 = function.evalute(x1)
+        f_x2 = function.evalute(x2)
+
         for epoch in range(epochs):
             if stopCondition(epoch, a, b):
                 break
 
-            f_x1 = function.evalute(x1)
-            f_x2 = function.evalute(x2)
+            # Simple cache
+            f_x1 = f_x1 if f_x1 != None else  function.evalute(x1)
+            f_x2 = f_x2 if f_x2 != None else function.evalute(x2)
 
             if f_x1 > f_x2:
                 a = x1
                 x1 = x2
+
+                # Cache update
+                f_x1 = f_x2
+                f_x2 = None
+
                 x2 = (b - a) * golden_ratio + a
                 # Dumb, but I like how it corresponds with lectures
                 b = b
@@ -28,6 +37,11 @@ class GoldenSectionSearchOptimizer(object):
                 # Dumb, but I like how it corresponds with lectures
                 a = a
                 b = x2
+
+                # Cache update
+                f_x2 = f_x1
+                f_x1 = None
+
                 x2 = x1
                 x1 = (b - a) * (-golden_ratio) + b
 
