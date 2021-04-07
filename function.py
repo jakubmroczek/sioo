@@ -13,7 +13,7 @@ class UnaryFunction:
 class FunctionInterval:
     def __init__(self, low, high):
         super().__init__()
-        assert low < high, f'{low}, {high}'
+        assert low <= high, f'{low}, {high}'
         self.low = low
         self.high = high
 
