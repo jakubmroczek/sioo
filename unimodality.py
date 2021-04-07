@@ -14,7 +14,7 @@ def is_function_unimodal_in_interval(function, functionInterval, unimodal_check_
         if not minimum_found:
             if function_x1 < function_x:
                 minimum_found = True
-            # Function has to be strictly unimodal, hence it can not be constant on some interval.
+            # Function has to be strictly unimodal, hence it can not be constant on some interval
             if function_x1 == function_x:
                 return False
         else:
@@ -26,14 +26,14 @@ def is_function_unimodal_in_interval(function, functionInterval, unimodal_check_
     return True
 
 def exhaustive_search_method(function, functionInterval, n):
-    # Krok 1
+    # Step 1
     x_1 = functionInterval.low
     delta_x = (functionInterval.high - functionInterval.low) / n
 
     x_2 = x_1 + delta_x
     x_3 = x_2 + delta_x
 
-    # Krok 2
+    # Step 2
     function_x_1 = function.evalute(x_1)
     function_x_2 = function.evalute(x_2)
     function_x_3 = function.evalute(x_3)
@@ -46,7 +46,7 @@ def exhaustive_search_method(function, functionInterval, n):
             x_2 = x_3
             x_3 = x_2 + delta_x
 
-            # Po co obilczac 2 razy to samo :D
+            # Cache the already computed stuff
             function_x_1 = function_x_2
             function_x_2 = function_x_3
             function_x_3 = function.evalute(x_3)

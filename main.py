@@ -87,7 +87,7 @@ def calculate(arguments: ProgramArguments):
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x,
                                               minimum_end_interval, intermediate_intervals)
     else:
-        # I have not fonud any explicit information in the SciPy documentation that the function interval got to be
+        # I have not found any explicit information in the SciPy documentation that the function interval got to be
         # unimodal
         result_x = optimizer.optimize(function, unimodal_interval, xtol, max_iterations)
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x, None, None)

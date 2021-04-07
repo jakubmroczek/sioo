@@ -118,7 +118,7 @@ class GUI(QDialog):
 
         pen = pg.mkPen(color=(255, 0, 0), width=7, style=QtCore.Qt.DashLine)
 
-        # plot data: x, y values
+        # Plot data: x, y values
         self.graphWidget.plot(x, y, pen=pen)
 
     def _plot_end_interval(self, result):
@@ -154,7 +154,7 @@ class GUI(QDialog):
 
         pen = pg.mkPen(color=(30, 240, 0), width=7, style=QtCore.Qt.DashLine)
 
-        # plot data: x, y values
+        # Plot data: x, y values
         self.graphWidget.plot(x, y, pen=pen)
 
     def _getProgramArguments(self):

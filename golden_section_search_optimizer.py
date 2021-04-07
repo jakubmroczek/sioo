@@ -2,12 +2,10 @@ from function import FunctionInterval
 from math import sqrt
 
 class GoldenSectionSearchOptimizer(object):
-
     def optimize(self, function, functionInterval, stopCondition, epochs):
         a, b  = functionInterval.low, functionInterval.high
         intermediate_intervals = [FunctionInterval(a, b)]
 
-        # Old code belowe
         gr = (sqrt(5) + 1) / 2
 
         c = b - (b - a) / gr
@@ -24,7 +22,8 @@ class GoldenSectionSearchOptimizer(object):
 
             intermediate_intervals.append(FunctionInterval(a, b))
 
-            # We recompute both c and d here to avoid loss of precision which may lead to incorrect results or infinite loop
+            # Recompute both c and d here to avoid loss of precision which may lead to incorrect results or infinite
+            # loop
             c = b - (b - a) / gr
             d = a + (b - a) / gr
 
