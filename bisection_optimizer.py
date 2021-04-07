@@ -39,6 +39,7 @@ class BisectionOptimizer(object):
 
             # We choose [x1, x2]
             a = x_1
+            # Dumb, but I like how it corresponds with lectures
             x_m = x_m
             b = x_2
             intermediate_intervals.append(FunctionInterval(a, b))
