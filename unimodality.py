@@ -56,31 +56,3 @@ def exhaustive_search_method(function, functionInterval, n):
                             f'punktem '
                             f'minimalnym')
 
-def bounding_phases_method(function, x, delta):
-    x0 = x
-    delta = abs(delta)
-    k = 0
-
-    f_x0_minus_delta =  function.evalute(x0 - delta)
-    f_x0 = function.evalute(x0)
-    f_x0_plus_delta = function.evalute(x0 + delta)
-
-    if f_x0_minus_delta >= f_x0 and f_x0 >= f_x0_plus_delta:
-        delta = -delta
-    if f_x0_minus_delta <= f_x0 and f_x0 <= f_x0_plus_delta:
-        delta = delta
-    else:
-        # Powinniśmy skoczyc do poczatku funkcji
-        raise Exception('bounding_phase_method should jump to case 1, but it is not implemented')
-
-    # Krok 3
-    while True:
-        x1 = x0 + 2 * k * delta
-        if function.evalute(x1) < function.evalute(x0):
-            k = k + 1
-            x0 = x1
-        else:
-            # Upewnij się, czy to k jest dobre
-            low = x0 - 2 * (k - 1) * delta
-            high = x1
-            return FunctionInterval(low, high)
