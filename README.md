@@ -1,5 +1,5 @@
 ## Opis
-To repozytorium przechowuje kod źródłowy zadania 1 "Optymalizacja jednowymiarowa" z przedmiotu "SIOO'.
+To repozytorium przechowuje kod źródłowy zadania 1 "Optymalizacja jednowymiarowa" z przedmiotu "SIOO".
 
 
 W naszym przypadku zaimplmentowaliśmy następujące metody optymalizacji:
