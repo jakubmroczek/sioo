@@ -74,10 +74,10 @@ class CalculationResult:
         result += f'Unimodal interval: "{self.unimodal_interval}"\n'
         result += f'Result x: "{self.result_x}"\n'
         result += f'Minimum interval: "{self.minimum_end_interval}"\n'
+        result += f'Minimum interval xtol: "{abs(self.minimum_end_interval.high - self.minimum_end_interval.low)}"\n'
         result += f'Intermediate intervals: "{self.intermediate_intervals}"\n'
         result += f'Executed iterations: "{self.executed_iterations}"\n'
         result += f'Executed experiments: "{self.executed_experiments}\n"'
-        result += f'Execution time: "{self.time}"\n'
         return result
 
 def get_function(expression):
