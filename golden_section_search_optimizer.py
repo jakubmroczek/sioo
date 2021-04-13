@@ -56,4 +56,4 @@ class GoldenSectionSearchOptimizer(object):
 
             intermediate_intervals.append(FunctionInterval(a, b))
 
-        return (b + a) / 2, (a, b), intermediate_intervals
+        return (b + a) / 2, (a, b), intermediate_intervals, executed_iterations, executed_evaluations

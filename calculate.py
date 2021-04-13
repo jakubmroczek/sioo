@@ -5,7 +5,7 @@ from scipy_golden_section_search_optimizer import SciPyGoldenSectionSearchOptimi
 from function import UnaryFunction, FunctionInterval
 from program_arguments import ProgramArguments, OptimizerType
 from unimodality import  is_function_unimodal_in_interval, exhaustive_search_method
-import datetime
+from datetime import datetime
 
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
@@ -74,10 +74,10 @@ class CalculationResult:
         result += f'Unimodal interval: "{self.unimodal_interval}"\n'
         result += f'Result x: "{self.result_x}"\n'
         result += f'Minimum interval: "{self.minimum_end_interval}"\n'
-        result += f'Intermediate intervals: "{self.intermediate_intervals}"'
-        result += f'Executed iterations: "{self.executed_iterations}"'
-        result += f'Executed experiments: "{self.executed_experiments}"'
-        result += f'Execution time: "{self.time}"'
+        result += f'Intermediate intervals: "{self.intermediate_intervals}"\n'
+        result += f'Executed iterations: "{self.executed_iterations}"\n'
+        result += f'Executed experiments: "{self.executed_experiments}\n"'
+        result += f'Execution time: "{self.time}"\n'
         return result
 
 def get_function(expression):
