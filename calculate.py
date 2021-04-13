@@ -5,6 +5,7 @@ from scipy_golden_section_search_optimizer import SciPyGoldenSectionSearchOptimi
 from function import UnaryFunction, FunctionInterval
 from program_arguments import ProgramArguments, OptimizerType
 from unimodality import  is_function_unimodal_in_interval, exhaustive_search_method
+import datetime
 
 def calculate(arguments: ProgramArguments):
     optimizer = get_optimizer(arguments.optimizerType)
@@ -23,15 +24,26 @@ def calculate(arguments: ProgramArguments):
 
 
     if not is_scipy_optimzier(arguments.optimizerType):
-        result_x, minimum_end_interval, intermediate_intervals =  optimizer.optimize(function, unimodal_interval,
-                                                                                     stopCondition, max_iterations)
+        time = datetime.now()
+
+        result_x, minimum_end_interval, intermediate_intervals, executed_iterations, executed_evaluations =  \
+            optimizer.optimize(function, unimodal_interval, stopCondition, max_iterations)
+
+        time = datetime.now() - time
+
         calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x,
-                                              minimum_end_interval, intermediate_intervals)
+                                              minimum_end_interval, intermediate_intervals, executed_iterations,
+                                              executed_evaluations, time)
     else:
+        time = datetime.now()
         # I have not found any explicit information in the SciPy documentation that the function interval got to be
         # unimodal
         result_x = optimizer.optimize(function, unimodal_interval, xtol, max_iterations)
-        calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x, None, None)
+
+        time = datetime.now() - time
+
+        calculationResult = CalculationResult(function, user_function_interval, unimodal_interval, result_x, None,
+                                              None, None, None, time)
 
 
     log_to_console(calculationResult)
@@ -39,7 +51,8 @@ def calculate(arguments: ProgramArguments):
     return calculationResult
 
 class CalculationResult:
-    def __init__(self, function, user_interval, unimodal_interval, result_x, minimum_interval, intermediate_intervals):
+    def __init__(self, function, user_interval, unimodal_interval, result_x, minimum_interval,
+                 intermediate_intervals, executed_iterations, executed_experiments, time):
         super().__init__()
         self.function = function
         self.user_interval = user_interval
@@ -50,6 +63,9 @@ class CalculationResult:
         else:
             self.minimum_end_interval = None
         self.intermediate_intervals = intermediate_intervals
+        self.executed_iterations = executed_iterations
+        self.executed_experiments = executed_experiments
+        self.time = time
 
     def __str__(self) -> str:
         result = ''
@@ -59,6 +75,9 @@ class CalculationResult:
         result += f'Result x: "{self.result_x}"\n'
         result += f'Minimum interval: "{self.minimum_end_interval}"\n'
         result += f'Intermediate intervals: "{self.intermediate_intervals}"'
+        result += f'Executed iterations: "{self.executed_iterations}"'
+        result += f'Executed experiments: "{self.executed_experiments}"'
+        result += f'Execution time: "{self.time}"'
         return result
 
 def get_function(expression):

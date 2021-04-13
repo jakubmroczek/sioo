@@ -1,5 +1,4 @@
 from function import FunctionInterval
-from math import sqrt
 
 class GoldenSectionSearchOptimizer(object):
     def optimize(self, function, functionInterval, stopCondition, epochs):
@@ -14,13 +13,23 @@ class GoldenSectionSearchOptimizer(object):
         f_x1 = function.evalute(x1)
         f_x2 = function.evalute(x2)
 
+        executed_iterations = 0
+        executed_evaluations = 0
+
         for epoch in range(epochs):
             if stopCondition(epoch, a, b):
                 break
 
+            executed_iterations = executed_iterations + 1
+
             # Simple cache
-            f_x1 = f_x1 if f_x1 != None else  function.evalute(x1)
-            f_x2 = f_x2 if f_x2 != None else function.evalute(x2)
+            if f_x1 == None:
+                f_x1 = function.evalute(x1)
+                executed_evaluations = executed_evaluations + 1
+
+            if f_x2 == None:
+                f_x2 = function.evalute(x2)
+                executed_evaluations = executed_evaluations + 1
 
             if f_x1 > f_x2:
                 a = x1
