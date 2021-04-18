@@ -10,6 +10,28 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
+class MultipleNumberFunction():
+    '''
+    Supports up to 8 arguments
+    '''
+    ARGUMENTS = ['x', 'y', 'z', 'v', 'w', 'q', 'r', 't']
+
+    def __init__(self, expression, argc):
+        super.__init__()
+        self.expression = expression
+        self.argc = argc
+        assert argc <= len(self.ARGUMENTS)
+
+    def evaluate(self, argv):
+        assert len(argv) == self.argc
+        arguments = {}
+        for index in range(self.argc):
+            argument_name = self.ARGUMENTS[index]
+            argument_value = argv[index]
+            arguments[argument_name] = argument_value
+        return eval(self.expression, arguments)
+
+
 class FunctionInterval:
     def __init__(self, low, high):
         super().__init__()
