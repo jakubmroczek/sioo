@@ -24,6 +24,7 @@ class BisectionOptimizer(object):
 
             f_x_1 = function.evalute(x_1)
             executed_evaluations = executed_evaluations + 1
+
             if epoch == 0:
                 f_x_m = function.evalute(x_m)
                 executed_evaluations = executed_evaluations + 1
