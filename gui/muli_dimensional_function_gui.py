@@ -23,6 +23,8 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(functionLabel, rowIndex + 0, 0, 1, 1)
         layout.addWidget(self.functionLabel, rowIndex + 0, 1, 1, 1)
 
+        layout.addWidget(self.runButton, rowIndex + 1, 0, 1, 1)
+
     def __init__(self):
         self.functionLabel = QLineEdit('x ** 2 - 2 * x - 10 + y + y ** 2')
 
