@@ -15,6 +15,9 @@ class GUI(QDialog):
 
         self.layout = QGridLayout()
 
+        # Tracking current number of function args
+        self.is_one_dimensional_function_gui = True
+
         self._add_basic_widgets()
 
         self.setLayout(self.layout)
@@ -35,16 +38,37 @@ class GUI(QDialog):
         self.layout.addWidget(self.functionArgumentNumberComboBox, 0, 1, 1, 1)
 
     def _on_function_arguments_number_changed(self, value):
-        self._remove_extra_widgets()
-        self.impl = None
-        self.impl = OneDimensionalFunctionGUI()
-        self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
-        self.impl.setOnCalculationStart(self.onCalculationStartCallback)
+        if self._should_relayout(value):
+
+            self._remove_extra_widgets()
+
+            if self._should_relayout_to_one_dimenstional():
+                self.impl = OneDimensionalFunctionGUI()
+                self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
+                self.impl.setOnCalculationStart(self.onCalculationStartCallback)
+                self.is_one_dimensional_function_gui = True
+            else:
+                print('multi dim gui')
+                self.is_one_dimensional_function_gui = False
 
     def _remove_extra_widgets(self):
         '''
-        Removes all the widget except the basic one (function arguments numbr label and combo box).
+        Removes all the widget except the basic one (function arguments number label and combo box).
         '''
-        for i in range(self.NUMBER_OF_BASIC_WIDGETS, self.layout.count()):
+        for i in reversed(range(self.NUMBER_OF_BASIC_WIDGETS, self.layout.count())):
             if self.layout.itemAt(i):
                 self.layout.itemAt(i).widget().setParent(None)
+
+
+    def _should_relayout(self, value):
+        value = int(value)
+        single_argument_function_index = 1
+
+        if value > single_argument_function_index:
+            return self.is_one_dimensional_function_gui
+
+        if value == single_argument_function_index:
+            return not self.is_one_dimensional_function_gui
+
+    def _should_relayout_to_one_dimenstional(self):
+        return not self.is_one_dimensional_function_gui
