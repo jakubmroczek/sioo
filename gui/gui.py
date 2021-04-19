@@ -18,6 +18,10 @@ class GUI(QDialog):
 
         self._add_basic_widgets()
 
+        button = QComboBox()
+        button.addItems(['SDFDAS,', 'SDFDSA'])
+        self.layout.addWidget(button, 1, 0, 1, 1)
+
         self.setLayout(self.layout)
 
     def setOnCalculationStart(self, callback):
@@ -58,7 +62,7 @@ class GUI(QDialog):
         '''
         Removes all the widget except the basic one (function arguments numbr label and combo box).
         '''
-        for i in reversed(range(self.layout.count() - self.NUMBER_OF_BASIC_WIDGETS)):
+        for i in range(self.NUMBER_OF_BASIC_WIDGETS, self.layout.count()):
             self.layout.itemAt(i).widget().setParent(None)
 
 
