@@ -18,10 +18,6 @@ class GUI(QDialog):
 
         self._add_basic_widgets()
 
-        button = QComboBox()
-        button.addItems(['SDFDAS,', 'SDFDSA'])
-        self.layout.addWidget(button, 1, 0, 1, 1)
-
         self.setLayout(self.layout)
 
     def setOnCalculationStart(self, callback):
