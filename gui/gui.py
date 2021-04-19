@@ -1,6 +1,5 @@
-import traceback
-
 from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QLabel, QMessageBox, QGridLayout)
+from .one_dimensional_function_gui import OneDimensionalFunctionGUI
 
 
 class GUI(QDialog):
@@ -20,6 +19,8 @@ class GUI(QDialog):
 
         self.setLayout(self.layout)
 
+        self.impl = None
+
     def setOnCalculationStart(self, callback):
         self.onCalculationStartCallback = callback
 
@@ -33,26 +34,11 @@ class GUI(QDialog):
         self.layout.addWidget(functionArgumentLabel, 0, 0, 1, 1)
         self.layout.addWidget(self.functionArgumentNumberComboBox, 0, 1, 1, 1)
 
-    def _onCalculationStart(self):
-        # Clean the plot
-        self.graphWidget.clear()
-        programArguments = self._getProgramArguments()
-
-        try:
-            result = self.onCalculationStartCallback(programArguments)
-            self._plot(result)
-        except Exception as e:
-            msg = QMessageBox()
-            msg.setWindowTitle('Error')
-            text = f'{str(e)}\n Traceback: "{traceback.print_exc()}"'
-            msg.setText(text)
-            msg.exec()
-        except:
-            print(f'Caught unsupported exception!\n Traceback: "{traceback.print_exc()}"')
-
-
     def _on_function_arguments_number_changed(self, value):
         self._remove_extra_widgets()
+        self.impl = OneDimensionalFunctionGUI()
+        self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
+        self.impl.setOnCalculationStart(self.onCalculationStartCallback)
 
     def _remove_extra_widgets(self):
         '''
@@ -60,10 +46,3 @@ class GUI(QDialog):
         '''
         for i in range(self.NUMBER_OF_BASIC_WIDGETS, self.layout.count()):
             self.layout.itemAt(i).widget().setParent(None)
-
-
-    def _plot(self, result):
-        raise Exception('Abstract method called')
-
-    def _getProgramArguments(self):
-        raise Exception('Abstract method called')

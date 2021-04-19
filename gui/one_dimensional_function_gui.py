@@ -7,18 +7,55 @@ from program_arguments import ProgramArguments, OptimizerType
 from function import FunctionInterval
 import traceback
 
-class GUI(QDialog):
+class OneDimensionalFunctionGUI:
     BISECTION = 'Bisection'
     GOLDEN_SECTION_SEARCH = 'Golden-section search'
     SCIPY_BISECTION = 'SciPy Bisection'
     SCIPTY_GOLDEN_SECITION_SEARCH = 'Sci-Py Golden-section search'
 
-    def __init__(self, parent=None):
-        super(GUI, self).__init__(parent)
 
-        self.originalPalette = QApplication.palette()
-        self.setWindowTitle("SIOO")
+    def add_widgets_to_layout(self, layout, rowIndex):
+        '''
+        This method is called by the GUI class. The layout object is expected to be of QGridLayout.
+        '''
+        functionLabel = QLabel('Function:')
+        intervalStartLabel = QLabel('Interval start:')
+        intervalEndLabel = QLabel('Interval end:')
+        maxIterationsLabel = QLabel('Max iterations:')
+        xtolLabel = QLabel('Xtol:')
+        unimodalityCheckPointsLabel = QLabel('Unimodality-check points number:')
+        exhaustiveSerachPoints = QLabel('Exhaustive search points number:')
 
+        layout.addWidget(functionLabel, rowIndex + 0, 0, 1, 1)
+        layout.addWidget(self.functionLabel, rowIndex + 0, 1, 1, 1)
+
+        layout.addWidget(intervalStartLabel, rowIndex + 1, 0, 1, 1)
+        layout.addWidget(self.functionLowPointLabel, rowIndex + 1, 1, 1, 1)
+
+        layout.addWidget(intervalEndLabel, rowIndex + 2, 0, 1, 2)
+        layout.addWidget(self.functionHighLabel, rowIndex + 2, 1, 1, 1)
+
+        layout.addWidget(maxIterationsLabel, rowIndex + 3, 0, 1, 1)
+        layout.addWidget(self.maxIterationsEdit, rowIndex + 3, 1, 1, 1)
+
+        layout.addWidget(xtolLabel, rowIndex + 4, 0, 1, 1)
+        layout.addWidget(self.xtolEdit, rowIndex + 4, 1, 1, 1)
+
+        # Unimodality check
+        layout.addWidget(unimodalityCheckPointsLabel, rowIndex + 5, 0, 1, 1)
+        layout.addWidget(self.unimodalityCheckPointsEdit, rowIndex + 5, 1, 1, 1)
+
+        # Exhaustive search
+        layout.addWidget(exhaustiveSerachPoints, rowIndex + 6, 0, 1, 1)
+        layout.addWidget(self.exhaustiveSerachEdit, rowIndex + 6, 1, 1, 1)
+
+        layout.addWidget(self.optimizerComboBox, rowIndex + 7, 0, 1, 2)
+        layout.addWidget(self.runButton, rowIndex + 8, 0, 1, 2)
+        layout.addWidget(self.graphWidget, rowIndex + 9, 0, 1, 2)
+
+        layout.setRowStretch(5, 1)
+
+    def __init__(self):
         # Plot
         self.graphWidget = pg.PlotWidget()
         self.graphWidget.setBackground('#7C7C7C')
@@ -37,46 +74,6 @@ class GUI(QDialog):
 
         self.unimodalityCheckPointsEdit = QLineEdit('100')
         self.exhaustiveSerachEdit = QLineEdit('100')
-
-        functionLabel = QLabel('Function:')
-        intervalStartLabel = QLabel('Interval start:')
-        intervalEndLabel = QLabel('Interval end:')
-        maxIterationsLabel = QLabel('Max iterations:')
-        xtolLabel = QLabel('Xtol:')
-        unimodalityCheckPointsLabel = QLabel('Unimodality-check points number:')
-        exhaustiveSerachPoints = QLabel('Exhaustive search points number:')
-
-        layout = QGridLayout()
-        layout.addWidget(functionLabel, 0, 0, 1, 1)
-        layout.addWidget(self.functionLabel, 0, 1, 1, 1)
-
-        layout.addWidget(intervalStartLabel, 1, 0, 1, 1)
-        layout.addWidget(self.functionLowPointLabel, 1, 1, 1, 1)
-
-        layout.addWidget(intervalEndLabel, 2, 0, 1, 2)
-        layout.addWidget(self.functionHighLabel, 2, 1, 1, 1)
-
-        layout.addWidget(maxIterationsLabel, 3, 0, 1, 1)
-        layout.addWidget(self.maxIterationsEdit, 3, 1, 1, 1)
-
-        layout.addWidget(xtolLabel, 4, 0, 1, 1)
-        layout.addWidget(self.xtolEdit, 4, 1, 1, 1)
-
-        # Unimodality check
-        layout.addWidget(unimodalityCheckPointsLabel, 5, 0, 1, 1)
-        layout.addWidget(self.unimodalityCheckPointsEdit, 5, 1, 1, 1)
-
-        # Exhaustive search
-        layout.addWidget(exhaustiveSerachPoints, 6, 0, 1, 1)
-        layout.addWidget(self.exhaustiveSerachEdit, 6, 1, 1, 1)
-
-        layout.addWidget(self.optimizerComboBox, 7, 0, 1, 2)
-        layout.addWidget(self.runButton, 8, 0, 1, 2)
-        layout.addWidget(self.graphWidget, 9, 0, 1, 2)
-
-        layout.setRowStretch(5, 1)
-
-        self.setLayout(layout)
 
         # Calculation start callback
         self.onCalculationStartCallback = None
