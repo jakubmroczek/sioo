@@ -1,11 +1,14 @@
-from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QGridLayout, QLineEdit,
-                             QPushButton, QLabel, QMessageBox)
-import numpy as np
-from PyQt5 import QtCore
-import pyqtgraph as pg
-from program_arguments import ProgramArguments, OptimizerType
-from function import FunctionInterval
 import traceback
+
+import numpy as np
+import pyqtgraph as pg
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import (QComboBox, QLineEdit,
+                             QPushButton, QLabel, QMessageBox)
+
+from function import FunctionInterval
+from program_arguments import ProgramArguments, OptimizerType
+
 
 class OneDimensionalFunctionGUI:
     BISECTION = 'Bisection'

@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QLabel, QMessageBox, QGridLayout)
+from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QLabel, QGridLayout)
 from .one_dimensional_function_gui import OneDimensionalFunctionGUI
+from .muli_dimensional_function_gui import MuliDimensionalFunctionGUI
 
 
 class GUI(QDialog):
@@ -17,7 +18,8 @@ class GUI(QDialog):
 
         self._add_basic_widgets()
 
-        self.onCalculationStartCallback = None
+        self.onOneDimensionalCalculationStartCallback = None
+        self.onMulitDimensionalCalculationStartCallback = None
 
         # Tracking current number of function args
         self.is_one_dimensional_function_gui = None
@@ -28,8 +30,11 @@ class GUI(QDialog):
 
         self.impl = None
 
-    def setOnCalculationStart(self, callback):
-        self.onCalculationStartCallback = callback
+    def setOnOneDimensionalCalculationStart(self, callback):
+        self.onOneDimensionalCalculationStartCallback = callback
+
+    def setOnMulitiDimensionalCalcualtionStartCallback(self, callback):
+        self.onMulitDimensionalCalculationStartCallback = callback
 
     def _add_basic_widgets(self):
         # Number of function arguments
@@ -49,14 +54,19 @@ class GUI(QDialog):
             if self._should_relayout_to_one_dimenstional():
                 self._init_one_dimensional_function_gui()
             else:
-                print('multi dim gui')
-                self.is_one_dimensional_function_gui = False
+                self._init_multi_dimensional_function_gui()
 
     def _init_one_dimensional_function_gui(self):
         self.impl = OneDimensionalFunctionGUI()
         self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
-        self.impl.setOnCalculationStart(self.onCalculationStartCallback)
+        self.impl.setOnCalculationStart(self.onOneDimensionalCalculationStartCallback)
         self.is_one_dimensional_function_gui = True
+
+    def _init_multi_dimensional_function_gui(self):
+        self.impl = MuliDimensionalFunctionGUI()
+        self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
+        self.impl.setOnCalculationStart(self.onMulitDimensionalCalculationStartCallback)
+        self.is_one_dimensional_function_gui = False
 
     def _remove_extra_widgets(self):
         '''
