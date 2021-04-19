@@ -36,6 +36,7 @@ class GUI(QDialog):
 
     def _on_function_arguments_number_changed(self, value):
         self._remove_extra_widgets()
+        self.impl = None
         self.impl = OneDimensionalFunctionGUI()
         self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
         self.impl.setOnCalculationStart(self.onCalculationStartCallback)
@@ -45,4 +46,5 @@ class GUI(QDialog):
         Removes all the widget except the basic one (function arguments numbr label and combo box).
         '''
         for i in range(self.NUMBER_OF_BASIC_WIDGETS, self.layout.count()):
-            self.layout.itemAt(i).widget().setParent(None)
+            if self.layout.itemAt(i):
+                self.layout.itemAt(i).widget().setParent(None)
