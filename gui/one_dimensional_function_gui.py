@@ -13,8 +13,6 @@ class GUI(QDialog):
     SCIPY_BISECTION = 'SciPy Bisection'
     SCIPTY_GOLDEN_SECITION_SEARCH = 'Sci-Py Golden-section search'
 
-    MAX_NUMBER_OF_FUNCTINO_ARGUMENTS = 8
-
     def __init__(self, parent=None):
         super(GUI, self).__init__(parent)
 
@@ -25,12 +23,6 @@ class GUI(QDialog):
         self.graphWidget = pg.PlotWidget()
         self.graphWidget.setBackground('#7C7C7C')
         self.graphWidget.showGrid(x = True, y = True, alpha = 0.8)
-
-        # Number of function arguments
-        functionArgumentLabel = QLabel('Number of functions argument:')
-        self.functionArgumentNumberComboBox = QComboBox()
-        self.functionArgumentNumberComboBox.addItems([str(x) for x in range(1, self.MAX_NUMBER_OF_FUNCTINO_ARGUMENTS
-                                                                            + 1)])
 
         self.functionLabel = QLineEdit('x ** 2 - 2 * x - 10')
         self.functionLowPointLabel = QLineEdit('-1.0')
@@ -55,37 +47,32 @@ class GUI(QDialog):
         exhaustiveSerachPoints = QLabel('Exhaustive search points number:')
 
         layout = QGridLayout()
+        layout.addWidget(functionLabel, 0, 0, 1, 1)
+        layout.addWidget(self.functionLabel, 0, 1, 1, 1)
 
-        # Adding funciton argument combobox to layout
-        layout.addWidget(functionArgumentLabel, 0, 0, 1, 1)
-        layout.addWidget(self.functionArgumentNumberComboBox, 0, 1, 1, 1)
+        layout.addWidget(intervalStartLabel, 1, 0, 1, 1)
+        layout.addWidget(self.functionLowPointLabel, 1, 1, 1, 1)
 
-        layout.addWidget(functionLabel, 1, 0, 1, 1)
-        layout.addWidget(self.functionLabel, 1, 1, 1, 1)
+        layout.addWidget(intervalEndLabel, 2, 0, 1, 2)
+        layout.addWidget(self.functionHighLabel, 2, 1, 1, 1)
 
-        layout.addWidget(intervalStartLabel, 2, 0, 1, 1)
-        layout.addWidget(self.functionLowPointLabel, 2, 1, 1, 1)
+        layout.addWidget(maxIterationsLabel, 3, 0, 1, 1)
+        layout.addWidget(self.maxIterationsEdit, 3, 1, 1, 1)
 
-        layout.addWidget(intervalEndLabel, 3, 0, 1, 2)
-        layout.addWidget(self.functionHighLabel, 3, 1, 1, 1)
-
-        layout.addWidget(maxIterationsLabel, 4, 0, 1, 1)
-        layout.addWidget(self.maxIterationsEdit, 4, 1, 1, 1)
-
-        layout.addWidget(xtolLabel, 5, 0, 1, 1)
-        layout.addWidget(self.xtolEdit, 5, 1, 1, 1)
+        layout.addWidget(xtolLabel, 4, 0, 1, 1)
+        layout.addWidget(self.xtolEdit, 4, 1, 1, 1)
 
         # Unimodality check
-        layout.addWidget(unimodalityCheckPointsLabel, 6, 0, 1, 1)
-        layout.addWidget(self.unimodalityCheckPointsEdit, 6, 1, 1, 1)
+        layout.addWidget(unimodalityCheckPointsLabel, 5, 0, 1, 1)
+        layout.addWidget(self.unimodalityCheckPointsEdit, 5, 1, 1, 1)
 
         # Exhaustive search
-        layout.addWidget(exhaustiveSerachPoints, 7, 0, 1, 1)
-        layout.addWidget(self.exhaustiveSerachEdit, 7, 1, 1, 1)
+        layout.addWidget(exhaustiveSerachPoints, 6, 0, 1, 1)
+        layout.addWidget(self.exhaustiveSerachEdit, 6, 1, 1, 1)
 
-        layout.addWidget(self.optimizerComboBox, 8, 0, 1, 2)
-        layout.addWidget(self.runButton, 9, 0, 1, 2)
-        layout.addWidget(self.graphWidget, 10, 0, 1, 2)
+        layout.addWidget(self.optimizerComboBox, 7, 0, 1, 2)
+        layout.addWidget(self.runButton, 8, 0, 1, 2)
+        layout.addWidget(self.graphWidget, 9, 0, 1, 2)
 
         layout.setRowStretch(5, 1)
 
@@ -174,7 +161,7 @@ class GUI(QDialog):
         arguments = ProgramArguments()
         arguments.expression = self.functionLabel.text()
         arguments.functionInterval = FunctionInterval(float(self.functionLowPointLabel.text()),
-                                                float(self.functionHighLabel.text()))
+                                                      float(self.functionHighLabel.text()))
 
         optimzerType = str(self.optimizerComboBox.currentText())
 

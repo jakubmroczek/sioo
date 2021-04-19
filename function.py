@@ -10,7 +10,7 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
-class MultipleNumberFunction():
+class MultiNumberFunction():
     '''
     Supports up to 8 arguments
     '''

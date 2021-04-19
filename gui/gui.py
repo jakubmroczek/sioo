@@ -1,0 +1,63 @@
+import traceback
+
+from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QLabel, QMessageBox, QGridLayout)
+
+
+class GUI(QDialog):
+
+    MAX_NUMBER_OF_FUNCTION_ARGUMENTS = 8
+
+    def __init__(self, parent=None):
+        super(GUI, self).__init__(parent)
+
+        self.originalPalette = QApplication.palette()
+        self.setWindowTitle("SIOO")
+
+        # Number of function arguments
+        functionArgumentLabel = QLabel('Number of functions argument:')
+        self.functionArgumentNumberComboBox = QComboBox()
+        self.functionArgumentNumberComboBox.addItems([str(x) for x in range(1, self.MAX_NUMBER_OF_FUNCTION_ARGUMENTS
+                                                                            + 1)])
+        self.functionArgumentNumberComboBox.currentTextChanged.connect(self._on_function_arguments_number_changed)
+
+        self.layout = QGridLayout()
+
+        self.layout.addWidget(functionArgumentLabel, 0, 0, 1, 1)
+        self.layout.addWidget(self.functionArgumentNumberComboBox, 0, 1, 1, 1)
+
+        self.setLayout(self.layout)
+
+    def setOnCalculationStart(self, callback):
+        self.onCalculationStartCallback = callback
+
+    def _onCalculationStart(self):
+        # Clean the plot
+        self.graphWidget.clear()
+        programArguments = self._getProgramArguments()
+
+        try:
+            result = self.onCalculationStartCallback(programArguments)
+            self._plot(result)
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setWindowTitle('Error')
+            text = f'{str(e)}\n Traceback: "{traceback.print_exc()}"'
+            msg.setText(text)
+            msg.exec()
+        except:
+            print(f'Caught unsupported exception!\n Traceback: "{traceback.print_exc()}"')
+
+
+    def _on_function_arguments_number_changed(self, value):
+        self._remove_all_widgets()
+
+    def _remove_all_widgets(self):
+        for i in reversed(range(self.layout.count())):
+            self.layout.itemAt(i).widget().setParent(None)
+
+
+    def _plot(self, result):
+        raise Exception('Abstract method called')
+
+    def _getProgramArguments(self):
+        raise Exception('Abstract method called')
