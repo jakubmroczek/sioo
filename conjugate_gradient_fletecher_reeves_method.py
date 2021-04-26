@@ -16,10 +16,11 @@ class ConjugateGradientFletcherReevesMethod:
         # Dodaj jeszcze jedną pętle xD
 
         for k in range(0, max_iterations):
+            print(x_k)
             gradient_k = self.gradient(function, x_k)
             d_k = -1 * gradient_k
 
-            if self.is_converged(d, epsillon):
+            if self.is_converged(d_k, epsillon):
                 return x_k
 
             #TODO: Sprawdz w notatkach ze spotkania, czy ten zakres ma sens
@@ -50,8 +51,9 @@ class ConjugateGradientFletcherReevesMethod:
         return x
 
     def gradient(self, function, x):
-        # TODO: implement me
-        return function.evaluate(x)
+        # TODO: Popraw implementację
+        f = [function.evaluate(arg) for arg in x]
+        return np.gradient(f)
 
     def is_converged(self, gradient, epsillon):
         #TODO: Is this ok for the gradient?
