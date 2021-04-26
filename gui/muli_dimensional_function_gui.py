@@ -1,13 +1,7 @@
 import traceback
-
-import numpy as np
-import pyqtgraph as pg
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import (QComboBox, QLineEdit,
+from PyQt5.QtWidgets import (QLineEdit,
                              QPushButton, QLabel, QMessageBox)
-
-from function import FunctionInterval
-from program_arguments import ProgramArguments, OptimizerType
+from program_arguments import MuliDimensionProgramArguments
 
 
 class MuliDimensionalFunctionGUI:
@@ -58,5 +52,5 @@ class MuliDimensionalFunctionGUI:
         print('plotting a beautiful function')
 
     def _getProgramArguments(self):
-        print('returning empyt args')
-        return ()
+        programArugments = MuliDimensionProgramArguments()
+        return programArugments

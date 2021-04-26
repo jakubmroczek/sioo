@@ -18,3 +18,14 @@ class ProgramArguments:
         self.exhaustive_serach_n = 100
         self.max_iterations = 500
         self.xtol = 1e-3
+
+class MuliDimensionProgramArguments:
+    def __init__(self):
+        super().__init__()
+        self.expression = "x + y ** 2"
+        # Number of varibales in the expression
+        self.argc = 2
+        self.start_x = (0, 0)
+        self.epsilon = 1e-4
+        self.alpha = 0.1
+        self.max_iterations = 10_0000

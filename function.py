@@ -10,14 +10,13 @@ class UnaryFunction:
         self.x = x
         return eval(self.expression)
 
-class MultiNumberFunction():
+class MultiNumberFunction:
     '''
     Supports up to 8 arguments
     '''
     ARGUMENTS = ['x', 'y', 'z', 'v', 'w', 'q', 'r', 't']
 
     def __init__(self, expression, argc):
-        super.__init__()
         self.expression = expression
         self.argc = argc
         assert argc <= len(self.ARGUMENTS)
