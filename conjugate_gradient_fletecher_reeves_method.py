@@ -1,4 +1,4 @@
-from function import MultiNumberFunction
+from function import MultiNumberFunction, FunctionInterval
 from math import fabs
 
 class ConjugateGradientFletcherReevesMethod:
@@ -60,7 +60,11 @@ class ConjugateGradientFletcherReevesMethod:
     #TODO: put low high in FuncitonInterval
     def directional_minimization(self, function, x_k, d_k, low, high):
         unary_function_wrapper = lambda alpha : function(x_k + alpha * d_k)
-        return self.one_dimension_optimizer.optimize(unary_function_wrapper, low, high)
+        functionInterval = FunctionInterval(low, high)
+        max_iterations = 100
+        xtol = 1e-3
+        stop_condition = lambda iteration, a, b : iteration >= max_iterations or abs(b - a) < xtol
+        return self.one_dimension_optimizer.optimize(unary_function_wrapper, functionInterval, stop_condition, max_iterations)
 
     def dot_product(self, a, b):
         pass
