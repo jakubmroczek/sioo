@@ -1,5 +1,6 @@
 from function import MultiNumberFunction, FunctionInterval
 from math import sqrt
+import numpy as np
 
 class ConjugateGradientFletcherReevesMethod:
     def __init__(self, one_dimension_optimizer):
@@ -27,8 +28,6 @@ class ConjugateGradientFletcherReevesMethod:
             high = 2
 
             alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
-            print('alpha k is')
-            print(alpha_k)
 
             #TODO: Ta zmienna będzie nadpisana
             x_next_k = x_k + alpha_k * d_k
@@ -52,7 +51,7 @@ class ConjugateGradientFletcherReevesMethod:
 
     def gradient(self, derivatives, x):
         assert len(derivatives) == len(x)
-        gradient = [derivative.evaluate(x) for derivative in derivatives]
+        gradient = np.array([derivative.evaluate(x) for derivative in derivatives])
         return gradient
 
     def is_converged(self, gradient, epsillon):
@@ -61,12 +60,32 @@ class ConjugateGradientFletcherReevesMethod:
 
     #TODO: put low high in FuncitonInterval
     def directional_minimization(self, function, x_k, d_k, low, high):
-        unary_function_wrapper = lambda alpha : function(x_k + alpha * d_k)
+        unary_function_wrapper = self._make_unary_function_wrapper(function, x_k, d_k)
         functionInterval = FunctionInterval(low, high)
         max_iterations = 100
         xtol = 1e-3
         stop_condition = lambda iteration, a, b : iteration >= max_iterations or abs(b - a) < xtol
-        return self.one_dimension_optimizer.optimize(unary_function_wrapper, functionInterval, stop_condition, max_iterations)
+        tuple = self.one_dimension_optimizer.optimize(unary_function_wrapper, functionInterval, stop_condition,
+                                                 max_iterations)
+        result_x = tuple[0]
+        return result_x
+
+    def _make_unary_function_wrapper(self, function, x_k, d_k):
+        class UnaryFunctionWrapper:
+            def __init__(self, function: MultiNumberFunction, x_k, d_k):
+                self.function = function
+                self.x_k = np.array(x_k)
+                print(d_k)
+                self.d_k = np.array(d_k)
+
+            def evalute(self, alpha):
+                print(self.x_k)
+                print(self.d_k)
+                arg = self.x_k + alpha * self.d_k
+                print(arg)
+                return self.function.evaluate(arg)
+
+        return UnaryFunctionWrapper(function, x_k, d_k)
 
     def dot_product(self, a, b):
         pass
