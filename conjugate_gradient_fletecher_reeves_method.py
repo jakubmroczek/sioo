@@ -6,7 +6,7 @@ class ConjugateGradientFletcherReevesMethod:
         self.one_dimension_optimizer = one_dimension_optimizer
 
 
-    def optimize(self, function : MultiNumberFunction, x1, epsillon, alpha, n):
+    def optimize(self, function : MultiNumberFunction, x1, epsillon, alpha, n, derivatives):
 
         # totally random numbers
         max_iterations = 1000
@@ -17,7 +17,7 @@ class ConjugateGradientFletcherReevesMethod:
 
         for k in range(0, max_iterations):
             print(x_k)
-            gradient_k = self.gradient(function, x_k)
+            gradient_k = self.gradient(derivatives, x_k)
             d_k = -1 * gradient_k
 
             if self.is_converged(d_k, epsillon):
@@ -32,7 +32,7 @@ class ConjugateGradientFletcherReevesMethod:
 
             #TODO: Ta zmienna będzie nadpisana
             x_next_k = x_k + alpha_k * d_k
-            gradient_next_k = self.gradient(function, x_next_k)
+            gradient_next_k = self.gradient(derivatives, x_next_k)
 
             n_next = self.dot_product(gradient_next_k, gradient_next_k) / self.dot_product(gradient_k, gradient_k)
 
@@ -50,10 +50,13 @@ class ConjugateGradientFletcherReevesMethod:
 
         return x
 
-    def gradient(self, function, x):
-        # TODO: Popraw implementację
-        f = [function.evaluate(arg) for arg in x]
-        return np.gradient(f)
+    def gradient(self, derivatives, x):
+        assert len(derivatives) == len(x)
+        gradient = []
+        for derivative, arg in zip(derivatives, x):
+            derivative_value = derivatives.evaluate(arg)
+            gradient.append(derivative_value)
+        return gradient
 
     def is_converged(self, gradient, epsillon):
         #TODO: Is this ok for the gradient?
