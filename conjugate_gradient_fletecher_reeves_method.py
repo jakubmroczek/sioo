@@ -1,5 +1,5 @@
 from function import MultiNumberFunction, FunctionInterval
-from math import fabs
+from math import sqrt
 
 class ConjugateGradientFletcherReevesMethod:
     def __init__(self, one_dimension_optimizer):
@@ -56,7 +56,7 @@ class ConjugateGradientFletcherReevesMethod:
 
     def is_converged(self, gradient, epsillon):
         #TODO: Is this ok for the gradient?
-        return fabs(gradient) < epsillon
+        return self.vector_length(gradient) < epsillon
 
     #TODO: put low high in FuncitonInterval
     def directional_minimization(self, function, x_k, d_k, low, high):
@@ -69,3 +69,10 @@ class ConjugateGradientFletcherReevesMethod:
 
     def dot_product(self, a, b):
         pass
+
+    def vector_length(self, vector):
+        length = 0
+        for component in vector:
+            length += component ** 2
+        lenght = sqrt(length)
+        return length
