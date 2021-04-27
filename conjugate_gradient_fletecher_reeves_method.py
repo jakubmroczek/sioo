@@ -75,14 +75,10 @@ class ConjugateGradientFletcherReevesMethod:
             def __init__(self, function: MultiNumberFunction, x_k, d_k):
                 self.function = function
                 self.x_k = np.array(x_k)
-                print(d_k)
                 self.d_k = np.array(d_k)
 
             def evalute(self, alpha):
-                print(self.x_k)
-                print(self.d_k)
                 arg = self.x_k + alpha * self.d_k
-                print(arg)
                 return self.function.evaluate(arg)
 
         return UnaryFunctionWrapper(function, x_k, d_k)
