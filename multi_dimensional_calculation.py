@@ -15,6 +15,9 @@ def multidimensional_calculation(arguments):
 
     result = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
 
+    print('the result is ')
+    print(result)
+
     return result
 
 def _get_function(expression, argc):

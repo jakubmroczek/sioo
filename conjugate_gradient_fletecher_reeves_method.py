@@ -47,7 +47,7 @@ class ConjugateGradientFletcherReevesMethod:
                 gradient_k = gradient_next_k
 
 
-        return x
+        return x_k
 
     def gradient(self, derivatives, x):
         assert len(derivatives) == len(x)
@@ -84,7 +84,7 @@ class ConjugateGradientFletcherReevesMethod:
         return UnaryFunctionWrapper(function, x_k, d_k)
 
     def dot_product(self, a, b):
-        pass
+        return np.dot(a, b)
 
     def vector_length(self, vector):
         length = 0
