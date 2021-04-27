@@ -13,7 +13,9 @@ def multidimensional_calculation(arguments):
     alpha = arguments.alpha
     max_iterations = arguments.max_iterations
 
-    return method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
+    result = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
+
+    return result
 
 def _get_function(expression, argc):
     return MultiNumberFunction(expression, argc)
