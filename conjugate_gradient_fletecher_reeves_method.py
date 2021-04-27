@@ -27,7 +27,7 @@ class ConjugateGradientFletcherReevesMethod:
 
             for k in range(n):
                 # Step 3
-                if self.is_converged(d_1, epsilon):
+                if self.is_converged(gradient_x_k, epsilon):
                     return x_k
 
                 # Step 4

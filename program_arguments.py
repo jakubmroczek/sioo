@@ -22,11 +22,11 @@ class ProgramArguments:
 class MuliDimensionProgramArguments:
     def __init__(self):
         super().__init__()
-        self.expression = "x + y ** 2"
-        self.derivatives_expressions = ["1", "2 ** y"]
+        self.expression = "x ** 2+ y ** 2"
+        self.derivatives_expressions = ["2 * x", "2 * y"]
         # Number of varibales in the expression
         self.argc = 2
         self.start_x = (0, 1)
-        self.epsilon = 1e-6
+        self.epsilon = 1e-2
         self.alpha = 0.1
         self.max_iterations = 10_0000
