@@ -9,6 +9,51 @@ class ConjugateGradientFletcherReevesMethod:
 
     def optimize(self, function : MultiNumberFunction, x1, epsillon, alpha, n, derivatives):
 
+        # Step 1
+        x_1, e = x1, epsillon
+
+        # Step 2
+        k = 1
+        gradient_x_1 = self.gradient(derivatives, x_1)
+        d_1 = -1 * gradient_x_1
+
+        # TODO: Zla aktualizacja
+        # Skąd mam wziąc x_k -> nie jest to jasne
+        x_k = x_1
+        d_k = d_1
+        gradient_x_k = gradient_x_1
+
+        # Step 3
+        if self.is_converged(d_1, e):
+            return x_k
+
+        # Step 4
+        #TODO: Sprecyzuj lepiej zakres, czym jest długośc kroku?
+        low = 0
+        high = 2 * alpha
+        alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
+        x_k_1 = x_k + alpha_k * d_k
+
+        # Step 5
+        gradient_x_k_1 = self.gradient(derivatives, x_k_1)
+        n_k = self.dot_product(gradient_x_k_1, gradient_x_k_1) / self.dot_product(gradient_x_k, gradient_x_k)
+        d_k_1 = -1 * gradient_x_k_1 + n_k * d_k
+
+        # Step 6
+        if k < n:
+            d_k = d_k_1
+            x_k = x_k_1
+            # Jumpt to step 3
+
+        x_1 = x_k_1
+        gradient_x_1 = gradient_x_k_1
+        # Jumpt to step 2
+
+
+
+
+
+        # SOME OLD CODE
         # totally random numbers
         max_iterations = 1000
         x_k = x1
@@ -55,7 +100,6 @@ class ConjugateGradientFletcherReevesMethod:
         return gradient
 
     def is_converged(self, gradient, epsillon):
-        #TODO: Is this ok for the gradient?
         return self.vector_length(gradient) < epsillon
 
     #TODO: put low high in FuncitonInterval
