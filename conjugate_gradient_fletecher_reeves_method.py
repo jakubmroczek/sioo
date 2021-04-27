@@ -19,7 +19,7 @@ class ConjugateGradientFletcherReevesMethod:
             gradient_k = self.gradient(derivatives, x_k)
             d_k = -1 * gradient_k
 
-            if self.is_converged(d_k, epsillon):
+            if self.is_converged(gradient_k, epsillon):
                 return x_k
 
             #TODO: Sprawdz w notatkach ze spotkania, czy ten zakres ma sens
@@ -27,7 +27,8 @@ class ConjugateGradientFletcherReevesMethod:
             high = 2
 
             alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
-
+            print('alpha k is')
+            print(alpha_k)
 
             #TODO: Ta zmienna będzie nadpisana
             x_next_k = x_k + alpha_k * d_k
@@ -74,5 +75,5 @@ class ConjugateGradientFletcherReevesMethod:
         length = 0
         for component in vector:
             length += component ** 2
-        lenght = sqrt(length)
+        length = sqrt(length)
         return length
