@@ -16,7 +16,6 @@ class ConjugateGradientFletcherReevesMethod:
         # Dodaj jeszcze jedną pętle xD
 
         for k in range(0, max_iterations):
-            print(x_k)
             gradient_k = self.gradient(derivatives, x_k)
             d_k = -1 * gradient_k
 
@@ -52,10 +51,7 @@ class ConjugateGradientFletcherReevesMethod:
 
     def gradient(self, derivatives, x):
         assert len(derivatives) == len(x)
-        gradient = []
-        for derivative, arg in zip(derivatives, x):
-            derivative_value = derivatives.evaluate(arg)
-            gradient.append(derivative_value)
+        gradient = [derivative.evaluate(x) for derivative in derivatives]
         return gradient
 
     def is_converged(self, gradient, epsillon):
