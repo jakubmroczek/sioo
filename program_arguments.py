@@ -27,6 +27,6 @@ class MuliDimensionProgramArguments:
         # Number of varibales in the expression
         self.argc = 2
         self.start_x = (0, 1)
-        self.epsilon = 1e-2
+        self.epsilon = 1e-6
         self.alpha = 0.1
         self.max_iterations = 10_0000

@@ -23,10 +23,10 @@ class ConjugateGradientFletcherReevesMethod:
             # Skąd mam wziąc x_k -> nie jest to jasne
             x_k = x_1
             d_k = d_1
-            gradient_x_k = gradient_x_1
 
             for k in range(n):
                 # Step 3
+                gradient_x_k = self.gradient(derivatives, x_k)
                 if self.is_converged(gradient_x_k, epsilon):
                     return x_k
 
