@@ -7,92 +7,48 @@ class ConjugateGradientFletcherReevesMethod:
         self.one_dimension_optimizer = one_dimension_optimizer
 
 
-    def optimize(self, function : MultiNumberFunction, x1, epsillon, alpha, n, derivatives):
+    def optimize(self, function : MultiNumberFunction, x_1, epsilon, alpha, n, derivatives):
+        # Cache variable needed during computation
+        x_k_1 = None
 
         # Step 1
-        x_1, e = x1, epsillon
+        # Define x_1 and epsilon
 
-        # Step 2
-        k = 1
-        gradient_x_1 = self.gradient(derivatives, x_1)
-        d_1 = -1 * gradient_x_1
+        while True:
+            # Step 2
+            gradient_x_1 = self.gradient(derivatives, x_1)
+            d_1 = -1 * gradient_x_1
 
-        # TODO: Zla aktualizacja
-        # Skąd mam wziąc x_k -> nie jest to jasne
-        x_k = x_1
-        d_k = d_1
-        gradient_x_k = gradient_x_1
+            # TODO: Zla aktualizacja
+            # Skąd mam wziąc x_k -> nie jest to jasne
+            x_k = x_1
+            d_k = d_1
+            gradient_x_k = gradient_x_1
 
-        # Step 3
-        if self.is_converged(d_1, e):
-            return x_k
+            for k in range(n):
+                # Step 3
+                if self.is_converged(d_1, epsilon):
+                    return x_k
 
-        # Step 4
-        #TODO: Sprecyzuj lepiej zakres, czym jest długośc kroku?
-        low = 0
-        high = 2 * alpha
-        alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
-        x_k_1 = x_k + alpha_k * d_k
+                # Step 4
+                #TODO: Sprecyzuj lepiej zakres, czym jest długośc kroku?
+                low = 0
+                high = 2 * alpha
+                alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
+                x_k_1 = x_k + alpha_k * d_k
 
-        # Step 5
-        gradient_x_k_1 = self.gradient(derivatives, x_k_1)
-        n_k = self.dot_product(gradient_x_k_1, gradient_x_k_1) / self.dot_product(gradient_x_k, gradient_x_k)
-        d_k_1 = -1 * gradient_x_k_1 + n_k * d_k
+                # Step 5
+                gradient_x_k_1 = self.gradient(derivatives, x_k_1)
+                n_k = self.dot_product(gradient_x_k_1, gradient_x_k_1) / self.dot_product(gradient_x_k, gradient_x_k)
+                d_k_1 = -1 * gradient_x_k_1 + n_k * d_k
 
-        # Step 6
-        if k < n:
-            d_k = d_k_1
-            x_k = x_k_1
-            # Jumpt to step 3
+                # Step 6
+                d_k = d_k_1
+                x_k = x_k_1
+                # Jump to step 3
 
-        x_1 = x_k_1
-        gradient_x_1 = gradient_x_k_1
-        # Jumpt to step 2
-
-
-
-
-
-        # SOME OLD CODE
-        # totally random numbers
-        max_iterations = 1000
-        x_k = x1
-        alpha_k = alpha
-
-        # Dodaj jeszcze jedną pętle xD
-
-        for k in range(0, max_iterations):
-            gradient_k = self.gradient(derivatives, x_k)
-            d_k = -1 * gradient_k
-
-            if self.is_converged(gradient_k, epsillon):
-                return x_k
-
-            #TODO: Sprawdz w notatkach ze spotkania, czy ten zakres ma sens
-            low = 0
-            high = 2
-
-            alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
-
-            #TODO: Ta zmienna będzie nadpisana
-            x_next_k = x_k + alpha_k * d_k
-            gradient_next_k = self.gradient(derivatives, x_next_k)
-
-            n_next = self.dot_product(gradient_next_k, gradient_next_k) / self.dot_product(gradient_k, gradient_k)
-
-            d_next_k = -1 * gradient_next_k + n_next * d_k
-
-            if k < n:
-                d_k = d_next_k
-                x_k = x_next_k
-                # k = k + 1
-            else:
-                #GO TO SECOND STEP XD
-                # xjk = x_next_k
-                gradient_k = gradient_next_k
-
-
-        return x_k
+            # Jump to step 2
+            x_1 = x_k_1
 
     def gradient(self, derivatives, x):
         assert len(derivatives) == len(x)
