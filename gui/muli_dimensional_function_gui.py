@@ -47,7 +47,9 @@ class MuliDimensionalFunctionGUI:
         self.x_1_label = QLabel("Initial position")
         self.x_1_edit = QLineEdit(self.EXAMPLE_FUNCTION_X_1[self.nunmber_of_function_variable])
 
-
+        # Epsilon
+        self.epsilon_label = QLabel("Epsilon")
+        self.epsilon_edit = QLineEdit("1e-4")
 
         self.runButton = QPushButton('Calculate!')
         self.runButton.setStyleSheet("background-color: #2958B5")
@@ -71,9 +73,13 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(self.x_1_label, rowIndex + 1, 0, 1, 1)
         layout.addWidget(self.x_1_edit, rowIndex + 1, 1, 1, 1)
 
-        layout.addWidget(self.runButton, rowIndex + 2, 0, 1, 2)
+        # Epsilon
+        layout.addWidget(self.epsilon_label, rowIndex + 2, 0, 1, 1)
+        layout.addWidget(self.epsilon_edit, rowIndex + 2, 1, 1, 1)
 
-        derivativeStartRow = rowIndex + 3
+        layout.addWidget(self.runButton, rowIndex + 3, 0, 1, 2)
+
+        derivativeStartRow = rowIndex + 4
 
         self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
 
@@ -129,6 +135,7 @@ class MuliDimensionalFunctionGUI:
         program_arguments.derivatives_expressions = derivative_expressions
         program_arguments.start_x = self._get_start_position()
         program_arguments.argc = self.nunmber_of_function_variable
+        program_arguments.epsilon = self._get_epsilon()
         return program_arguments
 
     def _get_function_expression(self):
@@ -147,3 +154,7 @@ class MuliDimensionalFunctionGUI:
         args = expression.split(',')
         args = [float(arg.strip()) for arg in args]
         return args
+
+    def _get_epsilon(self):
+        epsilon = float(self.epsilon_edit.text())
+        return epsilon
