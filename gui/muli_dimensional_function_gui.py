@@ -40,7 +40,7 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(functionLabel, rowIndex + 0, 0, 1, 1)
         layout.addWidget(self.function_edit, rowIndex + 0, 1, 1, 1)
 
-        layout.addWidget(self.runButton, rowIndex + 1, 0, 1, 1)
+        layout.addWidget(self.runButton, rowIndex + 1, 0, 1, 2)
 
         derivativeStartRow = rowIndex + 2
 
@@ -50,7 +50,7 @@ class MuliDimensionalFunctionGUI:
         assert self.nunmber_of_function_variable <= len(self.DERIVATIVES_LABELS)
 
         self.derivative_line_edits = []
-        for i in range(self.nunmber_of_function_variable):
+        for i in range(len(self.DERIVATIVES_LABELS)):
             label_name = self.DERIVATIVES_LABELS[i]
             label = QLabel(label_name)
             layout.addWidget(label, startIndex, 0, 1, 1)
@@ -58,6 +58,9 @@ class MuliDimensionalFunctionGUI:
             layout.addWidget(line_edit, startIndex, 1, 1, 1)
             self.derivative_line_edits.append(line_edit)
             startIndex += 1
+
+            if i + 1 > self.nunmber_of_function_variable:
+                line_edit.setReadOnly(True)
 
     def setOnCalculationStart(self, callback):
         self.onCalculationStartCallback = callback
@@ -88,6 +91,8 @@ class MuliDimensionalFunctionGUI:
 
     def _get_derivatives_expressions(self):
         expressions = []
-        for line_edit in self.derivative_line_edits:
-            expressions.append(line_edit.text())
+        for i in range(self.nunmber_of_function_variable):
+            line_edit = self.derivative_line_edits[i]
+            expression = line_edit.text()
+            expressions.append(expression)
         return expressions
