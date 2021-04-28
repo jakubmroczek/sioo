@@ -8,6 +8,9 @@ class ConjugateGradientFletcherReevesMethod:
 
 
     def optimize(self, function : MultiNumberFunction, x_1, epsilon, alpha, n, derivatives):
+        # Search history, needed to plot stuff in GUI
+        search_history = []
+
         # Cache variable needed during computation
         x_k_1 = None
 
@@ -27,7 +30,8 @@ class ConjugateGradientFletcherReevesMethod:
                 # Step 3
                 gradient_x_k = self.gradient(derivatives, x_k)
                 if self.is_converged(gradient_x_k, epsilon):
-                    return x_k
+                    search_history.append(x_k)
+                    return x_k, search_history
 
                 # Step 4
                 low = 0
@@ -42,6 +46,7 @@ class ConjugateGradientFletcherReevesMethod:
 
                 # Step 6
                 d_k = d_k_1
+                search_history.append(x_k)
                 x_k = x_k_1
                 # Jump to step 3
 
