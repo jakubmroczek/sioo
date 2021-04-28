@@ -13,10 +13,15 @@ def multidimensional_calculation(arguments):
     alpha = arguments.alpha
     max_iterations = arguments.max_iterations
 
-    result = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
+    result, search_history = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
 
-    print('the result is ')
+    print('*' * 100)
+
+    print('The result is ')
     print(result)
+
+    print('Search points are')
+    print(search_history)
 
     return result
 
