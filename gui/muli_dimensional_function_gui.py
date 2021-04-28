@@ -127,6 +127,7 @@ class MuliDimensionalFunctionGUI:
         program_arguments = MuliDimensionProgramArguments()
         program_arguments.expression = self._get_function_expression()
         program_arguments.derivatives_expressions = derivative_expressions
+        program_arguments.start_x = self._get_start_position()
         return program_arguments
 
     def _get_function_expression(self):
@@ -139,3 +140,9 @@ class MuliDimensionalFunctionGUI:
             expression = line_edit.text()
             expressions.append(expression)
         return expressions
+
+    def _get_start_position(self):
+        expression = self.x_1_edit.text()
+        args = expression.split(',')
+        args = [float(arg.strip()) for arg in args]
+        return args
