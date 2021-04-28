@@ -1,5 +1,5 @@
 from function import MultiNumberFunction, FunctionInterval
-from math import sqrt
+from numpy import linalg
 import numpy as np
 
 class ConjugateGradientFletcherReevesMethod:
@@ -85,8 +85,4 @@ class ConjugateGradientFletcherReevesMethod:
         return np.dot(a, b)
 
     def vector_length(self, vector):
-        length = 0
-        for component in vector:
-            length += component ** 2
-        length = sqrt(length)
-        return length
+        return linalg.norm(vector)
