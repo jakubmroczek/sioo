@@ -21,6 +21,7 @@ class ConjugateGradientFletcherReevesMethod:
 
             x_k = x_1
             d_k = d_1
+            alpha_k = alpha
 
             for k in range(n):
                 # Step 3
@@ -29,9 +30,8 @@ class ConjugateGradientFletcherReevesMethod:
                     return x_k
 
                 # Step 4
-                #TODO: Sprecyzuj lepiej zakres, czym jest długośc kroku?
                 low = 0
-                high = 2 * alpha
+                high = 2 * alpha_k
                 alpha_k = self.directional_minimization(function, x_k, d_k, low, high)
                 x_k_1 = x_k + alpha_k * d_k
 
