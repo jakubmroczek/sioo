@@ -19,8 +19,6 @@ class ConjugateGradientFletcherReevesMethod:
             gradient_x_1 = self.gradient(derivatives, x_1)
             d_1 = -1 * gradient_x_1
 
-            # TODO: Zla aktualizacja
-            # Skąd mam wziąc x_k -> nie jest to jasne
             x_k = x_1
             d_k = d_1
 
