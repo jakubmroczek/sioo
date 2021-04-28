@@ -19,6 +19,17 @@ class MuliDimensionalFunctionGUI:
         8: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2 + q ** 2 + r ** 2 + t ** 2",
     }
 
+    EXAMPLE_FUNCTION_DERIVATIVES = [
+        '2 * x',
+        '2 * y',
+        '2 * z',
+        '2 * v',
+        '2 * w',
+        '2 * q',
+        '2 * r',
+        '2 * t',
+    ]
+
     def __init__(self, nunmber_of_function_variable):
         self.nunmber_of_function_variable = nunmber_of_function_variable
 
@@ -55,7 +66,8 @@ class MuliDimensionalFunctionGUI:
             label_name = self.DERIVATIVES_LABELS[i]
             label = QLabel(label_name)
             layout.addWidget(label, startIndex, 0, 1, 1)
-            line_edit = QLineEdit()
+            derivative_expression = self.EXAMPLE_FUNCTION_DERIVATIVES[i]
+            line_edit = QLineEdit(derivative_expression)
             layout.addWidget(line_edit, startIndex, 1, 1, 1)
             self.derivative_line_edits.append(line_edit)
             startIndex += 1
