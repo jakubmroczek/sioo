@@ -53,8 +53,8 @@ class ConjugateGradientFletcherReevesMethod:
         gradient = np.array([derivative.evaluate(x) for derivative in derivatives])
         return gradient
 
-    def is_converged(self, gradient, epsilon):
-        return self.vector_length(gradient) < epsilon
+    def is_converged(self, gradient, epsillon):
+        return self.vector_length(gradient) < epsillon
 
     #TODO: put low high in FuncitonInterval
     def directional_minimization(self, function, x_k, d_k, low, high):
