@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (QLineEdit,
 from program_arguments import MuliDimensionProgramArguments
 from function import MultiNumberFunction
 import numpy as np
+from gui.plot_3d import Plot3D
 
 class MuliDimensionalFunctionGUI:
     DERIVATIVES_LABELS = [
@@ -135,7 +136,8 @@ class MuliDimensionalFunctionGUI:
             print(f'Caught unsupported exception!\n Traceback: "{traceback.print_exc()}"')
 
     def _plot(self, result):
-        pass
+        plot = Plot3D()
+        plot.show()
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
