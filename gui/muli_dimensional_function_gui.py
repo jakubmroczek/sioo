@@ -19,6 +19,16 @@ class MuliDimensionalFunctionGUI:
         8: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2 + q ** 2 + r ** 2 + t ** 2",
     }
 
+    EXAMPLE_FUNCTION_X_1 = {
+        2: "1, 2",
+        3: "1, 2, 3",
+        4: "1, 2, 3, 4",
+        5: "1, 2, 3, 4, 5",
+        6: "1, 2, 3, 4, 5, 6",
+        7: "1, 2, 3, 4, 5, 6, 7",
+        8: "1, 2, 3, 4, 5, 6, 7, 8",
+    }
+
     EXAMPLE_FUNCTION_DERIVATIVES = [
         '2 * x',
         '2 * y',
@@ -32,6 +42,12 @@ class MuliDimensionalFunctionGUI:
 
     def __init__(self, nunmber_of_function_variable):
         self.nunmber_of_function_variable = nunmber_of_function_variable
+
+        # Initial position x1
+        self.x_1_label = QLabel("Initial position")
+        self.x_1_edit = QLineEdit(self.EXAMPLE_FUNCTION_X_1[self.nunmber_of_function_variable])
+
+
 
         self.runButton = QPushButton('Calculate!')
         self.runButton.setStyleSheet("background-color: #2958B5")
@@ -52,9 +68,12 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(functionLabel, rowIndex + 0, 0, 1, 1)
         layout.addWidget(self.function_edit, rowIndex + 0, 1, 1, 1)
 
-        layout.addWidget(self.runButton, rowIndex + 1, 0, 1, 2)
+        layout.addWidget(self.x_1_label, rowIndex + 1, 0, 1, 1)
+        layout.addWidget(self.x_1_edit, rowIndex + 1, 1, 1, 1)
 
-        derivativeStartRow = rowIndex + 2
+        layout.addWidget(self.runButton, rowIndex + 2, 0, 1, 2)
+
+        derivativeStartRow = rowIndex + 3
 
         self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
 
@@ -105,9 +124,13 @@ class MuliDimensionalFunctionGUI:
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
-        programArugments = MuliDimensionProgramArguments()
-        programArugments.derivatives_expressions = derivative_expressions
-        return programArugments
+        program_arguments = MuliDimensionProgramArguments()
+        program_arguments.expression = self._get_function_expression()
+        program_arguments.derivatives_expressions = derivative_expressions
+        return program_arguments
+
+    def _get_function_expression(self):
+        return self.function_edit.text()
 
     def _get_derivatives_expressions(self):
         expressions = []
