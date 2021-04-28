@@ -28,5 +28,5 @@ class MuliDimensionProgramArguments:
         self.argc = 2
         self.start_x = (10, 15)
         self.epsilon = 1e-6
-        self.alpha = 1
+        self.alpha = 1.0
         self.max_iterations = 10_0000
