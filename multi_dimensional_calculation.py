@@ -2,6 +2,14 @@ from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcher
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import MultiNumberFunction
 
+class MultiDimensionalCalculationResult:
+
+    def __init__(self):
+        super().__init__()
+        self.function = None
+        self.optimum = None
+        self.search_history = None
+
 def multidimensional_calculation(arguments):
     goldenSectionSearchOptimzier = GoldenSectionSearchOptimizer()
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
@@ -13,17 +21,24 @@ def multidimensional_calculation(arguments):
     alpha = arguments.alpha
     max_iterations = arguments.max_iterations
 
-    result, search_history = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
+    optimum, search_history = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
 
     print('Optimum found at: ')
-    _log_x(result)
+    _log_x(optimum)
 
     print('')
 
     print('Search history:')
     _log_search_history(search_history)
 
+    result = MultiDimensionalCalculationResult()
+    result.function = function
+    result.optimum = optimum
+    result.search_history = search_history
+
     return result
+
+
 
 def _log_x(x):
     print(x)

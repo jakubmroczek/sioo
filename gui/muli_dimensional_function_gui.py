@@ -137,7 +137,7 @@ class MuliDimensionalFunctionGUI:
 
     def _plot(self, result):
         plot = Plot3D()
-        plot.show()
+        plot.show(result)
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
