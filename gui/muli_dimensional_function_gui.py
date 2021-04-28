@@ -52,8 +52,8 @@ class MuliDimensionalFunctionGUI:
         self.epsilon_edit = QLineEdit("1e-4")
 
         # K label
-        self.k_label = QLabel("k (max number inner loops)")
-        self.k_edit = QLineEdit('10000')
+        self.n_label = QLabel("n (max number inner loops)")
+        self.n_edit = QLineEdit('10000')
 
         self.runButton = QPushButton('Calculate!')
         self.runButton.setStyleSheet("background-color: #2958B5")
@@ -82,8 +82,8 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(self.epsilon_edit, rowIndex + 2, 1, 1, 1)
 
         # K
-        layout.addWidget(self.k_label, rowIndex + 3, 0, 1, 1)
-        layout.addWidget(self.k_edit, rowIndex + 3, 1, 1, 1)
+        layout.addWidget(self.n_label, rowIndex + 3, 0, 1, 1)
+        layout.addWidget(self.n_edit, rowIndex + 3, 1, 1, 1)
 
         layout.addWidget(self.runButton, rowIndex + 4, 0, 1, 2)
 
@@ -144,7 +144,7 @@ class MuliDimensionalFunctionGUI:
         program_arguments.start_x = self._get_start_position()
         program_arguments.argc = self.nunmber_of_function_variable
         program_arguments.epsilon = self._get_epsilon()
-        program_arguments.k = self._get_k()
+        program_arguments.max_iterations = self._get_n()
         return program_arguments
 
     def _get_function_expression(self):
@@ -168,6 +168,6 @@ class MuliDimensionalFunctionGUI:
         epsilon = float(self.epsilon_edit.text())
         return epsilon
 
-    def _get_k(self):
-        k = int(self.k_edit.text())
+    def _get_n(self):
+        k = int(self.n_edit.text())
         return k
