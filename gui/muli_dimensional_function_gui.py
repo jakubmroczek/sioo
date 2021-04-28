@@ -23,6 +23,7 @@ class MuliDimensionalFunctionGUI:
         self.nunmber_of_function_variable = nunmber_of_function_variable
 
         self.runButton = QPushButton('Calculate!')
+        self.runButton.setStyleSheet("background-color: #2958B5")
 
         # Calculation start callback
         self.onCalculationStartCallback = None

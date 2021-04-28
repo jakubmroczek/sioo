@@ -70,6 +70,7 @@ class OneDimensionalFunctionGUI:
         self.optimizerComboBox = QComboBox()
         self.optimizerComboBox.addItems([self.BISECTION, self.GOLDEN_SECTION_SEARCH, self.SCIPY_BISECTION, self.SCIPTY_GOLDEN_SECITION_SEARCH])
         self.runButton = QPushButton('Calculate!')
+        self.runButton.setStyleSheet("background-color: #2958B5")
 
         # Line edit for iterations and xtol
         self.maxIterationsEdit = QLineEdit('5000')
