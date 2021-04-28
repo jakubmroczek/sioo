@@ -90,8 +90,6 @@ class GUI(QDialog):
     def _should_relayout_to_one_dimenstional(self, index):
         index = int(index)
         single_argument_function_index = 1
-        print(index)
-        print(index == single_argument_function_index)
         return index == single_argument_function_index
 
     def _get_function_variables_n(self):

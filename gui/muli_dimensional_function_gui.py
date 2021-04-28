@@ -73,5 +73,14 @@ class MuliDimensionalFunctionGUI:
         print('plotting a beautiful function')
 
     def _getProgramArguments(self):
+        derivative_expressions = self._get_derivatives_expressions()
+        print(derivative_expressions)
         programArugments = MuliDimensionProgramArguments()
+        # programArugments.derivatives_expressions = derivative_expressions
         return programArugments
+
+    def _get_derivatives_expressions(self):
+        expressions = []
+        for line_edit in self.derivative_line_edits:
+            expressions.append(line_edit.text())
+        return expressions
