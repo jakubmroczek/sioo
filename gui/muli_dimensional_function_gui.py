@@ -74,7 +74,6 @@ class MuliDimensionalFunctionGUI:
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
-        print(derivative_expressions)
         programArugments = MuliDimensionProgramArguments()
         programArugments.derivatives_expressions = derivative_expressions
         return programArugments
