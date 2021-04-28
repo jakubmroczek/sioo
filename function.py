@@ -1,4 +1,4 @@
-# Do not delete this, otherwise the app will not support many standard math function!!
+# Do not delete this, otherwise the app will not support many standard math_utils function!!
 from math import *
 
 class UnaryFunction:
