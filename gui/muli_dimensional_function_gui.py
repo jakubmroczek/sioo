@@ -9,10 +9,18 @@ class MuliDimensionalFunctionGUI:
         f'df / d{arg}' for arg in MultiNumberFunction.ARGUMENTS
     ]
 
+    EXAMPLE_FUNCTIONS = {
+        2: "x ** 2 + y ** 2",
+        3: "x ** 2 + y ** 2 + z ** 2",
+        4: "x ** 2 + y ** 2 + z ** 2 + v ** 2",
+        5: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2",
+        6: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2 + q ** 2 ",
+        7: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2 + q ** 2 + r ** 2",
+        8: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2 + q ** 2 + r ** 2 + t ** 2",
+    }
+
     def __init__(self, nunmber_of_function_variable):
         self.nunmber_of_function_variable = nunmber_of_function_variable
-
-        self.functionLabel = QLineEdit('x ** 2 - 2 * x - 10 + y + y ** 2')
 
         self.runButton = QPushButton('Calculate!')
 
@@ -27,10 +35,10 @@ class MuliDimensionalFunctionGUI:
         This method is called by the GUI class. The layout object is expected to be of QGridLayout.
         '''
         functionLabel = QLabel('Function:')
-
+        self.function_edit = QLineEdit(self.EXAMPLE_FUNCTIONS[self.nunmber_of_function_variable])
 
         layout.addWidget(functionLabel, rowIndex + 0, 0, 1, 1)
-        layout.addWidget(self.functionLabel, rowIndex + 0, 1, 1, 1)
+        layout.addWidget(self.function_edit, rowIndex + 0, 1, 1, 1)
 
         layout.addWidget(self.runButton, rowIndex + 1, 0, 1, 1)
 
