@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (QLineEdit,
                              QPushButton, QLabel, QMessageBox)
 from program_arguments import MuliDimensionProgramArguments
 from function import MultiNumberFunction
+import numpy as np
 
 class MuliDimensionalFunctionGUI:
     DERIVATIVES_LABELS = [
@@ -161,7 +162,7 @@ class MuliDimensionalFunctionGUI:
     def _get_start_position(self):
         expression = self.x_1_edit.text()
         args = expression.split(',')
-        args = [float(arg.strip()) for arg in args]
+        args = np.array([float(arg.strip()) for arg in args])
         return args
 
     def _get_epsilon(self):
