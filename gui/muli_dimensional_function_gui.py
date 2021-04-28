@@ -135,7 +135,7 @@ class MuliDimensionalFunctionGUI:
             print(f'Caught unsupported exception!\n Traceback: "{traceback.print_exc()}"')
 
     def _plot(self, result):
-        print('plotting a beautiful function')
+        pass
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
