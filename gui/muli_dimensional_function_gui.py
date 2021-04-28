@@ -128,6 +128,7 @@ class MuliDimensionalFunctionGUI:
         program_arguments.expression = self._get_function_expression()
         program_arguments.derivatives_expressions = derivative_expressions
         program_arguments.start_x = self._get_start_position()
+        program_arguments.argc = self.nunmber_of_function_variable
         return program_arguments
 
     def _get_function_expression(self):
