@@ -64,16 +64,23 @@ class MuliDimensionalFunctionGUI:
         self.derivative_line_edits = []
         for i in range(len(self.DERIVATIVES_LABELS)):
             label_name = self.DERIVATIVES_LABELS[i]
+
             label = QLabel(label_name)
             layout.addWidget(label, startIndex, 0, 1, 1)
+
             derivative_expression = self.EXAMPLE_FUNCTION_DERIVATIVES[i]
-            line_edit = QLineEdit(derivative_expression)
+            line_edit = QLineEdit()
+            if i + 1 <= self.nunmber_of_function_variable:
+                line_edit.setText(derivative_expression)
+            else:
+                line_edit.setReadOnly(True)
+
             layout.addWidget(line_edit, startIndex, 1, 1, 1)
+
             self.derivative_line_edits.append(line_edit)
+
             startIndex += 1
 
-            if i + 1 > self.nunmber_of_function_variable:
-                line_edit.setReadOnly(True)
 
     def setOnCalculationStart(self, callback):
         self.onCalculationStartCallback = callback
