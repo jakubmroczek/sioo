@@ -9,7 +9,9 @@ class MuliDimensionalFunctionGUI:
         f'df / d{arg}' for arg in MultiNumberFunction.ARGUMENTS
     ]
 
-    def __init__(self):
+    def __init__(self, nunmber_of_function_variable):
+        self.nunmber_of_function_variable = nunmber_of_function_variable
+
         self.functionLabel = QLineEdit('x ** 2 - 2 * x - 10 + y + y ** 2')
 
         self.runButton = QPushButton('Calculate!')
@@ -37,8 +39,17 @@ class MuliDimensionalFunctionGUI:
         self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
 
     def _add_derivative_widgets_to_layout(self, layout, startIndex):
-        for label_name in self.DERIVATIVES_LABELS:
-            print(label_name)
+        assert self.nunmber_of_function_variable <= len(self.DERIVATIVES_LABELS)
+
+        self.derivative_line_edits = []
+        for i in range(self.nunmber_of_function_variable):
+            label_name = self.DERIVATIVES_LABELS[i]
+            label = QLabel(label_name)
+            layout.addWidget(label, startIndex, 0, 1, 1)
+            line_edit = QLineEdit()
+            layout.addWidget(line_edit, startIndex, 1, 1, 1)
+            self.derivative_line_edits.append(line_edit)
+            startIndex += 1
 
     def setOnCalculationStart(self, callback):
         self.onCalculationStartCallback = callback

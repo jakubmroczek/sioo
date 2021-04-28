@@ -51,9 +51,10 @@ class GUI(QDialog):
 
             self._remove_extra_widgets()
 
-            if self._should_relayout_to_one_dimenstional():
+            if self._should_relayout_to_one_dimenstional(value):
                 self._init_one_dimensional_function_gui()
             else:
+                print('init stuff')
                 self._init_multi_dimensional_function_gui()
 
     def _init_one_dimensional_function_gui(self):
@@ -63,7 +64,8 @@ class GUI(QDialog):
         self.is_one_dimensional_function_gui = True
 
     def _init_multi_dimensional_function_gui(self):
-        self.impl = MuliDimensionalFunctionGUI()
+        function_variables_n = self._get_function_variables_n()
+        self.impl = MuliDimensionalFunctionGUI(function_variables_n)
         self.impl.add_widgets_to_layout(self.layout, self.NUMBER_OF_BASIC_WIDGETS)
         self.impl.setOnCalculationStart(self.onMulitDimensionalCalculationStartCallback)
         self.is_one_dimensional_function_gui = False
@@ -80,11 +82,17 @@ class GUI(QDialog):
         value = int(value)
         single_argument_function_index = 1
 
-        if value > single_argument_function_index:
-            return self.is_one_dimensional_function_gui
-
         if value == single_argument_function_index:
             return not self.is_one_dimensional_function_gui
+        else:
+            return True
 
-    def _should_relayout_to_one_dimenstional(self):
-        return not self.is_one_dimensional_function_gui
+    def _should_relayout_to_one_dimenstional(self, index):
+        index = int(index)
+        single_argument_function_index = 1
+        print(index)
+        print(index == single_argument_function_index)
+        return index == single_argument_function_index
+
+    def _get_function_variables_n(self):
+        return int(self.functionArgumentNumberComboBox.currentText())
