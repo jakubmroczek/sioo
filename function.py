@@ -16,6 +16,12 @@ class MultiNumberFunction:
     '''
     ARGUMENTS = ['x', 'y', 'z', 'v', 'w', 'q', 'r', 't']
 
+    # We have to pass this map in eval functions, cause otherwise some math stuff is not visible
+    GLOBALS = {
+        'sin': sin,
+        'cos': cos,
+    }
+
     def __init__(self, expression, argc):
         self.expression = expression
         self.argc = argc
@@ -28,7 +34,7 @@ class MultiNumberFunction:
             argument_name = self.ARGUMENTS[index]
             argument_value = argv[index]
             arguments[argument_name] = argument_value
-        return eval(self.expression, arguments)
+        return eval(self.expression, self.GLOBALS, arguments)
 
 
 class FunctionInterval:
