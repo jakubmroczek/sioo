@@ -9,6 +9,8 @@ class Plot3D:
         self._plot_intermediate_steps(result, ax)
         self._plot_function_surface(result, ax)
         
+        fig.canvas.set_window_title('Wykres funkcji')
+
         plt.show()
 
     def _plot_function_surface(self, result, ax):
