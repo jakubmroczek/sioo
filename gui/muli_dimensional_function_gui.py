@@ -125,7 +125,11 @@ class MuliDimensionalFunctionGUI:
 
         try:
             result = self.onCalculationStartCallback(programArguments)
-            self._plot(result)
+            #  We only plot if we have 2 dimensional case, otherwise it does not make sense
+            if self.nunmber_of_function_variable == 2:
+                self._plot(result)
+            
+            self._print_to_stoudt(result)
         except Exception as e:
             msg = QMessageBox()
             msg.setWindowTitle('Error')
@@ -138,6 +142,16 @@ class MuliDimensionalFunctionGUI:
     def _plot(self, result):
         plot = Plot3D()
         plot.show(result)
+
+    def _print_to_stoudt(self, result):
+        print('*' * 100)
+        print(f'Function: {result.function.expression}')
+        print(f'Minimum at: {result.optimum}')
+        print(f'Search history:')
+        for index, step in enumerate(result.search_history):
+            print(f'\t{index} {step}')
+            
+        print('')
 
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
