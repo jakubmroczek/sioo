@@ -8,7 +8,8 @@ class Plot3D:
         
         self._plot_intermediate_steps(result, ax)
         self._plot_function_surface(result, ax)
-        
+        self._plot_optimum_place(result, ax)
+
         fig.canvas.set_window_title('Wykres funkcji')
 
         plt.show()
@@ -22,21 +23,25 @@ class Plot3D:
 
         Z = self._function_at_xy(X, Y, result.function)
         
-        # ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-        #         cmap='binary', edgecolor='none')
-
         ax.plot_wireframe(X, Y, Z, color='black')
         
     def _plot_intermediate_steps(self, result, ax):
         # Coordinates of the points on the scatter grid
         xs, ys, zs = [], [], []
 
-        for step in result.search_history:
+        for i in range(0, len(result.search_history) - 1):
+            step = result.search_history[i]
             xs.append(step[0])
             ys.append(step[1])
             zs.append(result.function.evaluate(step))
 
         ax.scatter(xs, ys, zs, marker='x', color='red', s=500)
+
+    def _plot_optimum_place(self, result, ax):
+        xs = [result.optimum[0]]
+        ys = [result.optimum[1]]
+        zs = [result.function.evaluate(result.optimum)]
+        ax.scatter(xs, ys, zs, marker='o', color='blue', s=1000)
 
     def _function_at_xy(self, x, y, function):        
             Z = []
