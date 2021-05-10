@@ -3,14 +3,11 @@ import matplotlib.pyplot as plt
 
 class Plot3D:
     def show(self, result):
-        fig = plt.figure()
+        fig = plt.figure(figsize=(10, 10))
         ax = plt.axes(projection='3d')
         
         self._plot_intermediate_steps(result, ax)
         self._plot_function_surface(result, ax)
-        
-        # TODO: Rename the title
-        ax.set_title('surface');
         
         plt.show()
 
@@ -37,7 +34,7 @@ class Plot3D:
             ys.append(step[1])
             zs.append(result.function.evaluate(step))
 
-        ax.scatter(xs, ys, zs, marker='x', color='red', s=5s00)
+        ax.scatter(xs, ys, zs, marker='x', color='red', s=500)
 
     def _function_at_xy(self, x, y, function):        
             Z = []
