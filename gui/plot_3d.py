@@ -6,8 +6,8 @@ class Plot3D:
         fig = plt.figure()
         ax = plt.axes(projection='3d')
         
-        self._plot_function_surface(result, ax)
         self._plot_intermediate_steps(result, ax)
+        self._plot_function_surface(result, ax)
         
         # TODO: Rename the title
         ax.set_title('surface');
@@ -23,14 +23,21 @@ class Plot3D:
 
         Z = self._function_at_xy(X, Y, result.function)
         
-        ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
-                cmap='viridis', edgecolor='none')
+        # ax.plot_surface(X, Y, Z, rstride=1, cstride=1,
+        #         cmap='binary', edgecolor='none')
+
+        ax.plot_wireframe(X, Y, Z, color='black')
         
     def _plot_intermediate_steps(self, result, ax):
-        xs = [1,  2 , 43, 4]
-        ys = [1,  2 , 43, 4]
-        zs = [1,  2 , 43, 4]
-        ax.scatter(xs, ys, zs, marker='x')
+        # Coordinates of the points on the scatter grid
+        xs, ys, zs = [], [], []
+
+        for step in result.search_history:
+            xs.append(step[0])
+            ys.append(step[1])
+            zs.append(result.function.evaluate(step))
+
+        ax.scatter(xs, ys, zs, marker='x', color='red', s=5s00)
 
     def _function_at_xy(self, x, y, function):        
             Z = []
