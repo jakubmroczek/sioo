@@ -23,28 +23,12 @@ def multidimensional_calculation(arguments):
 
     optimum, search_history = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
 
-    print('Optimum found at: ')
-    _log_x(optimum)
-
-    print('')
-
-    print('Search history:')
-    _log_search_history(search_history)
-
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
     result.search_history = search_history
 
     return result
-
-
-
-def _log_x(x):
-    print(x)
-def _log_search_history(history):
-    for h in history:
-        print(h)
 
 def _get_function(expression, argc):
     return MultiNumberFunction(expression, argc)
