@@ -78,7 +78,7 @@ class CalculationResult:
             result += f'Minimum interval xtol: "{abs(self.minimum_end_interval.high - self.minimum_end_interval.low)}"\n'
         result += f'Intermediate intervals: "{self.intermediate_intervals}"\n'
         result += f'Executed iterations: "{self.executed_iterations}"\n'
-        result += f'Executed experiments: "{self.executed_experiments}\n"'
+        result += f'Executed experiments: "{self.executed_experiments}"\n'
         return result
 
 def get_function(expression):
