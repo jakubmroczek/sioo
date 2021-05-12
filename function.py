@@ -20,6 +20,7 @@ class MultiNumberFunction:
     GLOBALS = {
         'sin': sin,
         'cos': cos,
+        'log': log,
     }
 
     def __init__(self, expression, argc):
