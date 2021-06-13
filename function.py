@@ -37,6 +37,25 @@ class MultiNumberFunction:
             arguments[argument_name] = argument_value
         return eval(self.expression, self.GLOBALS, arguments)
 
+class PenaltyMethodFunction:
+    def __init__(self, penalty_function : MultiNumberFunction):
+        self.penalty_function = penalty_function
+    
+    def evaluate(self, argv):
+        context = self._make_eval_context(argv)
+        function_value = eval(self.expression, self.GLOBALS, context)
+        penalty_value = self.penalty_function(argv)
+        return function_value + penalty_value
+
+    def _make_eval_context(self, argv):
+        assert len(argv) == self.argc
+        #TODO: Make this an evaluation context
+        arguments = {}
+        for index in range(self.argc):
+            argument_name = self.ARGUMENTS[index]
+            argument_value = argv[index]
+            arguments[argument_name] = argument_value
+        return arguments
 
 class FunctionInterval:
     def __init__(self, low, high):
