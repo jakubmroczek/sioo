@@ -38,13 +38,30 @@ class MultiNumberFunction:
         return eval(self.expression, self.GLOBALS, arguments)
 
 class PenaltyMethodFunction:
-    def __init__(self, penalty_function : MultiNumberFunction):
+    '''
+    Supports up to 8 arguments
+    '''
+    ARGUMENTS = ['x', 'y', 'z', 'v', 'w', 'q', 'r', 't']
+
+    # We have to pass this map in eval functions, cause otherwise some math stuff is not visible
+    GLOBALS = {
+        'sin': sin,
+        'cos': cos,
+        'log': log,
+        'max': max
+    }
+
+    def __init__(self, penalty_function : MultiNumberFunction, oryginal_fun, argc):
         self.penalty_function = penalty_function
+        self.oryginal_fun = oryginal_fun
+        self.argc = argc
+        self.expression = oryginal_fun.expression + ' + ' + penalty_function.expression
     
     def evaluate(self, argv):
         context = self._make_eval_context(argv)
-        function_value = eval(self.expression, self.GLOBALS, context)
-        penalty_value = self.penalty_function(argv)
+        # function_value = eval(self.expression, self.GLOBALS, context)
+        function_value = self.oryginal_fun.evaluate(argv)
+        penalty_value = self.penalty_function.evaluate(argv)
         return function_value + penalty_value
 
     def _make_eval_context(self, argv):
