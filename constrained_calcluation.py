@@ -15,13 +15,14 @@ def constrained_caluclation(arguments):
     function = _get_function(arguments.expression, arguments.argc)
 
     #TODO: Create more general penalty function
+    #TODO: HANDLE ALSO >= SCENARIOS !!
+    # TODO: ADD C0 PARAM TO GUI
     con1 = "-3 * x - 2 * y + 6"
     con2 = "-1 * x + y - 3"
     con3 = "1 * x + 1 * y - 7"
     con4 = " 0.66 * x - y - (4/3)"
     
-    # 1000 is penalty parameter
-    template = '1000 * max(0, (%s)) ** 2'
+    template = 'max(0, (%s)) ** 2'
     con1 = template % con1
     con2 = template % con2
     con3 = template % con3

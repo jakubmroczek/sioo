@@ -56,23 +56,15 @@ class PenaltyMethodFunction:
         self.oryginal_fun = oryginal_fun
         self.argc = argc
         self.expression = oryginal_fun.expression + ' + ' + penalty_function.expression
+        self.penalty_coeff = 1.2
     
     def evaluate(self, argv):
-        context = self._make_eval_context(argv)
-        # function_value = eval(self.expression, self.GLOBALS, context)
         function_value = self.oryginal_fun.evaluate(argv)
         penalty_value = self.penalty_function.evaluate(argv)
-        return function_value + penalty_value
+        return function_value + self.penalty_coeff * penalty_value
 
-    def _make_eval_context(self, argv):
-        assert len(argv) == self.argc
-        #TODO: Make this an evaluation context
-        arguments = {}
-        for index in range(self.argc):
-            argument_name = self.ARGUMENTS[index]
-            argument_value = argv[index]
-            arguments[argument_name] = argument_value
-        return arguments
+    def set_penalty_parameter(self, coef):
+        self.penalty_coeff = coef    
 
 class FunctionInterval:
     def __init__(self, low, high):
