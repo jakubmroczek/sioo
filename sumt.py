@@ -14,8 +14,8 @@ class SUMT:
         
         max_iter = 1_000_000 
         c_k = c_0
-        x_k_1 = x_0
-        x_k = x_k_1
+        x_k_prev = x_0
+        x_k = x_k_prev  
 
         for k in range(1, max_iter):
             # TODO: set c0 of the constarained function
@@ -23,15 +23,17 @@ class SUMT:
             # TODO: Pass additional params
             x_k = self._unconstrained_search()
 
-            if self._should_stop(function, x_k_1, x_k):
+            if self._should_stop(function, x_k, x_k_prev):
                 return x_k
 
             c_k = self.growth_param * c_k
 
             function.set_penalty_parameter(c_k)
 
-    def _unconstrained_search(self, params):
-        return self.fletcher_reves.optimize('some args')
+    def _unconstrained_search(self,  x_1, epsilon, derivatives):
+        alpha = 0.01
+        n = 10_000
+        return self.fletcher_reves.optimize(x_1, epsilon, alpha, n, derivatives)
 
     def _should_stop(self, function, x_k_1, x_k):
         if abs(x_k_1 - x_k) < self.epsilon:
