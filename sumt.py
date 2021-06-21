@@ -30,7 +30,7 @@ class SUMT:
         alpha = 0.01
         n = 10_000
         epsilon = self.epsilon
-        return self.fletcher_reves.optimize(x_1, function, epsilon, alpha, n, derivatives)
+        return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 
     def _should_stop(self, function, x_k_1, x_k):
         if abs(x_k_1 - x_k) < self.epsilon:

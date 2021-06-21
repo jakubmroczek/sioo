@@ -1,6 +1,7 @@
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import MultiNumberFunction, PenaltyMethodFunction
+from sumt import SUMT
 
 class MultiDimensionalCalculationResult:
 
@@ -10,14 +11,10 @@ class MultiDimensionalCalculationResult:
         self.optimum = None
         self.search_history = None
 
-def constrained_caluclation(arguments):
-    goldenSectionSearchOptimzier = GoldenSectionSearchOptimizer()
-    method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
-
+def constrained_caluclation(arguments):    
     function = _get_function(arguments.expression, arguments.argc)
 
-
-    #TODO: My penalty function
+    #TODO: Create more general penalty function
     con1 = "-3 * x - 2 * y + 6"
     con2 = "-1 * x + y - 3"
     con3 = "1 * x + 1 * y - 7"
@@ -39,13 +36,21 @@ def constrained_caluclation(arguments):
 
     derivatives = _get_derivatives(arguments.derivatives_expressions, arguments.argc)
     
-    x = arguments.start_x
+    x_0 = arguments.start_x
     epsilon = arguments.epsilon
+    # TODO: Pass alpha to the SUMT
     alpha = arguments.alpha
     max_iterations = arguments.max_iterations
 
-    optimum, search_history = method.optimize(function, x, epsilon, alpha, max_iterations, derivatives)
+    growth_param = 1.5
+    epsilon = 1e-4
+    c_0 = 3
 
+    goldenSectionSearchOptimzier = GoldenSectionSearchOptimizer()
+    method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
+    method = SUMT(method, growth_param, epsilon)
+
+    optimum, search_history = method.optimize(function, derivatives, x_0, c_0)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
