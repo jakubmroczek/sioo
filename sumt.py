@@ -27,6 +27,10 @@ class SUMT:
 
             function.set_penalty_parameter(c_k)
 
+        print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
+
+        return x_k
+
     def _unconstrained_search(self, function, x_1, derivatives):
         alpha = 0.01
         n = 10_000

@@ -17,6 +17,9 @@ def constrained_caluclation(arguments):
     #TODO: Create more general penalty function
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: ADD C0 PARAM TO GUI
+    # TODO: ADD HISTORY PARAMETER TO THE GUI
+    # TODO: VISUALIZE THE SEARCH DOMAIN
+    # TODO: SUPPORT FOR THE REMAINING PARAMS
     con1 = "-3 * x - 2 * y + 6"
     con2 = "-1 * x + y - 3"
     con3 = "1 * x + 1 * y - 7"
@@ -51,11 +54,11 @@ def constrained_caluclation(arguments):
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
     method = SUMT(method, growth_param, epsilon)
 
-    optimum, search_history = method.optimize(function, derivatives, x_0, c_0)
+    optimum = method.optimize(function, derivatives, x_0, c_0)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
-    result.search_history = search_history
+    result.search_history = []
 
     return result
 
