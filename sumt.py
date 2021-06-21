@@ -22,6 +22,7 @@ class SUMT:
             if self._has_converged(function, x_k_prev, x_k):
                 return x_k
 
+            x_k_prev = x_k
             c_k = self.growth_param * c_k
 
             function.set_penalty_parameter(c_k)
