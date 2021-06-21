@@ -1,0 +1,47 @@
+Zadanie 4 -> rozszerzenie Zadanie 2
+dodanie składnika do funkcji kary i współczynnik przez który mnożymy ten wynik
+wspomnienie o obszarze działania: koło, trójkąt
+wewnętrzne i zewnętrzne funkcje kary
+
+materiały wykładowe, gdzie mogę to znaleźć
+srednio jest to opisane na wikampie
+
+materiały zewnętrzne poniżej
+
+https://en.wikipedia.org/wiki/Penalty_method - zewnętrzna funkcja kary
+https://en.wikipedia.org/wiki/Interior-point_method - "wewnętrzna funkcja kary"
+https://mat.uab.cat/~alseda/MasterOpt/const_opt.pdf - dobrze zilustrowany opis obu metod
+http://www.math.chalmers.se/Math/Grundutb/CTH/tma947/1011/lecture12.pdf - zwięzły opis (obie metody)
+
+
+Pytanie do zadanie 3:
+- co się dzieje gdy, leaving variable jest zarówno entering variable?
+- wstawianie slack variable dopiero w fazie 1 
+- wstawianie artificial variable dopiero w fazie 2
+
+Pytanie do 4:
+- czyli musimy zrobić SUMT
+- czyli implementuję funkcję kary a algorytm przeszukiania zostaje ten sam?
+- ograniczenia: ograniczenie kuli albo okrega do 0 i zobaczyc jak to bedzie dzialalo
+- ograniczenie: ograniczenie do trojkata
+
+Propozycje 
+propozycje dotyczące funkcji kary:
+ 
+f(x) = a0 + a1x1 + a2x2 + ... + anxn - z jednej strony podprzestrzeni (np. prostej na płaszczyźnie) dodatnia, z drugiej ujemna; np. na płaszczyźnie z trzech takich ograniczeń można zrobić trójkąt
+ 
+f(x) = dist(x, p) - r, gdzie p - wektor, r - skalar: wewnątrz kuli ujemna, na zewnątrz dodatnia (zastosowanie odległości eukidesowej na płaszczyźnie daje normalne koło); łącząc koło z prostą można dostać ciekawsze kształty, np. wycinki lub półkola
+ 
+hack, żeby szybciej się liczyło z odległością euklidesową: f(x) - dist(x, p)**2 - r**2 też działa
+ 
+ważne:
+
+jesli  cos wejdzie do bazy to warrtosc jest zastepoeana 0
+SPRAWDZENIE CZT KRAWEDZ NIE JEST POGARSZAJACA
+
+KOLUMNA GLOWNA, ALE NIE MA ELEMENTU CENTRALNEGO
+
+
+	
+przy zewnętrznej funkcji kary dobrze, żeby funkcje c były ujemne wewnątrz badanego obszaru i dodatnie na zewnątrz
+	przy wewnętrznej funkcji kary na odwrót (bo logarytm z liczb niedodatnich jest nieokreślony, a w pobliżu zera ucieka do -oo)
