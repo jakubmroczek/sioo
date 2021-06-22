@@ -12,8 +12,9 @@ class MultiDimensionalCalculationResult:
         self.search_history = None
 
 def constrained_caluclation(arguments):    
-    function = _get_function(arguments.expression, arguments.argc)
-
+    expression = arguments.expression
+    argc = arguments.argc
+    
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: ADD C0 PARAM TO GUI
     # TODO: ADD HISTORY PARAMETER TO THE GUI
@@ -29,9 +30,9 @@ def constrained_caluclation(arguments):
     constarints.append(Constraint(con1, '<'))
     constarints.append(Constraint(con2, '<'))
     constarints.append(Constraint(con3, '<'))
+    constarints.append(Constraint(con4, '<'))
 
-    penalty_function = MultiNumberFunction(constarints, expr, 2)
-    function = PenaltyMethodFunction(penalty_function, function, 2)
+    function = PenaltyMethodFunction(constarints, expression, argc)
 
     derivatives = _get_derivatives(arguments.derivatives_expressions, arguments.argc)
     
@@ -57,12 +58,12 @@ def constrained_caluclation(arguments):
 
     return result
 
-def _get_function(expression, argc):
-    return MultiNumberFunction(expression, argc)
-
 def _get_derivatives(derivatives_expressions, argc):
     derivative_functions = []
     for expression in derivatives_expressions:
         function = _get_function(expression, argc)
         derivative_functions.append(function)
     return derivative_functions
+
+def _get_function(expression, argc):
+    return MultiNumberFunction(expression, argc)

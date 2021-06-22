@@ -60,6 +60,7 @@ class MaxFunction:
     def __init__(self, constraints, argc) -> None:
         expression = self._make_expression(constraints)
         print(f'Constrained expression is {expression}')
+        self.expression = expression
         self.function = MultiNumberFunction(expression, argc)
         
     def _make_expression(self, constraints):
@@ -79,6 +80,7 @@ class PenaltyMethodFunction:
         self.penalty_function = MaxFunction(constraints, argc)
         self.oryginal_fun = MultiNumberFunction(expression, argc)
         self.penalty_coeff = 1.2
+        self.expression = self.oryginal_fun.expression + self.penalty_function.expression
     
     def evaluate(self, argv):
         function_value = self.oryginal_fun.evaluate(argv)
