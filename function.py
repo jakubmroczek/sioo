@@ -90,6 +90,34 @@ class PenaltyMethodFunction:
     def set_penalty_parameter(self, coef):
         self.penalty_coeff = coef    
 
+class MaxDerivative:
+    def __init__(self, constraint, constraint_derivative_sqrt, argc) -> None:
+        '''
+        constraint is a derivative string of constarint sqrt
+        '''
+        self.constraint_fun = MultiNumberFunction(constraint, argc)
+        self.derivative_fun = MultiNumberFunction(constraint_derivative_sqrt, argc)
+
+    def evaluate(self, argv):
+        if self.constraint_fun.evaluate(argv) > 0:
+            return self.derivative_fun.evaluate(argv)
+        else:
+            return 0
+
+class SumFunction:
+
+    def __init__(self, functions) -> None:
+        '''
+        All functions must have the same argc
+        '''
+        self.functions = functions
+
+    def evaluate(self, argv):
+        sum = 0
+        for fun in self.functions:
+            sum += fun.evaluate(argv)
+        return sum
+
 class FunctionInterval:
     def __init__(self, low, high):
         super().__init__()

@@ -1,7 +1,7 @@
 import enum
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
-from function import Constraint, MultiNumberFunction, PenaltyMethodFunction
+from function import Constraint, MultiNumberFunction, PenaltyMethodFunction, MaxDerivative, SumFunction
 from sumt import SUMT
 
 class MultiDimensionalCalculationResult:
@@ -67,23 +67,24 @@ def constrained_caluclation(arguments):
 
     return result
 
-def _get_derivatives(derivatives_expressions, constraints_derivatives, argc, constraint_number):
-    assert len(constraints_derivatives) == argc * constraint_number
+def _get_derivatives(constraints_expression, derivatives_expressions, constraints_derivatives, argc):
+    assert len(constraints_derivatives) == argc * len(constraints_expression)
     
     derivative_functions = []
     for i, expression in enumerate(derivatives_expressions):
+        constraint = constraints_expression[i]
         function = _get_function(expression, argc)
         
-        start = i * constraint_number
+        start = i * len(constraints_expression)
         end = start + argc
         
         derivatives = [function]
         for j in range(start, end):
-            constraint = constraints_derivatives[j]
-            derivative = MaxDerivative(constraint, argc)
+            constraint_derivatvie = constraints_derivatives[j]
+            derivative = MaxDerivative(constraint, constraint_derivatvie, argc)
             derivatives.append(derivative)
 
-        function = SumFunction(derivatives, argc)
+        function = SumFunction(derivatives)
         derivative_functions.append(function)
     return derivative_functions
 
