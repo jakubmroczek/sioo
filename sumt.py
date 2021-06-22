@@ -11,7 +11,7 @@ class SUMT:
         # Init step
         # assert function.avoids_any_constraint(x_0)
         
-        max_iter = 1_000_000 
+        max_iter = 100
         c_k = c_0
         x_k_prev = x_0
         x_k = x_k_prev  
