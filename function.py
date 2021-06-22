@@ -39,11 +39,19 @@ class MultiNumberFunction:
         return eval(self.expression, self.GLOBALS, arguments)
 
 class Constraint:
-    
+    # TODO: We assume the rhs is equal to 0
     def __init__(self, expression, sign) -> None:
         self.expression = expression
         self.sign = sign
 
+    def normalize(self):
+        if self.sign == '<' or self.sign == '<=':
+            return self.expression
+        elif self.sign == '>' or self.sign == '>=':
+            # TODO: Check how do we behave for large coefficients
+            raise Exception(f'{self.sign} is not yet supported, please mulitply the constraint by -1')
+        else:  
+            raise Exception(f'Unsupported sign in Contraint, which is {self.sign}')
 
 class MaxFunction:
     
@@ -65,14 +73,11 @@ class MaxFunction:
     def evaluate(self, argv):
         return self.function.evaluate(argv)
 
-
 class PenaltyMethodFunction:
 
-    def __init__(self, penalty_function : MultiNumberFunction, oryginal_fun, argc):
-        self.penalty_function = penalty_function
-        self.oryginal_fun = oryginal_fun
-        self.argc = argc
-        self.expression = oryginal_fun.expression + ' + ' + penalty_function.expression
+    def __init__(self, constraints, expression, argc):
+        self.penalty_function = MaxFunction(constraints, argc)
+        self.oryginal_fun = MultiNumberFunction(expression, argc)
         self.penalty_coeff = 1.2
     
     def evaluate(self, argv):

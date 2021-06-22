@@ -1,6 +1,6 @@
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
-from function import MultiNumberFunction, PenaltyMethodFunction
+from function import Constraint, MultiNumberFunction, PenaltyMethodFunction
 from sumt import SUMT
 
 class MultiDimensionalCalculationResult:
@@ -14,7 +14,6 @@ class MultiDimensionalCalculationResult:
 def constrained_caluclation(arguments):    
     function = _get_function(arguments.expression, arguments.argc)
 
-    #TODO: Create more general penalty function
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: ADD C0 PARAM TO GUI
     # TODO: ADD HISTORY PARAMETER TO THE GUI
@@ -25,17 +24,13 @@ def constrained_caluclation(arguments):
     con3 = "1 * x + 1 * y - 7"
     con4 = " 0.66 * x - y - (4/3)"
     
-    template = 'max(0, (%s)) ** 2'
-    con1 = template % con1
-    con2 = template % con2
-    con3 = template % con3
-    con4 = template % con4
+    constarints = []
+    
+    constarints.append(Constraint(con1, '<'))
+    constarints.append(Constraint(con2, '<'))
+    constarints.append(Constraint(con3, '<'))
 
-    expr = con1 + ' + ' + con2  + ' + ' + con3  + ' + ' + con4
-
-    penalty_function = MultiNumberFunction(expr, 2)
-    print('EXPRESSION')
-    print(expr)
+    penalty_function = MultiNumberFunction(constarints, expr, 2)
     function = PenaltyMethodFunction(penalty_function, function, 2)
 
     derivatives = _get_derivatives(arguments.derivatives_expressions, arguments.argc)
