@@ -1,3 +1,4 @@
+import enum
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import Constraint, MultiNumberFunction, PenaltyMethodFunction
@@ -18,7 +19,7 @@ def constrained_caluclation(arguments):
     c0 = 10_000
 
     #TODO: HANDLE ALSO >= SCENARIOS !!
-    # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVES
+    # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVESS
     # TODO: ADD C0 PARAM TO GUI
     # TODO: ADD HISTORY PARAMETER TO THE GUI
     # TODO: VISUALIZE THE SEARCH DOMAIN
@@ -36,10 +37,15 @@ def constrained_caluclation(arguments):
     constarints.append(Constraint(con3, '<'))
     constarints.append(Constraint(con4, '<'))
 
+    # argc * constraints
+    # functions raised to sqrt ** 2
+    # TODO: Take it as constraint derivaties from program args
+    constraints_derivatives = []
+    constraint_number =  4
+    derivatives = _get_derivatives(arguments.derivatives_expressions, constraints_derivatives, arguments.argc, constraint_number)
+
     function = PenaltyMethodFunction(constarints, expression, argc, c0)
 
-    derivatives = _get_derivatives(arguments.derivatives_expressions, arguments.argc)
-    
     x_0 = arguments.start_x
     epsilon = arguments.epsilon
     # TODO: Pass alpha to the SUMT
@@ -61,10 +67,23 @@ def constrained_caluclation(arguments):
 
     return result
 
-def _get_derivatives(derivatives_expressions, argc):
+def _get_derivatives(derivatives_expressions, constraints_derivatives, argc, constraint_number):
+    assert len(constraints_derivatives) == argc * constraint_number
+    
     derivative_functions = []
-    for expression in derivatives_expressions:
+    for i, expression in enumerate(derivatives_expressions):
         function = _get_function(expression, argc)
+        
+        start = i * constraint_number
+        end = start + argc
+        
+        derivatives = [function]
+        for j in range(start, end):
+            constraint = constraints_derivatives[j]
+            derivative = MaxDerivative(constraint, argc)
+            derivatives.append(derivative)
+
+        function = SumFunction(derivatives, argc)
         derivative_functions.append(function)
     return derivative_functions
 
