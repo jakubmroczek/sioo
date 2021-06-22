@@ -1,20 +1,15 @@
 from math import sqrt
-
-from matplotlib.pyplot import step
 from function import PenaltyMethodFunction
-from math_utils.vector import vector_length
 
 class SUMT:
-    def __init__(self, fletcher_reves, growth_param, epsilon):
+    def __init__(self, fletcher_reves, growth_param, epsilon, alpha, n):
         self.fletcher_reves = fletcher_reves
         self.growth_param = growth_param
         self.epsilon = epsilon
-        
-    def optimize(self, function : PenaltyMethodFunction, derivatives, x_0, c_0):
-        # Init step
-        # assert function.avoids_any_constraint(x_0)
-        
-        max_iter = 8
+        self.alpha = alpha
+        self.n = n
+
+    def optimize(self, function : PenaltyMethodFunction, derivatives, x_0, c_0, max_iter):
         c_k = c_0
         x_k_prev = x_0
         x_k = x_k_prev
@@ -44,13 +39,14 @@ class SUMT:
         return x_k, history, log
 
     def _unconstrained_search(self, function, x_1, derivatives):
-        alpha = 0.01
-        n = 10_000
+        alpha = self.alpha
+        n = self.n
         epsilon = self.epsilon
         return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 
     def _has_converged(self, function, x_k_prev, x_k):
         distance = self._distance(x_k_prev, x_k)
+
         if distance < self.epsilon:
             return True
 

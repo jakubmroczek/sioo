@@ -11,20 +11,21 @@ class MultiDimensionalCalculationResult:
         self.optimum = None
         self.search_history = None
 
-def constrained_caluclation(arguments):    
+def constrained_caluclation(arguments):
     expression = arguments.expression
     argc = arguments.argc
-    # c0 = arguments.c0
+    x_0 = arguments.start_x
+    epsilon = arguments.epsilon
+    alpha = arguments.alpha
+    n = arguments.max_iterations
+    max_iterations = 8
+    growth_param = 2    
     c0 = 0.5
 
     # TODO: Perhaps we shouold also change the fletcher reeves stuff    
-    #TODO: HANDLE ALSO >= SCENARIOS !!
-    # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVESS
+    # TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: ADD C0 PARAM TO GUI
-    # TODO: ADD HISTORY PARAMETER TO THE GUI
-    # TODO: VISUALIZE THE SEARCH DOMAIN
     # TODO: SUPPORT FOR THE REMAINING PARAMS
-    # TODO: Add stuff to the gui
     con1 = "-3 * x - 2 * y + 6"
     con2 = "-1 * x + y - 3"
     con3 = "1 * x + 1 * y - 7"
@@ -37,9 +38,6 @@ def constrained_caluclation(arguments):
     constarints.append(Constraint(con3, '<'))
     constarints.append(Constraint(con4, '<'))
 
-    # argc * constraints
-    # functions raised to sqrt ** 2
-    # TODO: Take it as constraint derivaties from program args
     constraint_expressions = [con1, con2, con3, con4]
     x_derivatives = [
         '-6 * (-3 * x -2 * y + 6)',
@@ -55,27 +53,15 @@ def constrained_caluclation(arguments):
     ]
 
     constraints_derivatives = x_derivatives + y_derivative
-    
-    print('expressions')
-    print(constraint_expressions)
     derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc, c0)
 
     function = PenaltyMethodFunction(constarints, expression, argc, c0)
 
-    x_0 = arguments.start_x
-    epsilon = arguments.epsilon
-    # TODO: Pass alpha to the SUMT
-    alpha = arguments.alpha
-    max_iterations = arguments.max_iterations
-
-    growth_param = 2    
-    c_0 = 0.5
-
     goldenSectionSearchOptimzier = GoldenSectionSearchOptimizer()
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
-    method = SUMT(method, growth_param, epsilon)
+    method = SUMT(method, growth_param, epsilon, alpha, n)
 
-    optimum, history, log = method.optimize(function, derivatives, x_0, c_0)
+    optimum, history, log = method.optimize(function, derivatives, x_0, c0, max_iterations)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
@@ -95,8 +81,6 @@ def _get_derivatives(constraints_expression, derivatives_expressions, constraint
     for i, expression in enumerate(derivatives_expressions):
         function = _get_function(expression, argc)
 
-        # for constraint in constraints_expression:
-        
         start = i * constraint_number
         end = start + constraint_number
         
