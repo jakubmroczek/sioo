@@ -86,26 +86,31 @@ def constrained_caluclation(arguments):
 def _get_derivatives(constraints_expression, derivatives_expressions, constraints_derivatives, argc, c0):
     assert len(constraints_derivatives) == argc * len(constraints_expression)
     
+    constraint_number = len(constraints_expression)
+
     print('in _Get_deri')
     print(constraints_expression)
     derivative_functions = []
     for i, expression in enumerate(derivatives_expressions):
-        constraint = constraints_expression[i]
         function = _get_function(expression, argc)
 
-        print(f'constrian is {constraint}')
+        # for constraint in constraints_expression:
         
-        start = i * len(constraints_expression)
-        end = start + argc
+        start = i * constraint_number
+        end = start + constraint_number
         
         derivatives = []
+        index = 0
         for j in range(start, end):
+            constraint = constraints_expression[index]
+            index += 1
             constraint_derivatvie = constraints_derivatives[j]
             derivative = MaxDerivative(constraint, constraint_derivatvie, argc, c0)
             derivatives.append(derivative)
 
         function = ConstrainedDerivativesWrapper(function, derivatives)
         derivative_functions.append(function)
+    
     return derivative_functions
 
 def _get_function(expression, argc):
