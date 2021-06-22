@@ -116,6 +116,7 @@ class SumFunction:
         sum = 0
         for fun in self.functions:
             sum += fun.evaluate(argv)
+        print('SUM FUNCTION VALUE')
         return sum
 
 class FunctionInterval:

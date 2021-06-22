@@ -40,9 +40,10 @@ def constrained_caluclation(arguments):
     # argc * constraints
     # functions raised to sqrt ** 2
     # TODO: Take it as constraint derivaties from program args
-    constraints_derivatives = []
-    constraint_number =  4
-    derivatives = _get_derivatives(arguments.derivatives_expressions, constraints_derivatives, arguments.argc, constraint_number)
+    constraint_expressions = [con1, con2, con3, con4]
+    constraints_derivatives = ['0' for i in range(0,8)]
+    
+    derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc)
 
     function = PenaltyMethodFunction(constarints, expression, argc, c0)
 
