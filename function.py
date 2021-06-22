@@ -59,7 +59,7 @@ class MaxFunction:
 
     def __init__(self, constraints, argc) -> None:
         expression = self._make_expression(constraints)
-        print(f'Constrained expression is {expression}')
+        # print(f'Constrained expression is {expression}')
         self.expression = expression
         self.function = MultiNumberFunction(expression, argc)
         
@@ -95,11 +95,15 @@ class MaxDerivative:
         '''
         constraint is a derivative string of constarint sqrt
         '''
+        print(f'max der for {constraint}')
         self.constraint_fun = MultiNumberFunction(constraint, argc)
         self.derivative_fun = MultiNumberFunction(constraint_derivative_sqrt, argc)
         self.c0 = c0
 
     def evaluate(self, argv):
+        print('evaluating!')
+        print(self.constraint_fun.expression)
+        print(f'function value is {self.constraint_fun.evaluate(argv)}')
         if self.constraint_fun.evaluate(argv) > 0:
             return self.derivative_fun.evaluate(argv) * self.c0
         else:
@@ -118,6 +122,7 @@ class ConstrainedDerivativesWrapper:
         self.max_derivatives = max_derivatives
 
     def evaluate(self, argv):
+        print('o co chodzi?')
         sum = self.function.evaluate(argv)
         for fun in self.max_derivatives:
             sum += fun.evaluate(argv)

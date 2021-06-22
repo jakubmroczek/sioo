@@ -56,6 +56,8 @@ def constrained_caluclation(arguments):
 
     constraints_derivatives = x_derivatives + y_derivative
     
+    print('expressions')
+    print(constraint_expressions)
     derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc, c0)
 
     function = PenaltyMethodFunction(constarints, expression, argc, c0)
@@ -84,10 +86,14 @@ def constrained_caluclation(arguments):
 def _get_derivatives(constraints_expression, derivatives_expressions, constraints_derivatives, argc, c0):
     assert len(constraints_derivatives) == argc * len(constraints_expression)
     
+    print('in _Get_deri')
+    print(constraints_expression)
     derivative_functions = []
     for i, expression in enumerate(derivatives_expressions):
         constraint = constraints_expression[i]
         function = _get_function(expression, argc)
+
+        print(f'constrian is {constraint}')
         
         start = i * len(constraints_expression)
         end = start + argc

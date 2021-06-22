@@ -27,6 +27,8 @@ class SUMT:
             x_k_prev = x_k
             c_k = self.growth_param * c_k
 
+
+            print('setting the penalty parameters')
             function.set_penalty_parameter(c_k)
             for der in derivatives:
                 der.set_penalty_parameter(c_k)
@@ -36,8 +38,8 @@ class SUMT:
         return x_k
 
     def _unconstrained_search(self, function, x_1, derivatives):
-        alpha = 0.1
-        n = 10
+        alpha = 0.01
+        n = 10_000
         epsilon = self.epsilon
         return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 
