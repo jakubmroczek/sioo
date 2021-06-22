@@ -17,7 +17,8 @@ class SUMT:
         x_k = x_k_prev  
 
         for k in range(1, max_iter):
-            # TODO: Może ten punkt cały czas musi być spoza dziedziny (to jest punkt x0)
+            print(k)
+
             x_k, _ = self._unconstrained_search(function, x_k_prev, derivatives)
 
             if self._has_converged(function, x_k_prev, x_k):
@@ -33,8 +34,8 @@ class SUMT:
         return x_k
 
     def _unconstrained_search(self, function, x_1, derivatives):
-        alpha = 0.01
-        n = 10_000
+        alpha = 0.1
+        n = 10
         epsilon = self.epsilon
         return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 

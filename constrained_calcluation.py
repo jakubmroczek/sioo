@@ -18,6 +18,7 @@ def constrained_caluclation(arguments):
     c0 = 10_000
 
     #TODO: HANDLE ALSO >= SCENARIOS !!
+    # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVES
     # TODO: ADD C0 PARAM TO GUI
     # TODO: ADD HISTORY PARAMETER TO THE GUI
     # TODO: VISUALIZE THE SEARCH DOMAIN
@@ -45,9 +46,8 @@ def constrained_caluclation(arguments):
     alpha = arguments.alpha
     max_iterations = arguments.max_iterations
 
-    growth_param = 1.5
-    epsilon = 1e-4
-    c_0 = 3
+    growth_param = 2    
+    c_0 = 0.5
 
     goldenSectionSearchOptimzier = GoldenSectionSearchOptimizer()
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
