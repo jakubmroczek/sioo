@@ -41,7 +41,20 @@ def constrained_caluclation(arguments):
     # functions raised to sqrt ** 2
     # TODO: Take it as constraint derivaties from program args
     constraint_expressions = [con1, con2, con3, con4]
-    constraints_derivatives = ['0' for i in range(0,8)]
+    x_derivatives = [
+        '-6 * (-3 * x -2 * y + 6)',
+        '-2 * (-1 * x + y - 3)',
+        '2 * (x + y - 7)',
+        '(4/9) * (2 * x -3 * y - 4)'
+    ]
+    y_derivative = [
+        '-4 * (-3 * x - 2 * y  + 6)',
+        '2 * (-1 * x + y - 3)',
+        '2 * (x + y - 7)',
+        '(4/3) * -1 * x + 2 * y + (8/3)'
+    ]
+    
+    constraints_derivatives = x_derivatives + y_derivative
     
     derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc)
 
