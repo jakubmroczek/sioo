@@ -17,6 +17,7 @@ class SUMT:
         x_k = x_k_prev  
 
         for k in range(1, max_iter):
+            # TODO: Może ten punkt cały czas musi być spoza dziedziny (to jest punkt x0)
             x_k, _ = self._unconstrained_search(function, x_k_prev, derivatives)
 
             if self._has_converged(function, x_k_prev, x_k):

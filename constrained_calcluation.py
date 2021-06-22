@@ -14,12 +14,15 @@ class MultiDimensionalCalculationResult:
 def constrained_caluclation(arguments):    
     expression = arguments.expression
     argc = arguments.argc
-    
+    # c0 = arguments.c0
+    c0 = 10_000
+
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: ADD C0 PARAM TO GUI
     # TODO: ADD HISTORY PARAMETER TO THE GUI
     # TODO: VISUALIZE THE SEARCH DOMAIN
     # TODO: SUPPORT FOR THE REMAINING PARAMS
+    # TODO: Add stuff to the gui
     con1 = "-3 * x - 2 * y + 6"
     con2 = "-1 * x + y - 3"
     con3 = "1 * x + 1 * y - 7"
@@ -32,7 +35,7 @@ def constrained_caluclation(arguments):
     constarints.append(Constraint(con3, '<'))
     constarints.append(Constraint(con4, '<'))
 
-    function = PenaltyMethodFunction(constarints, expression, argc)
+    function = PenaltyMethodFunction(constarints, expression, argc, c0)
 
     derivatives = _get_derivatives(arguments.derivatives_expressions, arguments.argc)
     
