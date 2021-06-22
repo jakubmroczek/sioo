@@ -1,6 +1,7 @@
 import traceback
 from PyQt5.QtWidgets import (QLineEdit,
                              QPushButton, QLabel, QMessageBox)
+from pyqtgraph.widgets.ComboBox import ComboBox
 from program_arguments import MuliDimensionProgramArguments
 from function import MultiNumberFunction
 import numpy as np
@@ -42,6 +43,8 @@ class MuliDimensionalFunctionGUI:
         '2 * t',
     ]
 
+    MAX_NUMBER_OF_CONSTRAINTS = 5
+
     def __init__(self, nunmber_of_function_variable):
         self.nunmber_of_function_variable = nunmber_of_function_variable
 
@@ -65,6 +68,11 @@ class MuliDimensionalFunctionGUI:
 
         # Assigning callbacks on click
         self.runButton.clicked.connect(self._onCalculationStart)
+
+        # Constrained related stuff
+        self.constraintsComboBox = ComboBox()
+        self.constraintsComboBox.addItems([str(x) for x in range(0, self.MAX_NUMBER_OF_CONSTRAINTS)])
+        
 
     def add_widgets_to_layout(self, layout, rowIndex):
         '''
@@ -91,7 +99,14 @@ class MuliDimensionalFunctionGUI:
 
         derivativeStartRow = rowIndex + 5
 
-        self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
+        rowIndex = self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
+
+        # what should I do here
+        label = QLabel("Number of constraints")
+        # rowIndex += 1
+        layout.addWidget(label, rowIndex, 0, 1, 1)
+        # rowIndex += 1
+        layout.addWidget(self.constraintsComboBox, rowIndex, 1, 1, 1)
 
     def _add_derivative_widgets_to_layout(self, layout, startIndex):
         assert self.nunmber_of_function_variable <= len(self.DERIVATIVES_LABELS)
@@ -115,6 +130,8 @@ class MuliDimensionalFunctionGUI:
             self.derivative_line_edits.append(line_edit)
 
             startIndex += 1
+
+        return startIndex
 
 
     def setOnCalculationStart(self, callback):
