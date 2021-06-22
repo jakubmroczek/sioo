@@ -95,15 +95,16 @@ class MaxDerivative:
         '''
         constraint is a derivative string of constarint sqrt
         '''
-        print(f'max der for {constraint}')
+        # print(f'max der for {constraint}')
         self.constraint_fun = MultiNumberFunction(constraint, argc)
         self.derivative_fun = MultiNumberFunction(constraint_derivative_sqrt, argc)
         self.c0 = c0
 
     def evaluate(self, argv):
-        print('evaluating!')
-        print(self.constraint_fun.expression)
-        print(f'function value is {self.constraint_fun.evaluate(argv)}')
+        # print('evaluating!')
+        # print(self.constraint_fun.expression)
+        # print(f'argv is {argv}')
+        # print(f'function value is {self.constraint_fun.evaluate(argv)}')
         if self.constraint_fun.evaluate(argv) > 0:
             return self.derivative_fun.evaluate(argv) * self.c0
         else:
@@ -122,7 +123,10 @@ class ConstrainedDerivativesWrapper:
         self.max_derivatives = max_derivatives
 
     def evaluate(self, argv):
-        print('o co chodzi?')
+        # print('o co chodzi?')
+        # print('got argv')
+        # print(f'{argv}')
+        # raise Exception
         sum = self.function.evaluate(argv)
         for fun in self.max_derivatives:
             sum += fun.evaluate(argv)
