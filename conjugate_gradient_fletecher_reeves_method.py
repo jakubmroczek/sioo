@@ -52,6 +52,10 @@ class ConjugateGradientFletcherReevesMethod:
             x_1 = x_k_1
 
     def is_converged(self, gradient, epsilon):
+        print('has converted')
+        print(vector_length(gradient) < epsilon)
+        print(vector_length(gradient))
+        print(epsilon)
         return vector_length(gradient) < epsilon
 
     #TODO: put low high in FuncitonInterval

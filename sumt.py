@@ -27,11 +27,13 @@ class SUMT:
             x_k_prev = x_k
             c_k = self.growth_param * c_k
 
-
             print('setting the penalty parameters')
             function.set_penalty_parameter(c_k)
             for der in derivatives:
                 der.set_penalty_parameter(c_k)
+
+            if c_k >= 1024:
+                raise Exception
 
         print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
 

@@ -1,7 +1,6 @@
 import numpy as np
 from numpy import NaN, linalg
 
-i = 15
 def gradient(derivatives, x):
     '''
 
@@ -10,16 +9,8 @@ def gradient(derivatives, x):
     :return:
     '''
     assert len(derivatives) == len(x)
-    print('calculatin gradient')
     gradient = np.array([derivative.evaluate(x) for derivative in derivatives])
-    print(f'graident is {gradient}')
-
-    global i
-    i -= 1
-
-    if i == 0:
-        raise Exception
-    # raise Exception
+    print(f'gradient is {gradient}')
     return gradient
 
 def dot_product(a, b):

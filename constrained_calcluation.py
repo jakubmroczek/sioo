@@ -16,7 +16,7 @@ def constrained_caluclation(arguments):
     expression = arguments.expression
     argc = arguments.argc
     # c0 = arguments.c0
-    c0 = 10_000
+    c0 = 0.5
 
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVESS

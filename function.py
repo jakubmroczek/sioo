@@ -113,6 +113,7 @@ class MaxDerivative:
     def set_penalty_parameter(self, c0):
         self.c0 = c0
 
+i = 10
 class ConstrainedDerivativesWrapper:
 
     def __init__(self, function, max_derivatives) -> None:
@@ -127,9 +128,16 @@ class ConstrainedDerivativesWrapper:
         # print('got argv')
         # print(f'{argv}')
         # raise Exception
+        # global i
+        # i -= 1
+        # if i == 0:
+        #     raise Exception
+
         sum = self.function.evaluate(argv)
         for fun in self.max_derivatives:
-            sum += fun.evaluate(argv)
+            tmp = fun.evaluate(argv)
+            print(f'parital value {tmp} for expression {fun.derivative_fun.expression} for {argv} for {fun.c0}')
+            sum += tmp
         return sum
 
     def set_penalty_parameter(self, c0):
