@@ -73,7 +73,21 @@ class MuliDimensionalFunctionGUI:
         # Constrained related stuff
         self.constraintsComboBox = ComboBox()
         self.constraintsComboBox.addItems([str(x) for x in range(0, self.MAX_NUMBER_OF_CONSTRAINTS)])
-        
+        self.constraintsComboBox.currentTextChanged.connect(self._on_constraints_number_changed)
+
+    def _on_constraints_number_changed(self, value):
+        value = int(value)
+        old_number = self.constraints_number
+        if value != self.constraints_number:
+            self.constraints_number = value
+
+        # Delete old stuff
+        for i in reversed(range(self.layout.count() - old_number, self.layout.count())):
+            if self.layout.itemAt(i):
+                self.layout.itemAt(i).widget().setParent(None)
+
+        self.row_index -= old_number
+        self.row_index = self._add_constraints_widgets_to_layout(self.layout, self.row_index)
 
     def add_widgets_to_layout(self, layout, rowIndex):
         '''
@@ -111,6 +125,9 @@ class MuliDimensionalFunctionGUI:
 
         rowIndex += 1
         rowIndex = self._add_constraints_widgets_to_layout(layout, rowIndex)
+
+        self.row_index = rowIndex
+        self.layout = layout
 
     def _add_derivative_widgets_to_layout(self, layout, startIndex):
         assert self.nunmber_of_function_variable <= len(self.DERIVATIVES_LABELS)
@@ -224,7 +241,7 @@ class MuliDimensionalFunctionGUI:
                 return startIndex
 
             self.constraints_line_edits = []
-            for i in range(len(self.DERIVATIVES_LABELS)):
+            for i in range(self.constraints_number):
                 label_name = str(i)
 
                 label = QLabel(label_name)
@@ -232,7 +249,8 @@ class MuliDimensionalFunctionGUI:
 
                 expression = "x + y - 10"
                 line_edit = QLineEdit()
-                if i + 1 <= self.conconstraints_numbers:
+       
+                if i + 1 <= self.constraints_number:
                     line_edit.setText(expression)
                 else:
                     line_edit.setReadOnly(True)
