@@ -66,7 +66,7 @@ class MaxFunction:
     def _make_expression(self, constraints):
         expression = ''
         for constraint in constraints:
-            expression += '+'
+            expression += ' + '
             expression += self.template % constraint.normalize()
 
         return expression
