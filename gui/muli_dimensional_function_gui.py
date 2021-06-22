@@ -12,7 +12,7 @@ class MuliDimensionalFunctionGUI:
     ]
 
     EXAMPLE_FUNCTIONS = {
-        2: "x ** 2 + y ** 2",
+        2: "(x - 6) ** 2 + (y - 7) ** 2",
         3: "x ** 2 + y ** 2 + z ** 2",
         4: "x ** 2 + y ** 2 + z ** 2 + v ** 2",
         5: "x ** 2 + y ** 2 + z ** 2 + v ** 2 + w ** 2",
@@ -22,7 +22,7 @@ class MuliDimensionalFunctionGUI:
     }
 
     EXAMPLE_FUNCTION_X_1 = {
-        2: "1, 2",
+        2: "6, 7",
         3: "1, 2, 3",
         4: "1, 2, 3, 4",
         5: "1, 2, 3, 4, 5",
@@ -32,8 +32,8 @@ class MuliDimensionalFunctionGUI:
     }
 
     EXAMPLE_FUNCTION_DERIVATIVES = [
-        '2 * x',
-        '2 * y',
+        '2 * x - 12',
+        '2 * y - 14',
         '2 * z',
         '2 * v',
         '2 * w',
