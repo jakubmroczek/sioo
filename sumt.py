@@ -19,6 +19,7 @@ class SUMT:
         x_k_prev = x_0
         x_k = x_k_prev
         history = []
+        log = []
 
         for k in range(1, max_iter):
             print(k)
@@ -27,7 +28,9 @@ class SUMT:
             history += steps
 
             if self._has_converged(function, x_k_prev, x_k):
-                return x_k, history
+                return x_k, history, log
+
+            log.append((x_k, c_k))
 
             x_k_prev = x_k
             c_k = self.growth_param * c_k
@@ -38,7 +41,7 @@ class SUMT:
 
         print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
 
-        return x_k, history
+        return x_k, history, log
 
     def _unconstrained_search(self, function, x_1, derivatives):
         alpha = 0.01

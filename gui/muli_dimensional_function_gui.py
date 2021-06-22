@@ -153,6 +153,13 @@ class MuliDimensionalFunctionGUI:
             
         print('')
 
+        if result.log:
+            print('')
+            print('X_k and c_k')
+            for i, log in enumerate(result.log):
+                x, c = log
+                print(f'{i}. x:{x}, c:{c}')
+
     def _getProgramArguments(self):
         derivative_expressions = self._get_derivatives_expressions()
         program_arguments = MuliDimensionProgramArguments()

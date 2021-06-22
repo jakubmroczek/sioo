@@ -75,11 +75,12 @@ def constrained_caluclation(arguments):
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
     method = SUMT(method, growth_param, epsilon)
 
-    optimum, history = method.optimize(function, derivatives, x_0, c_0)
+    optimum, history, log = method.optimize(function, derivatives, x_0, c_0)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
     result.search_history = history
+    result.log = log
 
     return result
 
