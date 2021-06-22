@@ -47,6 +47,7 @@ class MuliDimensionalFunctionGUI:
 
     def __init__(self, nunmber_of_function_variable):
         self.nunmber_of_function_variable = nunmber_of_function_variable
+        self.constraints_number = 0
 
         # Initial position x1
         self.x_1_label = QLabel("Initial position")
@@ -107,6 +108,9 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(label, rowIndex, 0, 1, 1)
         # rowIndex += 1
         layout.addWidget(self.constraintsComboBox, rowIndex, 1, 1, 1)
+
+        rowIndex += 1
+        rowIndex = self._add_constraints_widgets_to_layout(layout, rowIndex)
 
     def _add_derivative_widgets_to_layout(self, layout, startIndex):
         assert self.nunmber_of_function_variable <= len(self.DERIVATIVES_LABELS)
@@ -212,3 +216,31 @@ class MuliDimensionalFunctionGUI:
     def _get_n(self):
         k = int(self.n_edit.text())
         return k
+
+    def _add_constraints_widgets_to_layout(self, layout, startIndex):
+            assert self.constraints_number < self.MAX_NUMBER_OF_CONSTRAINTS
+
+            if self.constraints_number == 0:
+                return startIndex
+
+            self.constraints_line_edits = []
+            for i in range(len(self.DERIVATIVES_LABELS)):
+                label_name = str(i)
+
+                label = QLabel(label_name)
+                layout.addWidget(label, startIndex, 0, 1, 1)
+
+                expression = "x + y - 10"
+                line_edit = QLineEdit()
+                if i + 1 <= self.conconstraints_numbers:
+                    line_edit.setText(expression)
+                else:
+                    line_edit.setReadOnly(True)
+
+                layout.addWidget(line_edit, startIndex, 1, 1, 1)
+
+                self.constraints_line_edits.append(line_edit)
+
+                startIndex += 1
+
+            return startIndex
