@@ -21,6 +21,7 @@ class MultiNumberFunction:
         'sin': sin,
         'cos': cos,
         'log': log,
+        'max': max
     }
 
     def __init__(self, expression, argc):
@@ -37,19 +38,35 @@ class MultiNumberFunction:
             arguments[argument_name] = argument_value
         return eval(self.expression, self.GLOBALS, arguments)
 
-class PenaltyMethodFunction:
-    '''
-    Supports up to 8 arguments
-    '''
-    ARGUMENTS = ['x', 'y', 'z', 'v', 'w', 'q', 'r', 't']
+class Constraint:
+    
+    def __init__(self, expression, sign) -> None:
+        self.expression = expression
+        self.sign = sign
 
-    # We have to pass this map in eval functions, cause otherwise some math stuff is not visible
-    GLOBALS = {
-        'sin': sin,
-        'cos': cos,
-        'log': log,
-        'max': max
-    }
+
+class MaxFunction:
+    
+    template = 'max(0, (%s)) ** 2'
+
+    def __init__(self, constraints, argc) -> None:
+        expression = self._make_expression(constraints)
+        print(f'Constrained expression is {expression}')
+        self.function = MultiNumberFunction(expression, argc)
+        
+    def _make_expression(self, constraints):
+        expression = ''
+        for constraint in constraints:
+            expression += '+'
+            expression += self.template % constraint.normalize()
+
+        return expression
+
+    def evaluate(self, argv):
+        return self.function.evaluate(argv)
+
+
+class PenaltyMethodFunction:
 
     def __init__(self, penalty_function : MultiNumberFunction, oryginal_fun, argc):
         self.penalty_function = penalty_function
