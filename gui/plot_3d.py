@@ -31,6 +31,8 @@ class Plot3D:
 
         for i in range(0, len(result.search_history) - 1):
             step = result.search_history[i]
+            print('THIS IS A STEP MAN')
+            print(step)
             xs.append(step[0])
             ys.append(step[1])
             zs.append(result.function.evaluate(step))

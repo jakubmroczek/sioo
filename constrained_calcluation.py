@@ -1,4 +1,3 @@
-import enum
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
 from function import Constraint, MultiNumberFunction, PenaltyMethodFunction, MaxDerivative, ConstrainedDerivativesWrapper
@@ -76,11 +75,11 @@ def constrained_caluclation(arguments):
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
     method = SUMT(method, growth_param, epsilon)
 
-    optimum = method.optimize(function, derivatives, x_0, c_0)
+    optimum, history = method.optimize(function, derivatives, x_0, c_0)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
-    result.search_history = []
+    result.search_history = history
 
     return result
 

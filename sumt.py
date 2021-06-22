@@ -1,4 +1,6 @@
 from math import sqrt
+
+from matplotlib.pyplot import step
 from function import PenaltyMethodFunction
 from math_utils.vector import vector_length
 
@@ -15,30 +17,28 @@ class SUMT:
         max_iter = 8
         c_k = c_0
         x_k_prev = x_0
-        x_k = x_k_prev  
+        x_k = x_k_prev
+        history = []
 
         for k in range(1, max_iter):
             print(k)
 
-            x_k, _ = self._unconstrained_search(function, x_k_prev, derivatives)
+            x_k, steps = self._unconstrained_search(function, x_k_prev, derivatives)
+            history += steps
 
             if self._has_converged(function, x_k_prev, x_k):
-                return x_k
+                return x_k, history
 
             x_k_prev = x_k
             c_k = self.growth_param * c_k
 
-            print('setting the penalty parameters')
             function.set_penalty_parameter(c_k)
             for der in derivatives:
                 der.set_penalty_parameter(c_k)
 
-            # if c_k >= 1024:
-            #     raise Exception
-
         print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
 
-        return x_k
+        return x_k, history
 
     def _unconstrained_search(self, function, x_1, derivatives):
         alpha = 0.01
@@ -47,13 +47,7 @@ class SUMT:
         return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 
     def _has_converged(self, function, x_k_prev, x_k):
-        print('HAS CONVERGED')
-        print(x_k)
-        print(x_k_prev)
-        
         distance = self._distance(x_k_prev, x_k)
-        print(f'distance is {distance} for point {x_k} and {x_k_prev}')
-        # if abs(vector_length(x_k) - vector_length(x_k_prev)) < self.epsilon:
         if distance < self.epsilon:
             return True
 

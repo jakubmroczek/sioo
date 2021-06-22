@@ -39,7 +39,7 @@ class MultiNumberFunction:
         return eval(self.expression, self.GLOBALS, arguments)
 
 class Constraint:
-    # TODO: We assume the rhs is equal to 0
+    #  We assume the rhs is equal to 0
     def __init__(self, expression, sign) -> None:
         self.expression = expression
         self.sign = sign
@@ -48,7 +48,6 @@ class Constraint:
         if self.sign == '<' or self.sign == '<=':
             return self.expression
         elif self.sign == '>' or self.sign == '>=':
-            # TODO: Check how do we behave for large coefficients
             raise Exception(f'{self.sign} is not yet supported, please mulitply the constraint by -1')
         else:  
             raise Exception(f'Unsupported sign in Contraint, which is {self.sign}')
@@ -59,7 +58,6 @@ class MaxFunction:
 
     def __init__(self, constraints, argc) -> None:
         expression = self._make_expression(constraints)
-        # print(f'Constrained expression is {expression}')
         self.expression = expression
         self.function = MultiNumberFunction(expression, argc)
         
@@ -95,16 +93,11 @@ class MaxDerivative:
         '''
         constraint is a derivative string of constarint sqrt
         '''
-        # print(f'max der for {constraint}')
         self.constraint_fun = MultiNumberFunction(constraint, argc)
         self.derivative_fun = MultiNumberFunction(constraint_derivative_sqrt, argc)
         self.c0 = c0
 
     def evaluate(self, argv):
-        # print('evaluating!')
-        # print(self.constraint_fun.expression)
-        # print(f'argv is {argv}')
-        # print(f'function value is {self.constraint_fun.evaluate(argv)}')
         if self.constraint_fun.evaluate(argv) > 0:
             return self.derivative_fun.evaluate(argv) * self.c0
         else:
@@ -113,7 +106,6 @@ class MaxDerivative:
     def set_penalty_parameter(self, c0):
         self.c0 = c0
 
-i = 10
 class ConstrainedDerivativesWrapper:
 
     def __init__(self, function, max_derivatives) -> None:
@@ -124,15 +116,6 @@ class ConstrainedDerivativesWrapper:
         self.max_derivatives = max_derivatives
 
     def evaluate(self, argv):
-        # print('o co chodzi?')
-        # print('got argv')
-        # print(f'{argv}')
-        # raise Exception
-        # global i
-        # i -= 1
-        # if i == 0:
-        #     raise Exception
-
         sum = self.function.evaluate(argv)
         for fun in self.max_derivatives:
             tmp = fun.evaluate(argv)
