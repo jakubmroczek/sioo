@@ -1,3 +1,4 @@
+from math import sqrt
 from function import PenaltyMethodFunction
 from math_utils.vector import vector_length
 
@@ -11,7 +12,7 @@ class SUMT:
         # Init step
         # assert function.avoids_any_constraint(x_0)
         
-        max_iter = 100
+        max_iter = 8
         c_k = c_0
         x_k_prev = x_0
         x_k = x_k_prev  
@@ -32,8 +33,8 @@ class SUMT:
             for der in derivatives:
                 der.set_penalty_parameter(c_k)
 
-            if c_k >= 1024:
-                raise Exception
+            # if c_k >= 1024:
+            #     raise Exception
 
         print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
 
@@ -50,10 +51,22 @@ class SUMT:
         print(x_k)
         print(x_k_prev)
         
-        if abs(vector_length(x_k) - vector_length(x_k_prev)) < self.epsilon:
+        distance = self._distance(x_k_prev, x_k)
+        print(f'distance is {distance} for point {x_k} and {x_k_prev}')
+        # if abs(vector_length(x_k) - vector_length(x_k_prev)) < self.epsilon:
+        if distance < self.epsilon:
             return True
 
         if abs(function.evaluate(x_k) - function.evaluate(x_k_prev)) < self.epsilon:
             return True
 
         return False
+
+    def _distance(self, a, b):
+        # Calculates point in n dimenstional space
+        assert len(a) == len(b)
+        sum = 0
+        for a_i, b_i in zip(a, b):
+            sum += (a_i - b_i) ** 2
+        return sqrt(sum)
+

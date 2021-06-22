@@ -18,6 +18,7 @@ def constrained_caluclation(arguments):
     # c0 = arguments.c0
     c0 = 0.5
 
+    # TODO: Perhaps we shouold also change the fletcher reeves stuff    
     #TODO: HANDLE ALSO >= SCENARIOS !!
     # TODO: STUFF DOES NOT WORK BECAUSE OF LACK OF MAX DERIVATIVESS
     # TODO: ADD C0 PARAM TO GUI
