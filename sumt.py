@@ -28,6 +28,8 @@ class SUMT:
             c_k = self.growth_param * c_k
 
             function.set_penalty_parameter(c_k)
+            for der in derivatives:
+                der.set_penalty_parameter(c_k)
 
         print('WARNING EXCEEDED THE MAX NUMBER OF ITERATIONS WITHOUT CONVERGING')
 

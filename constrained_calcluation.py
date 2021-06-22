@@ -1,7 +1,7 @@
 import enum
 from conjugate_gradient_fletecher_reeves_method import ConjugateGradientFletcherReevesMethod
 from golden_section_search_optimizer import GoldenSectionSearchOptimizer
-from function import Constraint, MultiNumberFunction, PenaltyMethodFunction, MaxDerivative, SumFunction
+from function import Constraint, MultiNumberFunction, PenaltyMethodFunction, MaxDerivative, ConstrainedDerivativesWrapper
 from sumt import SUMT
 
 class MultiDimensionalCalculationResult:
@@ -53,10 +53,10 @@ def constrained_caluclation(arguments):
         '2 * (x + y - 7)',
         '(4/3) * -1 * x + 2 * y + (8/3)'
     ]
-    
+
     constraints_derivatives = x_derivatives + y_derivative
     
-    derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc)
+    derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc, c0)
 
     function = PenaltyMethodFunction(constarints, expression, argc, c0)
 
@@ -81,7 +81,7 @@ def constrained_caluclation(arguments):
 
     return result
 
-def _get_derivatives(constraints_expression, derivatives_expressions, constraints_derivatives, argc):
+def _get_derivatives(constraints_expression, derivatives_expressions, constraints_derivatives, argc, c0):
     assert len(constraints_derivatives) == argc * len(constraints_expression)
     
     derivative_functions = []
@@ -92,13 +92,13 @@ def _get_derivatives(constraints_expression, derivatives_expressions, constraint
         start = i * len(constraints_expression)
         end = start + argc
         
-        derivatives = [function]
+        derivatives = []
         for j in range(start, end):
             constraint_derivatvie = constraints_derivatives[j]
-            derivative = MaxDerivative(constraint, constraint_derivatvie, argc)
+            derivative = MaxDerivative(constraint, constraint_derivatvie, argc, c0)
             derivatives.append(derivative)
 
-        function = SumFunction(derivatives)
+        function = ConstrainedDerivativesWrapper(function, derivatives)
         derivative_functions.append(function)
     return derivative_functions
 
