@@ -1,3 +1,4 @@
+from function import MultiNumberFunction
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -21,7 +22,9 @@ class Plot3D:
         
         X, Y = np.meshgrid(x, y)
 
-        Z = self._function_at_xy(X, Y, result.function)
+        function = MultiNumberFunction(result.oryginal_expression, result.argc)
+         
+        Z = self._function_at_xy(X, Y, function)
         
         ax.plot_wireframe(X, Y, Z, color='black')
         

@@ -39,6 +39,8 @@ def constrained_caluclation(arguments):
     optimum, history, log = method.optimize(function, derivatives, x_0, c0, max_iterations, sumt_epsilon)
     result = MultiDimensionalCalculationResult()
     result.function = function
+    result.oryginal_expression = arguments.expression
+    result.argc = arguments.argc
     result.optimum = optimum
     result.search_history = history
     result.log = log
