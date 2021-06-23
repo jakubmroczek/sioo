@@ -213,6 +213,11 @@ class MuliDimensionalFunctionGUI:
         program_arguments.argc = self.nunmber_of_function_variable
         program_arguments.epsilon = self._get_epsilon()
         program_arguments.max_iterations = self._get_n()
+
+        if self.constraints_number != 0:
+            program_arguments.constraints = self._get_constraints()
+            program_arguments.constraints_derivatives = self._get_constrainst_derivatives()
+
         return program_arguments
 
     def _get_function_expression(self):
@@ -239,6 +244,24 @@ class MuliDimensionalFunctionGUI:
     def _get_n(self):
         k = int(self.n_edit.text())
         return k
+
+    def _get_constraints(self):
+        expressions = []
+        for line_edit in self.constraints_line_edits:
+            expression = line_edit.text()
+            expressions.append(expression)
+        print('consntraints')
+        print(expressions)
+        return expressions
+
+    def _get_constrainst_derivatives(self):
+        expressions = []
+        for line_edit in self.constraints_derivatives_edits:
+            expression = line_edit.text()
+            expressions.append(expression)
+        print('derivatives')
+        print(expressions)
+        return expressions
 
     def _add_constraints_widgets_to_layout(self, layout, startIndex):
             assert self.constraints_number < self.MAX_NUMBER_OF_CONSTRAINTS

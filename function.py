@@ -119,7 +119,6 @@ class ConstrainedDerivativesWrapper:
         sum = self.function.evaluate(argv)
         for fun in self.max_derivatives:
             tmp = fun.evaluate(argv)
-            print(f'parital value {tmp} for expression {fun.derivative_fun.expression} for {argv} for {fun.c0}')
             sum += tmp
         return sum
 
