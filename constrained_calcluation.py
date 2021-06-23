@@ -29,21 +29,7 @@ def constrained_caluclation(arguments):
     constarints = []
     for c in constraint_expressions:
         constarints.append(Constraint(c, '<'))
- 
-    x_derivatives = [
-        '-6 * (-3 * x -2 * y + 6)',
-        '-2 * (-1 * x + y - 3)',
-        '2 * (x + y - 7)',
-        '(4/9) * (2 * x -3 * y - 4)'
-    ]
-    y_derivative = [
-        '-4 * (-3 * x - 2 * y  + 6)',
-        '2 * (-1 * x + y - 3)',
-        '2 * (x + y - 7)',
-        '(4/3) * -1 * x + 2 * y + (8/3)'
-    ]
-
-    constraints_derivatives = x_derivatives + y_derivative
+    constraints_derivatives = arguments.constraints_derivatives
     derivatives = _get_derivatives(constraint_expressions, arguments.derivatives_expressions, constraints_derivatives, arguments.argc, c0)
 
     function = PenaltyMethodFunction(constarints, expression, argc, c0)

@@ -342,26 +342,3 @@ class MuliDimensionalFunctionGUI:
                     startIndex += 1
             
             return startIndex
-       
-              
-            # for i in range(self.constraints_number * self.nunmber_of_function_variable):
-            #     label_name = 'Derivative of constraint ** 2 ' + str(i)
-
-            #     label = QLabel(label_name)
-            #     layout.addWidget(label, startIndex, 0, 1, 1)
-
-            #     expression = ""
-            #     line_edit = QLineEdit()
-       
-            #     if i + 1 <= self.constraints_number * self.nunmber_of_function_variable:
-            #         line_edit.setText(expression)
-            #     else:
-            #         line_edit.setReadOnly(True)
-
-            #     layout.addWidget(line_edit, startIndex, 1, 1, 1)
-
-            #     self.constraints_derivatives_edits.append(line_edit)
-
-            #     startIndex += 1
-
-            # return startIndex
