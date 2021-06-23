@@ -82,12 +82,18 @@ class MuliDimensionalFunctionGUI:
             self.constraints_number = value
 
         # Delete old stuff
-        for i in reversed(range(self.layout.count() - old_number, self.layout.count())):
+        items_to_delete = old_number + old_number * self.nunmber_of_function_variable
+        for i in reversed(range(self.layout.count() - items_to_delete, self.layout.count())):
             if self.layout.itemAt(i):
                 self.layout.itemAt(i).widget().setParent(None)
 
-        self.row_index -= old_number
+        self.row_index -= items_to_delete
+
+        if self.constraints_number == 0:
+            return
+
         self.row_index = self._add_constraints_widgets_to_layout(self.layout, self.row_index)
+        self.row_index = self._add_constraints_derivatives_widgets_to_layout(self.layout, self.row_index)
 
     def add_widgets_to_layout(self, layout, rowIndex):
         '''
@@ -258,6 +264,35 @@ class MuliDimensionalFunctionGUI:
                 layout.addWidget(line_edit, startIndex, 1, 1, 1)
 
                 self.constraints_line_edits.append(line_edit)
+
+                startIndex += 1
+
+            return startIndex
+
+    def _add_constraints_derivatives_widgets_to_layout(self, layout, row_index):
+            startIndex = row_index
+            
+            if self.constraints_number == 0:
+                return startIndex
+
+            self.constraints_derivatives_edits = []
+            for i in range(self.constraints_number * self.nunmber_of_function_variable):
+                label_name = 'Derivative of constraint ** 2 ' + str(i)
+
+                label = QLabel(label_name)
+                layout.addWidget(label, startIndex, 0, 1, 1)
+
+                expression = ""
+                line_edit = QLineEdit()
+       
+                if i + 1 <= self.constraints_number * self.nunmber_of_function_variable:
+                    line_edit.setText(expression)
+                else:
+                    line_edit.setReadOnly(True)
+
+                layout.addWidget(line_edit, startIndex, 1, 1, 1)
+
+                self.constraints_derivatives_edits.append(line_edit)
 
                 startIndex += 1
 
