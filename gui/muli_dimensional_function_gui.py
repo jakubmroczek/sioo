@@ -50,6 +50,19 @@ class MuliDimensionalFunctionGUI:
              " 0.66 * x - y - (4/3)",
     ]
      
+    EXAMPLE_CONSTRAINTS_DERIVATIVES = [
+        # x derivatives
+        '-6 * (-3 * x -2 * y + 6)',
+        '-2 * (-1 * x + y - 3)',
+        '2 * (x + y - 7)',
+        '(4/9) * (2 * x -3 * y - 4)',
+        # y derivatives
+        '-4 * (-3 * x - 2 * y  + 6)',
+        '2 * (-1 * x + y - 3)',
+        '2 * (x + y - 7)',
+        '(4/3) * -1 * x + 2 * y + (8/3)'
+    ]
+    
     MAX_NUMBER_OF_CONSTRAINTS = 5
 
     def __init__(self, nunmber_of_function_variable):
@@ -302,24 +315,53 @@ class MuliDimensionalFunctionGUI:
                 return startIndex
 
             self.constraints_derivatives_edits = []
-            for i in range(self.constraints_number * self.nunmber_of_function_variable):
-                label_name = 'Derivative of constraint ** 2 ' + str(i)
 
-                label = QLabel(label_name)
-                layout.addWidget(label, startIndex, 0, 1, 1)
+            for i in range(self.nunmber_of_function_variable):
+                variable = MultiNumberFunction.ARGUMENTS[i]
 
-                expression = ""
-                line_edit = QLineEdit()
-       
-                if i + 1 <= self.constraints_number * self.nunmber_of_function_variable:
+                for j in range(self.constraints_number):
+                    label_name = f'Constraint {j + 1} derivative df \ d{variable}'
+                    label = QLabel(label_name)
+                    layout.addWidget(label, startIndex, 0, 1, 1)
+
+                    #  we have 4 per x, y in examples
+                    index = i * 4 + j
+                    expression = ''
+                   
+                    # Examples only for first 2 variables
+                    if i >= 2:
+                        expression = '0'
+                    else:
+                        expression = self.EXAMPLE_CONSTRAINTS_DERIVATIVES[index] 
+
+                    line_edit = QLineEdit()
                     line_edit.setText(expression)
-                else:
-                    line_edit.setReadOnly(True)
-
-                layout.addWidget(line_edit, startIndex, 1, 1, 1)
-
-                self.constraints_derivatives_edits.append(line_edit)
-
-                startIndex += 1
-
+                    layout.addWidget(line_edit, startIndex, 1, 1, 1)
+                    self.constraints_derivatives_edits.append(line_edit)
+                    
+                    startIndex += 1
+            
             return startIndex
+       
+              
+            # for i in range(self.constraints_number * self.nunmber_of_function_variable):
+            #     label_name = 'Derivative of constraint ** 2 ' + str(i)
+
+            #     label = QLabel(label_name)
+            #     layout.addWidget(label, startIndex, 0, 1, 1)
+
+            #     expression = ""
+            #     line_edit = QLineEdit()
+       
+            #     if i + 1 <= self.constraints_number * self.nunmber_of_function_variable:
+            #         line_edit.setText(expression)
+            #     else:
+            #         line_edit.setReadOnly(True)
+
+            #     layout.addWidget(line_edit, startIndex, 1, 1, 1)
+
+            #     self.constraints_derivatives_edits.append(line_edit)
+
+            #     startIndex += 1
+
+            # return startIndex
