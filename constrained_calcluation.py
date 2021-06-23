@@ -22,9 +22,6 @@ def constrained_caluclation(arguments):
     growth_param = 2    
     c0 = 0.5
 
-    # TODO: ADD C0 PARAM TO GUI
-    # TODO: SUPPORT FOR THE derivatives, c0 and growth param
-    
     constraint_expressions = arguments.constraints
     constarints = []
     for c in constraint_expressions:

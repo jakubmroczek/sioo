@@ -81,6 +81,19 @@ class MuliDimensionalFunctionGUI:
         self.n_label = QLabel("n (max number inner loops)")
         self.n_edit = QLineEdit('10000')
 
+        # Constraints stuff
+        self.max_iterations_label = QLabel("SUMT max iterations")
+        self.max_iterations_edit = QLineEdit('8')
+      
+        self.growth_param_label = QLabel("SUMT growth parameters")
+        self.growth_param_edit = QLineEdit('2')
+
+        self.c0_label = QLabel("SUMT initial penalty param")
+        self.c0_edit = QLineEdit('0.5')
+
+        self.sumt_epsilon_label = QLabel("SUMT epsilon")
+        self.sumt_epsilon_edit = QLineEdit('1e-2')
+
         self.runButton = QPushButton('Calculate!')
         self.runButton.setStyleSheet("background-color: #2958B5")
 
@@ -136,9 +149,22 @@ class MuliDimensionalFunctionGUI:
         layout.addWidget(self.n_label, rowIndex + 3, 0, 1, 1)
         layout.addWidget(self.n_edit, rowIndex + 3, 1, 1, 1)
 
-        layout.addWidget(self.runButton, rowIndex + 4, 0, 1, 2)
+        # Constraint stuff
+        layout.addWidget(self.max_iterations_label, rowIndex + 4, 0, 1, 1)
+        layout.addWidget(self.max_iterations_edit, rowIndex + 4, 1, 1, 1)
 
-        derivativeStartRow = rowIndex + 5
+        layout.addWidget(self.growth_param_label, rowIndex + 5, 0, 1, 1)
+        layout.addWidget(self.growth_param_edit, rowIndex + 5, 1, 1, 1)
+
+        layout.addWidget(self.c0_label, rowIndex + 6, 0, 1, 1)
+        layout.addWidget(self.c0_edit, rowIndex + 6, 1, 1, 1)
+
+        layout.addWidget(self.sumt_epsilon_label, rowIndex + 7, 0, 1, 1)
+        layout.addWidget(self.sumt_epsilon_edit, rowIndex + 7, 1, 1, 1)
+
+        layout.addWidget(self.runButton, rowIndex + 8, 0, 1, 2)
+
+        derivativeStartRow = rowIndex + 5 + 3 + 1
 
         rowIndex = self._add_derivative_widgets_to_layout(layout, derivativeStartRow)
 
