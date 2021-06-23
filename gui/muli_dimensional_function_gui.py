@@ -43,6 +43,13 @@ class MuliDimensionalFunctionGUI:
         '2 * t',
     ]
 
+    EXAMPLE_CONSTRAINTS = [
+             "-3 * x - 2 * y + 6",
+             "-1 * x + y - 3",
+             "1 * x + 1 * y - 7",
+             " 0.66 * x - y - (4/3)",
+    ]
+     
     MAX_NUMBER_OF_CONSTRAINTS = 5
 
     def __init__(self, nunmber_of_function_variable):
@@ -250,8 +257,6 @@ class MuliDimensionalFunctionGUI:
         for line_edit in self.constraints_line_edits:
             expression = line_edit.text()
             expressions.append(expression)
-        print('consntraints')
-        print(expressions)
         return expressions
 
     def _get_constrainst_derivatives(self):
@@ -259,8 +264,6 @@ class MuliDimensionalFunctionGUI:
         for line_edit in self.constraints_derivatives_edits:
             expression = line_edit.text()
             expressions.append(expression)
-        print('derivatives')
-        print(expressions)
         return expressions
 
     def _add_constraints_widgets_to_layout(self, layout, startIndex):
@@ -276,7 +279,7 @@ class MuliDimensionalFunctionGUI:
                 label = QLabel(label_name)
                 layout.addWidget(label, startIndex, 0, 1, 1)
 
-                expression = "x + y - 10"
+                expression = self.EXAMPLE_CONSTRAINTS[i]
                 line_edit = QLineEdit()
        
                 if i + 1 <= self.constraints_number:

@@ -22,8 +22,7 @@ def constrained_caluclation(arguments):
     growth_param = 2    
     c0 = 0.5
 
-    # TODO: Perhaps we shouold also change the fletcher reeves stuff    
-    # TODO: HANDLE ALSO >= SCENARIOS !!
+    # TODO: Perhaps we shouold also change the fletcher reeves stuff
     # TODO: ADD C0 PARAM TO GUI
     # TODO: SUPPORT FOR THE REMAINING PARAMS
     con1 = "-3 * x - 2 * y + 6"
