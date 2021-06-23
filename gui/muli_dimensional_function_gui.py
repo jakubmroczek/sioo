@@ -287,7 +287,7 @@ class MuliDimensionalFunctionGUI:
 
             self.constraints_line_edits = []
             for i in range(self.constraints_number):
-                label_name = str(i)
+                label_name = f'Constraint {i + 1}'
 
                 label = QLabel(label_name)
                 layout.addWidget(label, startIndex, 0, 1, 1)
