@@ -22,22 +22,14 @@ def constrained_caluclation(arguments):
     growth_param = 2    
     c0 = 0.5
 
-    # TODO: Perhaps we shouold also change the fletcher reeves stuff
     # TODO: ADD C0 PARAM TO GUI
-    # TODO: SUPPORT FOR THE REMAINING PARAMS
-    con1 = "-3 * x - 2 * y + 6"
-    con2 = "-1 * x + y - 3"
-    con3 = "1 * x + 1 * y - 7"
-    con4 = " 0.66 * x - y - (4/3)"
+    # TODO: SUPPORT FOR THE derivatives, c0 and growth param
     
+    constraint_expressions = arguments.constraints
     constarints = []
-    
-    constarints.append(Constraint(con1, '<'))
-    constarints.append(Constraint(con2, '<'))
-    constarints.append(Constraint(con3, '<'))
-    constarints.append(Constraint(con4, '<'))
-
-    constraint_expressions = [con1, con2, con3, con4]
+    for c in constraint_expressions:
+        constarints.append(Constraint(c, '<'))
+ 
     x_derivatives = [
         '-6 * (-3 * x -2 * y + 6)',
         '-2 * (-1 * x + y - 3)',
