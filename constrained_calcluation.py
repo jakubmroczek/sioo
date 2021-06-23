@@ -18,9 +18,10 @@ def constrained_caluclation(arguments):
     epsilon = arguments.epsilon
     alpha = arguments.alpha
     n = arguments.max_iterations
-    max_iterations = 8
-    growth_param = 2    
-    c0 = 0.5
+    max_iterations = arguments.sumt_max_iterations
+    growth_param = arguments.sumt_growth  
+    c0 = arguments.sumt_c0
+    sumt_epsilon = arguments.sumt_epsilon
 
     constraint_expressions = arguments.constraints
     constarints = []
@@ -35,7 +36,7 @@ def constrained_caluclation(arguments):
     method = ConjugateGradientFletcherReevesMethod(goldenSectionSearchOptimzier)
     method = SUMT(method, growth_param, epsilon, alpha, n)
 
-    optimum, history, log = method.optimize(function, derivatives, x_0, c0, max_iterations)
+    optimum, history, log = method.optimize(function, derivatives, x_0, c0, max_iterations, sumt_epsilon)
     result = MultiDimensionalCalculationResult()
     result.function = function
     result.optimum = optimum
@@ -49,8 +50,6 @@ def _get_derivatives(constraints_expression, derivatives_expressions, constraint
     
     constraint_number = len(constraints_expression)
 
-    print('in _Get_deri')
-    print(constraints_expression)
     derivative_functions = []
     for i, expression in enumerate(derivatives_expressions):
         function = _get_function(expression, argc)

@@ -9,20 +9,18 @@ class SUMT:
         self.alpha = alpha
         self.n = n
 
-    def optimize(self, function : PenaltyMethodFunction, derivatives, x_0, c_0, max_iter):
+    def optimize(self, function : PenaltyMethodFunction, derivatives, x_0, c_0, max_iter, sumt_epsilon):
         c_k = c_0
         x_k_prev = x_0
         x_k = x_k_prev
         history = []
         log = []
 
-        for k in range(1, max_iter):
-            print(k)
-
+        for k in range(0, max_iter):
             x_k, steps = self._unconstrained_search(function, x_k_prev, derivatives)
             history += steps
 
-            if self._has_converged(function, x_k_prev, x_k):
+            if self._has_converged(function, x_k_prev, x_k, sumt_epsilon):
                 return x_k, history, log
 
             log.append((x_k, c_k))
@@ -44,13 +42,13 @@ class SUMT:
         epsilon = self.epsilon
         return self.fletcher_reves.optimize(function, x_1, epsilon, alpha, n, derivatives)
 
-    def _has_converged(self, function, x_k_prev, x_k):
+    def _has_converged(self, function, x_k_prev, x_k, sumt_epsilon):
         distance = self._distance(x_k_prev, x_k)
 
-        if distance < self.epsilon:
+        if distance < sumt_epsilon:
             return True
 
-        if abs(function.evaluate(x_k) - function.evaluate(x_k_prev)) < self.epsilon:
+        if abs(function.evaluate(x_k) - function.evaluate(x_k_prev)) < sumt_epsilon:
             return True
 
         return False

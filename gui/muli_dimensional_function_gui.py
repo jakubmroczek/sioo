@@ -263,8 +263,23 @@ class MuliDimensionalFunctionGUI:
         if self.constraints_number != 0:
             program_arguments.constraints = self._get_constraints()
             program_arguments.constraints_derivatives = self._get_constrainst_derivatives()
-
+            program_arguments.sumt_max_iterations = self._get_sumt_max_iterations()
+            program_arguments.sumt_growth = self._get_sumt_growth()
+            program_arguments.sumt_c0 = self._get_sumt_c0()
+            program_arguments.sumt_epsilon = self._get_sumt_epsilon()
         return program_arguments
+
+    def _get_sumt_max_iterations(self):
+        return int(self.max_iterations_edit.text())
+
+    def _get_sumt_growth(self):
+        return float(self.growth_param_edit.text())
+
+    def _get_sumt_c0(self):
+        return float(self.c0_edit.text())
+
+    def _get_sumt_epsilon(self):
+        return float(self.sumt_epsilon_edit.text())
 
     def _get_function_expression(self):
         return self.function_edit.text()
